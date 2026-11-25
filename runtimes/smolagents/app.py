@@ -56,7 +56,7 @@ def route_event(event_file: str) -> str:
 
 @tool
 def find_affected_pages(event_file: str) -> str:
-    """List pages the change touches. Pages named in the event win; otherwise a capped search. Ids are always real.
+    """List pages the change touches: pages the event names first, then search results, capped at 8. Ids are always real.
 
     Args:
         event_file: Path of the change event JSON file.

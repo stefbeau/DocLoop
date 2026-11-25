@@ -93,12 +93,11 @@ class Workspace:
         return result
 
     def find_affected_pages(self, event_file: str) -> dict:
-        """List pages the change touches. Pages named in the event win; otherwise a capped search. Ids are always real."""
+        """List pages the change touches: pages the event names first, then search results, capped at 8. Ids are always real."""
         event = self._event(event_file)
         candidates = [c.to_dict() for c in find_pages(event, self.store, self._searcher)]
         result = {"event_id": event.id, "candidates": candidates,
-                  "note": "explicit references returned as given" if any(c["basis"] == "explicit reference" for c in candidates)
-                  else "search results: confirm relevance before proposing edits"}
+                  "note": "pages marked 'explicit reference' are named in the event; all others are leads to read and sort"}
         self._save_state(event.id, "impact", result)
         self._audit(event.id, "impact_mapped", pages=[c["page_id"] for c in candidates])
         return result

@@ -1,8 +1,8 @@
 """Impact mapping: which pages does this change touch?
 
 Two rules, in this order:
-1. If the event names pages that exist, return exactly those and stop.
-2. Otherwise search, cap the result, and return only ids the store confirms.
+1. Pages the event names, if they exist, come first.
+2. Search fills the remaining places, up to the cap.
 
 An id that the store does not know is never returned.
 """
@@ -77,10 +77,18 @@ def search(query: str, store: PageStore, limit: int = MAX_CANDIDATES) -> list[Ca
 
 
 def find_pages(event: ChangeEvent, store: PageStore, searcher=None) -> list[Candidate]:
-    """`searcher(query, store)` replaces the built-in lexical search, for example with a vector index."""
+    """Pages the event names come first; search fills the remaining places.
+
+    `searcher(query, store)` replaces the built-in lexical search, for example
+    with a vector index. Whatever the source, only ids the store holds are returned.
+    """
     named = explicit_references(event, store)
-    if named:
-        return [Candidate(pid, store.get(pid).title, "explicit reference", 1.0) for pid in named]
+    found = [Candidate(pid, store.get(pid).title, "explicit reference", 1.0) for pid in named]
     query = event.title + "\n" + event.body
-    found = searcher(query, store) if searcher else search(query, store)
-    return [c for c in found if store.exists(c.page_id)][:MAX_CANDIDATES]   # real ids only, whatever the searcher
+    searched = searcher(query, store) if searcher else search(query, store)
+    seen = set(named)
+    for c in searched:
+        if c.page_id not in seen and store.exists(c.page_id):
+            found.append(c)
+            seen.add(c.page_id)
+    return found[:MAX_CANDIDATES]

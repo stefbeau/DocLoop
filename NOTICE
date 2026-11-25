@@ -4,13 +4,19 @@ Copyright 2026 Stéphane Beau. Licensed under the Apache License, Version 2.0.
 Third-party material
 --------------------
 
-The benchmark in docs/benchmarks/ was computed on the public OpenBB
-documentation repository (https://github.com/OpenBB-finance/openbb-docs),
-MIT License, Copyright (c) 2026 OpenBB.
+The benchmarks in docs/benchmarks/ were computed on two public repositories:
 
-None of that documentation is redistributed here. The report lists commit
-identifiers, dates and commit titles from its public history, and page counts.
-To reproduce it, clone that repository yourself and run `docloop replay`.
+1. OpenBB documentation (https://github.com/OpenBB-finance/openbb-docs),
+   MIT License, Copyright (c) 2026 OpenBB.
+2. Hugging Face Hub documentation (https://github.com/huggingface/hub-docs),
+   Apache License 2.0.
+
+None of that documentation is redistributed here. The reports list commit
+identifiers, dates and commit titles from the public histories, and page
+identifiers. To reproduce them, clone the repositories yourself and run
+`docloop replay`.
 
 docloop is an independent project. It is not affiliated with, endorsed by, or
-sponsored by OpenBB. "OpenBB" is a trademark of its owner.
+sponsored by OpenBB or Hugging Face. Their names are trademarks of their owners.
+The benchmarks measure this tool's search. They are not an assessment of
+either project's documentation.

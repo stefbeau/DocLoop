@@ -107,3 +107,9 @@ def test_replay_uses_the_docs_as_they_were_before_the_commit(history):
     event = replay(history, ["docs"], limit=1)["events"][0]
     assert event["truth"] == ["docs/team"]
     assert "docs/team" not in event["predicted"], "found only because the post-change text leaked in"
+
+
+def test_replay_can_leave_out_automated_commits(history):
+    report = replay(history, ["docs"], skip_message="legacy csv")
+    assert len(report["events"]) == 1
+    assert any("--skip-message" in why for why in report["skipped"])

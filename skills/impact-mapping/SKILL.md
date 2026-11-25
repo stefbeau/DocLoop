@@ -1,6 +1,6 @@
 ---
 name: impact-mapping
-description: How to decide which documentation pages a product change really affects, starting from search candidates. Use when find_affected_pages returns search results rather than explicit references, or returns nothing.
+description: How to decide which documentation pages a product change really affects, starting from the candidates find_affected_pages returns. Use whenever candidates need sorting, or when it returns nothing.
 ---
 
 # Impact mapping
@@ -10,7 +10,9 @@ more than a missing one.
 
 ## Order of evidence
 
-1. **Pages the event names.** Final. Do not add to them.
+1. **Pages the event names.** Likely by default. They are rarely the whole
+   answer: on real edit history, a named page was among the edited ones nine
+   times in ten, but the named pages covered only half of what was edited.
 2. **Pages that state the old behaviour.** Read each search candidate and look
    for the sentence the change makes false. If you can quote that sentence,
    the page is affected.

@@ -57,6 +57,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--base-url", help="OpenAI-compatible endpoint for the judge model")
     p.add_argument("--judge-max", type=int, help="judge only the newest N events, to limit cost")
     p.add_argument("--out", help="write the full JSON result here")
+    p.add_argument("--skip-message", help="leave out commits whose title matches this pattern, e.g. \"\\(automated\\)\"")
     p = sub.add_parser("rescore", help="recompute the summaries of a saved replay result, with no model calls")
     p.add_argument("result_file"); p.add_argument("--report", help="write a Markdown report here")
     args = parser.parse_args(argv)
@@ -93,7 +94,8 @@ def main(argv: list[str] | None = None) -> int:
         note = (lambda n, subject: print(f"  [{n}] {subject[:70]}", file=sys.stderr)) if (judge or searcher) else None
         try:
             report = replay(args.repo, args.roots, args.limit, args.max_pages, exclude=args.exclude,
-                            searcher=searcher, judge=judge, judge_max=args.judge_max, progress=note)
+                            searcher=searcher, judge=judge, judge_max=args.judge_max, progress=note,
+                            skip_message=args.skip_message)
         except Exception as exc:  # a provider error should read as one, not as a crash
             if not (searcher or judge):
                 raise

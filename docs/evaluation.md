@@ -152,6 +152,78 @@ With 80 events, treat differences of a few points as noise. The gap between
 lexical and hybrid search is large enough to take seriously. The effect of
 the reading step is not yet.
 
+## Second corpus: Hugging Face Hub documentation
+
+The public `huggingface/hub-docs` repository, folders `docs/hub` and
+`docs/inference-providers`: 334 pages, the 300 most recent docs commits.
+This measures DocLoop's search. It says nothing about the quality of the
+documentation itself.
+
+### Automated commits have to be left out
+
+Of 284 scorable commits, 98 are titled "Update Inference Providers
+documentation (automated)" and touch five pages each on average. The title
+names nothing, so no search can map it: the hit rate on those 98 is 0%. They
+are not change descriptions, and including them measures the commit bot, not
+the search. `--skip-message` leaves them out.
+
+| Lexical search, corpus at `2c3f84c8` | Events | Found a right page | Mean recall | Precision |
+| --- | ---: | ---: | ---: | ---: |
+| Every commit | 284 | 49% | 41% | 22% |
+| Human-written commits only | 186 | 75% | 65% | 32% |
+
+Full table for the second row: [benchmarks/hub-docs-replay.md](benchmarks/hub-docs-replay.md).
+
+When a person describes the change in a sentence, plain word matching finds a
+right page three times out of four. The OpenBB figure of 51% reflects its
+commit messages more than the method.
+
+### Pages named in the message are not the whole answer
+
+20 of the 186 messages name a page. A named page was among the edited ones in
+90% of cases, but the named pages covered only 52% of what was edited. The
+first version of this tool stopped at the named pages, a rule inherited from
+the pipeline it replaces, where it guarded against invented page ids. The
+tools now refuse invented ids on their own, so the rule was costing recall
+for nothing. Named pages now come first and search fills the remaining
+places: on those 20 events, hit rate goes from 90% to 95% and recall from 52%
+to 68%.
+
+### Hybrid search and the reading step (maintainer's run, 25 November 2026)
+
+Run on all 284 commits, automated ones included, so the hybrid figure is not
+comparable with the 75% above. A rerun on human-written commits is the next
+measurement.
+
+| All 284 commits | Found a right page | Mean recall |
+| --- | ---: | ---: |
+| Lexical search | 49% | 41% |
+| Hybrid search | 57% | 51% |
+
+Reading step on the 60 newest of those commits, judge `openai/gpt-oss-120b`,
+380 calls, no unparsed reply:
+
+| | Found a right page | Mean recall | Precision | Pages |
+| --- | ---: | ---: | ---: | ---: |
+| Hybrid search, all candidates | 70% | 63% | 15% | 7.7 |
+| Top 2 of the search ranking | 63% | 50% | 38% | 2 |
+| Reader deletes what it does not keep | 60% | 52% | 40% | 2.4 |
+| Reader reorders, top 3 | 70% | 58% | 31% | 3 |
+| Search ranking, top 3 | 65% | 54% | 29% | 3 |
+
+The reader separates right from wrong better here than on OpenBB (it keeps
+80% of right pages and drops 77% of wrong ones), and the conclusion is the
+same on both corpora:
+
+- Used to delete, it is no better than cutting the search ranking to the
+  same length.
+- Used to reorder, it gains a few points in the top 3, and on both corpora
+  that gain appears in the newer half of the events and not in the older half.
+
+A model reading one page at a time against a one-line description adds little
+to the ranking. Where the model earns its place is elsewhere: drafting the
+edit, and reading with the freedom to search again.
+
 ## What this benchmark is for
 
 It gives a number to move. Changes worth testing against it, in order:

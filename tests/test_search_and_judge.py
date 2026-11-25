@@ -73,10 +73,13 @@ def test_a_searcher_cannot_smuggle_in_an_invented_page(ws):
     assert [c.page_id for c in find_pages(e, ws.store, fake)] == ["charts/exporting-data"]
 
 
-def test_explicit_references_still_win_over_any_searcher(ws):
-    boom = lambda query, store: pytest.fail("the searcher must not run when the event names its pages")
+def test_named_pages_come_first_and_search_fills_in_after(ws):
+    other = lambda query, store: [Candidate("charts/file-formats", "Supported file formats", "vector", 0.7),
+                                  Candidate("charts/exporting-data", "Exporting data", "vector", 0.6)]
     e = ChangeEvent.from_dict(json.loads(open(event("fix-screenshot")).read()))
-    assert [c.basis for c in find_pages(e, ws.store, boom)] == ["explicit reference"]
+    found = find_pages(e, ws.store, other)
+    assert [(c.page_id, c.basis) for c in found] == [("charts/exporting-data", "explicit reference"),
+                                                     ("charts/file-formats", "vector")]
 
 
 def test_make_searcher_validates_its_arguments(tmp_path):

@@ -46,7 +46,7 @@ runtimes/    what runs the agent      three thin front ends over the same core
 | --- | --- | --- |
 | `classify_event` | Rule-based detectors over the event text and comments, with evidence | No |
 | `route_event` | Lookup table: which steps run, or hand to a person | No |
-| `find_affected_pages` | Pages named in the event, else a capped search. Real ids only | No |
+| `find_affected_pages` | Pages named in the event first, then search results, capped at 8. Real ids only | No |
 | `search_pages`, `read_page` | Look things up | No |
 | `propose_edit` | Saves a proposed page body, a diff and lint results. Writes nothing | No |
 | `propose_notice` | Saves a customer notice draft with lint results. Sends nothing | No |
@@ -100,7 +100,9 @@ edited.
 docloop replay --repo path/to/docs-repo --roots content --report report.md
 ```
 
-On the public OpenBB docs history (80 scored commits), word-matching search
+On the Hugging Face Hub docs history, plain word-matching search puts a right
+page among its candidates for 75% of 186 human-written changes. On the
+smaller and more tersely described OpenBB docs history (80 scored commits), word-matching search
 puts at least one right page among its candidates 51% of the time. Hybrid
 search, which also matches on meaning, raises that to 69%. A model reading
 each candidate keeps 72% of the right pages and discards 69% of the wrong
@@ -114,7 +116,7 @@ pip install -e ".[dev,mcp,smolagents]"
 pytest
 ```
 
-56 tests cover the detectors, routing, search, both page stores, the gate
+57 tests cover the detectors, routing, search, both page stores, the gate
 (including stale pages and proposals changed after approval), the audit log,
 the agent loop, the replay, vector and hybrid search, the reading-step
 judge, and the construction of all three runtimes.

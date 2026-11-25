@@ -85,13 +85,17 @@ def _strip_noise(subject: str, body: str) -> tuple[str, str]:
 
 def replay(repo: str | Path, roots: list[str], limit: int = 200, max_pages: int = 10, min_words: int = 3,
            exclude: list[str] | None = None, searcher=None, judge=None, judge_max: int | None = None,
-           progress=None) -> dict:
+           progress=None, skip_message: str | None = None) -> dict:
     """`searcher` swaps the search method. `judge` adds the reading step: a model keeps or drops each candidate."""
     repo = Path(repo)
     results, skipped = [], defaultdict(int)
     judged = 0
+    skip_pattern = re.compile(skip_message, re.I) if skip_message else None
     for change in list_changes(repo, roots, limit):
         subject, body = _strip_noise(change["subject"], change["body"])
+        if skip_pattern and skip_pattern.search(subject):
+            skipped[f"message matches --skip-message ({skip_message})"] += 1
+            continue
         truth = change["modified"]
         if not truth:
             skipped["no existing page modified (new pages, assets or config only)"] += 1

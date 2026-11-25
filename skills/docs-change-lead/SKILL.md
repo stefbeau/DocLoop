@@ -27,7 +27,8 @@ written to the documentation.
    a guess.
 3. **Find the pages.** If the route includes `impact`, call
    `find_affected_pages`.
-   - Candidates marked `explicit reference` are the answer. Do not add to them.
+   - Candidates marked `explicit reference` are named in the event. Treat
+     them as likely, and still read them.
    - Any other candidates are leads. Read each one and sort it into
      **likely** (you can point to the text the change makes false) or
      **also check** (same topic, no sentence you can point to). Draft edits
