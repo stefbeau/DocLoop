@@ -143,3 +143,17 @@ def test_replay_reports_older_and_newer_halves(history):
     periods = replay(history, ["docs"])["summary"]["by_period"]
     assert set(periods) == {"older half", "newer half"}
     assert periods["older half"]["events"] + periods["newer half"]["events"] == 2
+
+
+def test_provider_errors_become_one_actionable_line():
+    from docloop.cli import _provider_hint
+
+    class Refused(Exception):
+        status_code = 402
+
+    class Wrapped(Exception):
+        response = type("R", (), {"status_code": 401})()
+
+    assert "no inference credits" in _provider_hint(Refused("Error code: 402"))
+    assert "401 Unauthorized" in _provider_hint(Wrapped("nope"))
+    assert _provider_hint(RuntimeError("boom\ndetails")) == "RuntimeError: boom"

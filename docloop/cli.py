@@ -14,6 +14,22 @@ import sys
 from .workspace import Workspace
 
 
+def _provider_hint(exc: Exception) -> str:
+    """Turn a provider's HTTP error into one line a person can act on."""
+    status = getattr(exc, "status_code", None) or getattr(getattr(exc, "response", None), "status_code", None)
+    hints = {
+        401: "401 Unauthorized: the token is missing, mistyped or revoked. Check HF_TOKEN or OPENAI_API_KEY.",
+        402: "402 Payment Required: the token works, but the account has no inference credits. "
+             "Add credits with the provider, or use a free local option: --embedder local:all-MiniLM-L6-v2, "
+             "and --base-url pointing at a local model server for --judge-model.",
+        403: "403 Forbidden: the token lacks permission to call inference. Create one that allows it.",
+        404: "404 Not Found: the provider does not serve this model id. Try another model.",
+        429: "429 Too Many Requests: rate limited. Wait a little and run the same command again.",
+    }
+    first_line = str(exc).strip().splitlines()[0] if str(exc).strip() else type(exc).__name__
+    return hints.get(status, f"{type(exc).__name__}: {first_line}")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="docloop", description=__doc__.splitlines()[0])
     parser.add_argument("--docs", help="docs folder or CMS export (.json). Default: $DOCLOOP_DOCS or ./docs")
@@ -65,8 +81,15 @@ def main(argv: list[str] | None = None) -> int:
             print(f"docloop: {exc}", file=sys.stderr)
             return 1
         note = (lambda n, subject: print(f"  [{n}] {subject[:70]}", file=sys.stderr)) if (judge or searcher) else None
-        report = replay(args.repo, args.roots, args.limit, args.max_pages, exclude=args.exclude,
-                        searcher=searcher, judge=judge, judge_max=args.judge_max, progress=note)
+        try:
+            report = replay(args.repo, args.roots, args.limit, args.max_pages, exclude=args.exclude,
+                            searcher=searcher, judge=judge, judge_max=args.judge_max, progress=note)
+        except Exception as exc:  # a provider error should read as one, not as a crash
+            if not (searcher or judge):
+                raise
+            print(f"docloop: the model provider refused the request.\n  {_provider_hint(exc)}\n"
+                  "  Work already done is cached under .docloop, so a rerun resumes where this stopped.", file=sys.stderr)
+            return 1
         report["search"] = args.search if args.search == "lexical" else f"{args.search} ({args.embedder})"
         if args.report:
             Path(args.report).write_text(to_markdown(report), encoding="utf-8")

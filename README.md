@@ -112,7 +112,7 @@ pip install -e ".[dev,mcp,smolagents]"
 pytest
 ```
 
-54 tests cover the detectors, routing, search, both page stores, the gate
+55 tests cover the detectors, routing, search, both page stores, the gate
 (including stale pages and proposals changed after approval), the audit log,
 the agent loop, the replay, vector and hybrid search, the reading-step
 judge, and the construction of all three runtimes.
