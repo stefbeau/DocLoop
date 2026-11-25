@@ -102,7 +102,7 @@ Face Inference Providers. Nothing was tuned on these events.
 
 | Setup | Found a right page | Mean recall | Precision | Candidates per event |
 | --- | ---: | ---: | ---: | ---: |
-| Lexical search | 51% | 40% | 15% | 4.6 |
+| Lexical search | 51% | 40% | 15% | 5.4 |
 | Hybrid search | 69% | 51% | 12% | 8.0 |
 | Hybrid search, then the reading step | 54% | 37% | 33% | 2.9 |
 
