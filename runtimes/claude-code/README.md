@@ -9,7 +9,7 @@ editing the docs directly.
 From the root of the repository that holds your docs:
 
 ```
-pip install "docloop[mcp] @ git+https://github.com/stefbeau/docloop"
+pip install "docloop[mcp] @ git+https://github.com/stefbeau/DocLoop"
 mkdir -p .claude/skills .claude/agents
 cp -r <docloop>/skills/* .claude/skills/
 cp <docloop>/runtimes/claude-code/agents/*.md .claude/agents/

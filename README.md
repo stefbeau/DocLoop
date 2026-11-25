@@ -14,7 +14,7 @@ pipeline. [What changed and why](docs/evolution.md).
 ## Try it in one minute, with no API key
 
 ```
-git clone https://github.com/stefbeau/docloop && cd docloop
+git clone https://github.com/stefbeau/DocLoop && cd DocLoop
 pip install -e .
 
 docloop --docs examples/docs classify examples/events/retire-csv.json
