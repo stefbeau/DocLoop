@@ -167,25 +167,90 @@ def _periods(results: list[dict]) -> dict[str, list[dict]]:
     return {"older half": ordered[:half], "newer half": ordered[half:]} if len(ordered) >= 2 else {}
 
 
+def _at(rows: list[dict], order, k: int) -> dict:
+    """Hit rate, recall and precision of the first k pages of each event's list."""
+    hit = rec = prec = 0.0
+    for r in rows:
+        top, truth = order(r)[:k], set(r["truth"])
+        good = [p for p in top if p in truth]
+        hit += bool(good)
+        rec += len(good) / len(truth)
+        prec += len(good) / len(top) if top else 0.0
+    n = len(rows)
+    return {"hit_rate": round(hit / n, 3), "mean_recall": round(rec / n, 3), "precision": round(prec / n, 3)}
+
+
+def _mrr(rows: list[dict], order) -> float:
+    total = 0.0
+    for r in rows:
+        rank = next((i + 1 for i, p in enumerate(order(r)) if p in r["truth"]), None)
+        total += 1 / rank if rank else 0.0
+    return round(total / len(rows), 3)
+
+
+def _as_ranked(r: dict) -> list[str]:
+    return r["predicted"]
+
+
+def _reordered(r: dict) -> list[str]:
+    """Pages the reader kept first, then the ones it would have dropped. Nothing is deleted."""
+    kept = set(r["after_reading"]["kept"])
+    return [p for p in r["predicted"] if p in kept] + [p for p in r["predicted"] if p not in kept]
+
+
 def _reading_block(rows: list[dict]) -> dict:
     before = _block(rows)
     answered = [r for r in rows if r["after_reading"]["kept"]]
+    relevant = kept_relevant = irrelevant = dropped_irrelevant = 0
+    for r in rows:
+        truth, kept = set(r["truth"]), set(r["after_reading"]["kept"])
+        for page in r["predicted"]:
+            if page in truth:
+                relevant += 1
+                kept_relevant += page in kept
+            else:
+                irrelevant += 1
+                dropped_irrelevant += page not in kept
+    mean_kept = _mean([float(len(r["after_reading"]["kept"])) for r in rows]) or 0.0
+    k = max(1, round(mean_kept))
     return {"events": len(rows),
-            "before": {k: before[k] for k in ("hit_rate", "mean_recall", "precision_when_answered")},
+            "before": {k_: before[k_] for k_ in ("hit_rate", "mean_recall", "precision_when_answered")},
             "after": {"hit_rate": _mean([float(r["after_reading"]["hit"]) for r in rows]),
                       "mean_recall": _mean([r["after_reading"]["recall"] for r in rows]),
                       "precision_when_answered": _mean([r["after_reading"]["precision"] for r in answered]),
                       "events_with_nothing_kept": len(rows) - len(answered)},
             "mean_candidates_before": _mean([float(len(r["predicted"])) for r in rows]),
-            "mean_candidates_after": _mean([float(len(r["after_reading"]["kept"])) for r in rows])}
+            "mean_candidates_after": mean_kept,
+            # How well the reader tells right pages from wrong ones.
+            "kept_share_of_right_pages": round(kept_relevant / relevant, 3) if relevant else None,
+            "dropped_share_of_wrong_pages": round(dropped_irrelevant / irrelevant, 3) if irrelevant else None,
+            # The fair comparison: the same number of pages, taken from the top of the search ranking.
+            "same_size_baseline": {"top_k": k, **_at(rows, _as_ranked, k)},
+            # Using the verdicts to reorder the list instead of deleting from it.
+            "reorder_instead_of_delete": {
+                "top_3_before": _at(rows, _as_ranked, 3), "top_3_after": _at(rows, _reordered, 3),
+                "mrr_before": _mrr(rows, _as_ranked), "mrr_after": _mrr(rows, _reordered)}}
 
 
-def summarise_reading(results: list[dict], judge) -> dict:
+def summarise_reading(results: list[dict], judge=None, model: str = "") -> dict:
     rows = [r for r in results if "after_reading" in r]
-    out = {"model": judge.name, "model_calls": judge.calls, "unparsed_replies": judge.unparsed,
+    out = {"model": judge.name if judge else model,
+           "model_calls": judge.calls if judge else None, "unparsed_replies": judge.unparsed if judge else None,
            "overall": _reading_block(rows) if rows else None}
     out["by_period"] = {name: _reading_block(part) for name, part in _periods(rows).items() if part}
     return out
+
+
+def rescore(report: dict) -> dict:
+    """Recompute every summary from the saved events of an earlier run. No model calls."""
+    report = dict(report)
+    report["summary"] = summarise(report["events"])
+    if any("after_reading" in e for e in report["events"]):
+        old = report.get("reading_step", {})
+        new = summarise_reading(report["events"], model=old.get("model", ""))
+        new["model_calls"], new["unparsed_replies"] = old.get("model_calls"), old.get("unparsed_replies")
+        report["reading_step"] = new
+    return report
 
 
 def summarise(results: list[dict]) -> dict:
@@ -229,15 +294,34 @@ def to_markdown(report: dict, title: str = "Replay report") -> str:
     out += [f"- {n} × {why}" for why, n in report["skipped"].items()] or ["- none"]
     reading = report.get("reading_step")
     if reading and reading.get("overall"):
-        out += ["", f"## Reading step ({reading['model']})", "",
-                f"{reading['model_calls']} model calls, {reading['unparsed_replies']} unparsed replies (kept by default).", "",
-                "| Group | Events | Hit rate before | after | Recall before | after | Precision before | after | Candidates before | after |",
+        blocks = {"All judged events": reading["overall"], **reading["by_period"]}
+        calls = f"{reading['model_calls']} model calls, {reading['unparsed_replies']} unparsed replies (kept by default)." \
+            if reading.get("model_calls") is not None else ""
+        out += ["", f"## Reading step ({reading['model']})", "", calls, "",
+                "### If the reader deletes what it does not keep", "",
+                "| Group | Events | Hit rate before | after | Recall before | after | Precision before | after | Pages before | after |",
                 "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |"]
-        for name, b in {"All judged events": reading["overall"], **reading["by_period"]}.items():
+        for name, b in blocks.items():
             out.append(f'| {name} | {b["events"]} | {pct(b["before"]["hit_rate"])} | {pct(b["after"]["hit_rate"])} | '
                        f'{pct(b["before"]["mean_recall"])} | {pct(b["after"]["mean_recall"])} | '
                        f'{pct(b["before"]["precision_when_answered"])} | {pct(b["after"]["precision_when_answered"])} | '
                        f'{b["mean_candidates_before"]} | {b["mean_candidates_after"]} |')
+        out += ["", "### How well the reader tells right from wrong, and the same-size baseline", "",
+                "| Group | Right pages kept | Wrong pages dropped | Reader: hit rate | recall | Top-k of search: hit rate | recall | k |",
+                "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |"]
+        for name, b in blocks.items():
+            s_ = b["same_size_baseline"]
+            out.append(f'| {name} | {pct(b["kept_share_of_right_pages"])} | {pct(b["dropped_share_of_wrong_pages"])} | '
+                       f'{pct(b["after"]["hit_rate"])} | {pct(b["after"]["mean_recall"])} | '
+                       f'{pct(s_["hit_rate"])} | {pct(s_["mean_recall"])} | {s_["top_k"]} |')
+        out += ["", "### If the reader reorders the list instead of deleting", "",
+                "| Group | Right page in top 3, before | after | Recall in top 3, before | after | MRR before | after |",
+                "| --- | ---: | ---: | ---: | ---: | ---: | ---: |"]
+        for name, b in blocks.items():
+            ro = b["reorder_instead_of_delete"]
+            out.append(f'| {name} | {pct(ro["top_3_before"]["hit_rate"])} | {pct(ro["top_3_after"]["hit_rate"])} | '
+                       f'{pct(ro["top_3_before"]["mean_recall"])} | {pct(ro["top_3_after"]["mean_recall"])} | '
+                       f'{ro["mrr_before"]:.2f} | {ro["mrr_after"]:.2f} |')
     out += ["", "## Every scored event", "",
             "| Date | Commit | Message | Truth | Found | Recall |", "| --- | --- | --- | ---: | ---: | ---: |"]
     for r in report["events"]:

@@ -31,7 +31,14 @@ then with the menu path, then with the old name. Stop after three queries. If
 you still have nothing, report "no affected page found" and list the queries
 you tried. That is a valid result: the page may not exist yet.
 
+## Two piles, not one
+
+Sort what you read into **likely** and **also check**. A page you cannot
+tie to a specific sentence goes to also check, not in the bin: the reviewer
+sees both piles and decides.
+
 ## Never
 
 - Never return an id you did not get from a tool.
-- Never keep a page "to be safe".
+- Never propose an edit to an also-check page.
+- Never drop a candidate without listing it.

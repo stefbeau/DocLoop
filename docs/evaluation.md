@@ -114,25 +114,43 @@ Newer half only (40 events), the figures to quote:
 | Hybrid search | 73% | 51% | 14% |
 | Hybrid search, then the reading step | 60% | 39% | 38% |
 
-What this says:
+What this says, after looking at every event
+([table](benchmarks/openbb-hybrid-reading.md), [data](benchmarks/openbb-hybrid-reading.json)):
 
 - **Hybrid search helps.** Matching on meaning as well as words finds a right
   page for 14 more events out of 80, and it answers every event.
-- **The reading step, as first written, is too strict.** It nearly triples
-  precision and cuts the list from 8 pages to 3, but it also discards about a
-  quarter of the correct pages the search had found. For 9 events it kept
-  nothing at all. The judge made 621 calls with no unparsed reply, so this is
-  its judgement, not a parsing fault.
-- **Why:** the judge sees a commit title and one page, and is told to keep the
-  page only if it can point to text the change makes false. Given "V5 docs",
-  it cannot, so it drops pages a person did edit.
-- **For a human-gated system this is the wrong default.** A missed page costs
-  more than an extra candidate the reviewer dismisses. The next version of
-  the reading step should keep what it is unsure about and drop only what is
-  clearly unrelated.
+- **The reader carries real signal, and it is noisy.** It keeps 72% of the
+  right pages it is shown and discards 69% of the wrong ones. It also makes
+  calls that are hard to defend: for "Add missing screenshots" it kept all
+  eight candidates, and for "Update excel docs" it dropped the Excel
+  installation page and kept a command-line quickstart.
+- **Deleting is the wrong use of it.** Letting the reader delete cuts the list
+  from 8 pages to 3 and nearly triples precision, at the cost of a quarter of
+  the right pages. Against the fair baseline, the top 3 of the search
+  ranking, it is ahead overall (54% against 48% hit rate) but behind on the
+  older half and ahead on the newer half. On 40 events each, that is not a
+  result to lean on.
+- **Reordering loses nothing.** Using the same verdicts to put kept pages
+  first and the others after them keeps the full list's 69% hit rate and
+  moves a right page into the top 3 for 56% of events, up from 48%. That gain
+  also comes entirely from the newer half.
+- **Message length does not explain the reader's misses.** It keeps about the
+  same share of right pages for short messages (68%) as for longer ones (75%).
+- **The ceiling is the search, and the events.** For 25 of the 80 events the
+  right page is not among the eight candidates at all. No reading step
+  recovers those.
+
+The design consequence: the reading step sorts candidates into "likely" and
+"also check", and never removes a page from what the reviewer sees. The
+`docs-change-lead` skill now says so.
+
+An earlier version of this page said the reader was simply too strict and
+blamed short commit messages. The per-event data does not support either
+claim, and both have been removed.
 
 With 80 events, treat differences of a few points as noise. The gap between
-lexical and hybrid search is large enough to take seriously.
+lexical and hybrid search is large enough to take seriously. The effect of
+the reading step is not yet.
 
 ## What this benchmark is for
 

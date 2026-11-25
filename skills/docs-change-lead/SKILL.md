@@ -28,8 +28,13 @@ written to the documentation.
 3. **Find the pages.** If the route includes `impact`, call
    `find_affected_pages`.
    - Candidates marked `explicit reference` are the answer. Do not add to them.
-   - Candidates marked `search` are leads. Read each one and keep only pages
-     the change really affects. Load the `impact-mapping` skill if unsure.
+   - Any other candidates are leads. Read each one and sort it into
+     **likely** (you can point to the text the change makes false) or
+     **also check** (same topic, no sentence you can point to). Draft edits
+     for the likely pages only, and list every also-check page in your report.
+     Never silently discard a candidate: measured against real edit history,
+     a reader that deletes loses about a quarter of the right pages.
+     Load the `impact-mapping` skill if unsure.
    - No candidates: say so. Do not propose edits to a page you picked by title.
 4. **Draft.** For each kept page, produce one proposal with `propose_edit`.
    - One or two pages: draft them yourself. Load `drafting-doc-edits` first.
@@ -40,8 +45,9 @@ written to the documentation.
 5. **Notice.** If the route includes `notice`, load `customer-notice`, draft
    it, and call `propose_notice`. Fix lint issues the same way.
 6. **Report and stop.** Call `review_status` and give the person a short
-   package: the route and why, each page with a one-line reason, the notice
-   subject, open doubts, and the commands to approve or reject. Then stop.
+   package: the route and why, each likely page with a one-line reason, the
+   also-check pages, the notice subject, open doubts, and the commands to
+   approve or reject. Then stop.
 
 ## Brief template for a subagent
 

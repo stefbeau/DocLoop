@@ -157,3 +157,23 @@ def test_provider_errors_become_one_actionable_line():
     assert "no inference credits" in _provider_hint(Refused("Error code: 402"))
     assert "401 Unauthorized" in _provider_hint(Wrapped("nope"))
     assert _provider_hint(RuntimeError("boom\ndetails")) == "RuntimeError: boom"
+
+
+def test_reading_report_has_fair_baseline_and_reorder_view(history, tmp_path):
+    from docloop.replay import rescore
+    everything = lambda query, store: [Candidate(i, i, "vector", 1.0) for i in sorted(store.list_ids(), reverse=True)]
+
+    def rule(prompt):
+        change, page = prompt.split("PAGE id:")
+        topic = {"docs/export": "csv", "docs/views": "views", "docs/team": "invite"}[page.split()[0]]
+        return json.dumps({"keep": topic in change.lower(), "evidence": "..."})
+
+    report = replay(history, ["docs"], searcher=everything, judge=Judge(ScriptedChat(rule)))
+    block = report["reading_step"]["overall"]
+    assert block["kept_share_of_right_pages"] == 1.0 and block["dropped_share_of_wrong_pages"] == 1.0
+    assert block["same_size_baseline"]["top_k"] == 1
+    ro = block["reorder_instead_of_delete"]
+    assert ro["mrr_after"] >= ro["mrr_before"] and ro["top_3_after"]["mean_recall"] == 1.0
+    again = rescore(json.loads(json.dumps(report)))          # from the saved file, no model
+    assert again["reading_step"]["overall"] == block and again["summary"] == report["summary"]
+    assert "reorders the list instead of deleting" in to_markdown(again)

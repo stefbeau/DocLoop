@@ -57,11 +57,21 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--base-url", help="OpenAI-compatible endpoint for the judge model")
     p.add_argument("--judge-max", type=int, help="judge only the newest N events, to limit cost")
     p.add_argument("--out", help="write the full JSON result here")
+    p = sub.add_parser("rescore", help="recompute the summaries of a saved replay result, with no model calls")
+    p.add_argument("result_file"); p.add_argument("--report", help="write a Markdown report here")
     args = parser.parse_args(argv)
     for stream in (sys.stdout, sys.stderr):  # never crash on a console that cannot show a character
         if hasattr(stream, "reconfigure"):
             stream.reconfigure(errors="backslashreplace")
 
+    if args.cmd == "rescore":
+        from pathlib import Path
+        from .replay import rescore, to_markdown
+        report = rescore(json.loads(Path(args.result_file).read_text(encoding="utf-8")))
+        if args.report:
+            Path(args.report).write_text(to_markdown(report), encoding="utf-8")
+        print(json.dumps({k: report[k] for k in ("search", "reading_step") if k in report} or report["summary"]["overall"], indent=2))
+        return 0
     if args.cmd == "replay":
         from pathlib import Path
         from .replay import replay, to_markdown

@@ -102,10 +102,10 @@ docloop replay --repo path/to/docs-repo --roots content --report report.md
 
 On the public OpenBB docs history (80 scored commits), word-matching search
 puts at least one right page among its candidates 51% of the time. Hybrid
-search, which also matches on meaning, raises that to 69%. A first version of
-the model reading step tripled precision but threw away a quarter of the right
-pages, which is the wrong trade for a human-gated system and is being
-reworked. [Method, full results and what they mean](docs/evaluation.md).
+search, which also matches on meaning, raises that to 69%. A model reading
+each candidate keeps 72% of the right pages and discards 69% of the wrong
+ones, so it is used to sort candidates into "likely" and "also check" and
+never to delete them. [Method, full results and what they mean](docs/evaluation.md).
 
 ## Tests
 
@@ -114,7 +114,7 @@ pip install -e ".[dev,mcp,smolagents]"
 pytest
 ```
 
-55 tests cover the detectors, routing, search, both page stores, the gate
+56 tests cover the detectors, routing, search, both page stores, the gate
 (including stale pages and proposals changed after approval), the audit log,
 the agent loop, the replay, vector and hybrid search, the reading-step
 judge, and the construction of all three runtimes.
