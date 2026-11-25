@@ -135,7 +135,7 @@ What this says, after looking at every event
   moves a right page into the top 3 for 56% of events, up from 48%. That gain
   also comes entirely from the newer half.
 - **Message length does not explain the reader's misses.** It keeps about the
-  same share of right pages for short messages (68%) as for longer ones (75%).
+  same share of right pages for messages under 8 words (68%) as for longer ones (74%).
 - **The ceiling is the search, and the events.** For 25 of the 80 events the
   right page is not among the eight candidates at all. No reading step
   recovers those.
