@@ -100,10 +100,12 @@ edited.
 docloop replay --repo path/to/docs-repo --roots content --report report.md
 ```
 
-On the public OpenBB docs history (80 scored commits), the deterministic
-first pass puts at least one right page among its candidates 51% of the time,
-with 40% mean recall. That is the floor the agent starts from, before it
-reads anything. [Method, full results and what they mean](docs/evaluation.md).
+On the public OpenBB docs history (80 scored commits), word-matching search
+puts at least one right page among its candidates 51% of the time. Hybrid
+search, which also matches on meaning, raises that to 69%. A first version of
+the model reading step tripled precision but threw away a quarter of the right
+pages, which is the wrong trade for a human-gated system and is being
+reworked. [Method, full results and what they mean](docs/evaluation.md).
 
 ## Tests
 
@@ -121,8 +123,8 @@ judge, and the construction of all three runtimes.
 
 - It has no benchmark of draft quality, and the page-mapping benchmark covers
   the deterministic first pass only, not the agent's reading step.
-- Search is lexical by default. Vector and hybrid search are built in
-  (`DOCLOOP_SEARCH`, `DOCLOOP_EMBEDDER`) but not yet benchmarked with a live model.
+- Search is lexical by default. Hybrid search (`DOCLOOP_SEARCH=hybrid`,
+  `DOCLOOP_EMBEDDER`) scores better on the one corpus benchmarked so far.
 - It does not fetch pull requests or tickets. You give it a change event file.
 
 ## Licence

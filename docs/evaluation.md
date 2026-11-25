@@ -94,8 +94,45 @@ counted as unparsed: an unreadable answer must never drop a page silently.
 Every report splits the events into an older and a newer half by date. Tune
 on the older half. Report the newer half.
 
-These two modes are covered by tests with stand-in models. As of this commit
-they have not been run against a live model, so there is no result to show yet.
+### Result on the OpenBB history (25 November 2026)
+
+Same 80 commits, same corpus commit `692a7bce`. Embedder
+`BAAI/bge-small-en-v1.5`, judge `openai/gpt-oss-120b`, both through Hugging
+Face Inference Providers. Nothing was tuned on these events.
+
+| Setup | Found a right page | Mean recall | Precision | Candidates per event |
+| --- | ---: | ---: | ---: | ---: |
+| Lexical search | 51% | 40% | 15% | 4.6 |
+| Hybrid search | 69% | 51% | 12% | 8.0 |
+| Hybrid search, then the reading step | 54% | 37% | 33% | 2.9 |
+
+Newer half only (40 events), the figures to quote:
+
+| Setup | Found a right page | Mean recall | Precision |
+| --- | ---: | ---: | ---: |
+| Lexical search | 43% | 34% | 17% |
+| Hybrid search | 73% | 51% | 14% |
+| Hybrid search, then the reading step | 60% | 39% | 38% |
+
+What this says:
+
+- **Hybrid search helps.** Matching on meaning as well as words finds a right
+  page for 14 more events out of 80, and it answers every event.
+- **The reading step, as first written, is too strict.** It nearly triples
+  precision and cuts the list from 8 pages to 3, but it also discards about a
+  quarter of the correct pages the search had found. For 9 events it kept
+  nothing at all. The judge made 621 calls with no unparsed reply, so this is
+  its judgement, not a parsing fault.
+- **Why:** the judge sees a commit title and one page, and is told to keep the
+  page only if it can point to text the change makes false. Given "V5 docs",
+  it cannot, so it drops pages a person did edit.
+- **For a human-gated system this is the wrong default.** A missed page costs
+  more than an extra candidate the reviewer dismisses. The next version of
+  the reading step should keep what it is unsure about and drop only what is
+  clearly unrelated.
+
+With 80 events, treat differences of a few points as noise. The gap between
+lexical and hybrid search is large enough to take seriously.
 
 ## What this benchmark is for
 
