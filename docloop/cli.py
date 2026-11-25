@@ -30,8 +30,21 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("reject", help="human gate: reject and return to the writer")
     p.add_argument("event_id"); p.add_argument("--reviewer", required=True); p.add_argument("--note", default="")
     sub.add_parser("apply", help="human gate: write approved proposals to the docs").add_argument("event_id")
+    sub.add_parser("registry", help="list every page with its hash, tied to the corpus commit")
+    p = sub.add_parser("replay", help="score page mapping against past commits of a docs repository")
+    p.add_argument("--repo", required=True); p.add_argument("--roots", nargs="+", required=True)
+    p.add_argument("--exclude", nargs="*", default=[]); p.add_argument("--limit", type=int, default=200)
+    p.add_argument("--max-pages", type=int, default=10); p.add_argument("--report", help="also write a Markdown report here")
     args = parser.parse_args(argv)
 
+    if args.cmd == "replay":
+        from pathlib import Path
+        from .replay import replay, to_markdown
+        report = replay(args.repo, args.roots, args.limit, args.max_pages, exclude=args.exclude)
+        if args.report:
+            Path(args.report).write_text(to_markdown(report), encoding="utf-8")
+        print(json.dumps({k: report[k] for k in ("head", "roots", "summary", "skipped")}, indent=2))
+        return 0
     try:
         ws = Workspace(args.docs, args.home)
         result = {
@@ -45,6 +58,7 @@ def main(argv: list[str] | None = None) -> int:
             "approve": lambda: ws.approve(args.event_id, args.reviewer, "approved", args.note),
             "reject": lambda: ws.approve(args.event_id, args.reviewer, "rejected", args.note),
             "apply": lambda: ws.apply(args.event_id),
+            "registry": lambda: ws.store.registry(),
         }[args.cmd]()
     except (KeyError, ValueError, PermissionError, FileNotFoundError) as exc:
         print(f"docloop: {exc.args[0] if exc.args else exc}", file=sys.stderr)

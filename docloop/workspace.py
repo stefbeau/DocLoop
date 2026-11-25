@@ -44,7 +44,9 @@ class Workspace:
 
     def __init__(self, docs: str | Path | PageStore | None = None, home: str | Path | None = None):
         docs = docs or os.environ.get("DOCLOOP_DOCS", "docs")
-        self.store = docs if isinstance(docs, PageStore) else open_store(docs)
+        roots = [r for r in os.environ.get("DOCLOOP_ROOTS", "").split(",") if r] or None
+        exclude = [e for e in os.environ.get("DOCLOOP_EXCLUDE", "").split(",") if e]
+        self.store = docs if isinstance(docs, PageStore) else open_store(docs, roots, exclude)
         self.home = Path(home or os.environ.get("DOCLOOP_HOME", ".docloop"))
         self.home.mkdir(parents=True, exist_ok=True)
 

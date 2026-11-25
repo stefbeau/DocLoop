@@ -83,8 +83,27 @@ your house style. That is the main way to adapt `docloop` to your organisation.
 
 ### Where your docs live
 
-Markdown in Git and CMS exports both work through one interface. See
+Markdown in Git (`.md` and `.mdx`) and CMS exports both work through one
+interface. For Git, you can limit the scan to some folders and exclude
+archived ones (`DOCLOOP_ROOTS`, `DOCLOOP_EXCLUDE`), and `docloop registry`
+lists every page with its hash, tied to the corpus commit. See
 [adapters](docs/adapters.md) to connect a live content system.
+
+## Measured, not assumed
+
+`docloop replay` scores page mapping against the real history of a docs
+repository: for each past commit, it rebuilds the docs as they were, asks
+which pages the change affects, and compares with the pages that were really
+edited.
+
+```
+docloop replay --repo path/to/docs-repo --roots content --report report.md
+```
+
+On the public OpenBB docs history (80 scored commits), the deterministic
+first pass puts at least one right page among its candidates 51% of the time,
+with 40% mean recall. That is the floor the agent starts from, before it
+reads anything. [Method, full results and what they mean](docs/evaluation.md).
 
 ## Tests
 
@@ -93,14 +112,14 @@ pip install -e ".[dev,mcp,smolagents]"
 pytest
 ```
 
-34 tests cover the detectors, routing, search, both page stores, the gate
+42 tests cover the detectors, routing, search, both page stores, the gate
 (including stale pages and proposals changed after approval), the audit log,
-the agent loop, and the construction of all three runtimes.
+the agent loop, the replay, and the construction of all three runtimes.
 
 ## What this does not do yet
 
-- It has no benchmark of draft quality or page-mapping accuracy. A labelled
-  set of change events is the next step.
+- It has no benchmark of draft quality, and the page-mapping benchmark covers
+  the deterministic first pass only, not the agent's reading step.
 - Search is lexical. For a large corpus, connect a vector index.
 - It does not fetch pull requests or tickets. You give it a change event file.
 

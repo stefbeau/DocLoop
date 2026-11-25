@@ -40,7 +40,7 @@ def explicit_references(event: ChangeEvent, store: PageStore) -> list[str]:
 def search(query: str, store: PageStore, limit: int = MAX_CANDIDATES) -> list[Candidate]:
     """Small BM25 search over titles and bodies. Swap in a vector index if you have one."""
     pages = store.pages()
-    docs = {p.id: _tokens(p.title + " " + p.title + " " + p.body) for p in pages}
+    docs = {p.id: _tokens(" ".join([p.title, p.title, p.description, " ".join(p.keywords), p.body])) for p in pages}
     titles = {p.id: p.title for p in pages}
     n = len(docs) or 1
     avg_len = sum(len(t) for t in docs.values()) / n or 1

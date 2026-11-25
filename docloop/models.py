@@ -38,6 +38,8 @@ class Page:
     body: str
     visibility: str = "public"  # "public" or "internal"
     location: str = ""  # file path or URL, for humans
+    description: str = ""
+    keywords: list[str] = field(default_factory=list)
 
 
 @dataclass

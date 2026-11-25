@@ -5,7 +5,7 @@ project.
 
 | Store | Use it when | Page id |
 | --- | --- | --- |
-| `GitMarkdownStore` | Docs are Markdown files in a repository | Path under the docs folder, without `.md` |
+| `GitMarkdownStore` | Docs are `.md` or `.mdx` files in a repository | Path under the docs folder, without the extension |
 | `JsonCmsStore` | Docs live in a content system you can export to JSON | The system's own page id |
 
 `open_store(path)` picks one: a folder opens as Markdown, a `.json` file as a

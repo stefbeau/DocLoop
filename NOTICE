@@ -1,0 +1,16 @@
+docloop
+Copyright 2026 Stéphane Beau. Licensed under the Apache License, Version 2.0.
+
+Third-party material
+--------------------
+
+The benchmark in docs/benchmarks/ was computed on the public OpenBB
+documentation repository (https://github.com/OpenBB-finance/openbb-docs),
+MIT License, Copyright (c) 2026 OpenBB.
+
+None of that documentation is redistributed here. The report lists commit
+identifiers, dates and commit titles from its public history, and page counts.
+To reproduce it, clone that repository yourself and run `docloop replay`.
+
+docloop is an independent project. It is not affiliated with, endorsed by, or
+sponsored by OpenBB. "OpenBB" is a trademark of its owner.

@@ -88,8 +88,9 @@ Lead agent ── holds the whole context, follows the docs-change-lead skill
 - **Model quality.** The test suite exercises the tools, the gate, the loop
   and the delegation with a scripted model. Draft quality depends on the
   model you connect and has not been benchmarked here.
-- **Page-mapping accuracy.** The lesson from version 1 still stands: this
-  needs a hand-labelled set of change events and their true pages. That set
-  is the next thing to build.
+- **Page-mapping accuracy beyond the first pass.** `docloop replay` now scores
+  the deterministic search against real history ([results](evaluation.md)):
+  51% hit rate and 40% recall on 80 commits of a public docs repository. The
+  agent's reading step, which filters those candidates, is not scored yet.
 - **Scale.** Search is a small lexical index. Beyond a few thousand pages,
   plug a vector index in behind `impact.search`.
