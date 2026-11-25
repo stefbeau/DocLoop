@@ -50,8 +50,11 @@ class OpenAICompatibleModel:
 
     def __init__(self, model: str, base_url: str | None = None, api_key: str | None = None):
         from openai import OpenAI  # optional dependency
-        self.client = OpenAI(base_url=base_url or os.environ.get("OPENAI_BASE_URL"),
-                             api_key=api_key or os.environ.get("OPENAI_API_KEY"))
+        key = api_key or os.environ.get("OPENAI_API_KEY") or os.environ.get("HF_TOKEN")
+        url = base_url or os.environ.get("OPENAI_BASE_URL")
+        if not url and not (api_key or os.environ.get("OPENAI_API_KEY")) and os.environ.get("HF_TOKEN"):
+            url = "https://router.huggingface.co/v1"   # only a Hugging Face token: use its router
+        self.client = OpenAI(base_url=url, api_key=key)
         self.model = model
 
     def complete(self, messages: list[dict], tools: list[dict]) -> dict:
@@ -193,7 +196,7 @@ def main(argv: list[str] | None = None) -> int:
     elif args.model:
         model = OpenAICompatibleModel(args.model, args.base_url)
     else:
-        parser.error("give --model (with OPENAI_API_KEY set) or use --demo")
+        parser.error("give --model (with HF_TOKEN or OPENAI_API_KEY set) or use --demo")
     print(LeadAgent(ws, model).run(args.event_file))
     return 0
 

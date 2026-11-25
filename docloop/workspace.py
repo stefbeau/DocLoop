@@ -49,6 +49,11 @@ class Workspace:
         self.store = docs if isinstance(docs, PageStore) else open_store(docs, roots, exclude)
         self.home = Path(home or os.environ.get("DOCLOOP_HOME", ".docloop"))
         self.home.mkdir(parents=True, exist_ok=True)
+        self._searcher = None
+        mode = os.environ.get("DOCLOOP_SEARCH", "lexical")
+        if mode != "lexical":
+            from .embeddings import make_searcher
+            self._searcher = make_searcher(mode, os.environ.get("DOCLOOP_EMBEDDER"), self.home / "embeddings")
 
     # ---- helpers -------------------------------------------------------
     def _event(self, event_file: str) -> ChangeEvent:
@@ -90,7 +95,7 @@ class Workspace:
     def find_affected_pages(self, event_file: str) -> dict:
         """List pages the change touches. Pages named in the event win; otherwise a capped search. Ids are always real."""
         event = self._event(event_file)
-        candidates = [c.to_dict() for c in find_pages(event, self.store)]
+        candidates = [c.to_dict() for c in find_pages(event, self.store, self._searcher)]
         result = {"event_id": event.id, "candidates": candidates,
                   "note": "explicit references returned as given" if any(c["basis"] == "explicit reference" for c in candidates)
                   else "search results: confirm relevance before proposing edits"}
@@ -100,7 +105,8 @@ class Workspace:
 
     def search_pages(self, query: str) -> dict:
         """Search the documentation. Returns at most 8 page ids with titles and scores."""
-        return {"query": query, "results": [c.to_dict() for c in search(query, self.store)]}
+        found = self._searcher(query, self.store) if self._searcher else search(query, self.store)
+        return {"query": query, "results": [c.to_dict() for c in found if self.store.exists(c.page_id)]}
 
     def read_page(self, page_id: str) -> dict:
         """Read one page by id. Fails if the id does not exist."""

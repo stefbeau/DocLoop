@@ -84,9 +84,12 @@ def _strip_noise(subject: str, body: str) -> tuple[str, str]:
 
 
 def replay(repo: str | Path, roots: list[str], limit: int = 200, max_pages: int = 10, min_words: int = 3,
-           exclude: list[str] | None = None) -> dict:
+           exclude: list[str] | None = None, searcher=None, judge=None, judge_max: int | None = None,
+           progress=None) -> dict:
+    """`searcher` swaps the search method. `judge` adds the reading step: a model keeps or drops each candidate."""
     repo = Path(repo)
     results, skipped = [], defaultdict(int)
+    judged = 0
     for change in list_changes(repo, roots, limit):
         subject, body = _strip_noise(change["subject"], change["body"])
         truth = change["modified"]
@@ -112,7 +115,13 @@ def replay(repo: str | Path, roots: list[str], limit: int = 200, max_pages: int 
                 skipped["modified pages are outside the scanned folders"] += 1
                 continue
             event = ChangeEvent(id=change["sha"][:8], title=subject, body=body, source="commit")
-            found = find_pages(event, store)
+            found = find_pages(event, store, searcher)
+            kept = None
+            if judge and found and (judge_max is None or judged < judge_max):
+                kept = [c.page_id for c in found if judge.keep(event, store.get(c.page_id))["keep"]]
+                judged += 1
+        if progress:
+            progress(len(results) + 1, subject)
         predicted = [c.page_id for c in found]
         hits = [p for p in predicted if p in truth]
         rank = next((i + 1 for i, p in enumerate(predicted) if p in truth), None)
@@ -124,9 +133,17 @@ def replay(repo: str | Path, roots: list[str], limit: int = 200, max_pages: int 
             "precision": round(len(hits) / len(predicted), 3) if predicted else None,
             "reciprocal_rank": round(1 / rank, 3) if rank else 0.0,
             "hit": bool(hits), "new_pages": len(change["added"])})
-    return {"repo": str(repo), "head": _git(repo, "rev-parse", "HEAD").strip(), "roots": roots,
-            "candidate_cap": MAX_CANDIDATES, "summary": summarise(results), "skipped": dict(skipped),
-            "events": results}
+        if kept is not None:
+            kept_hits = [p for p in kept if p in truth]
+            results[-1]["after_reading"] = {
+                "kept": kept, "recall": round(len(kept_hits) / len(truth), 3),
+                "precision": round(len(kept_hits) / len(kept), 3) if kept else None, "hit": bool(kept_hits)}
+    report = {"repo": str(repo), "head": _git(repo, "rev-parse", "HEAD").strip(), "roots": roots,
+              "candidate_cap": MAX_CANDIDATES, "summary": summarise(results), "skipped": dict(skipped),
+              "events": results}
+    if judge:
+        report["reading_step"] = summarise_reading(results, judge)
+    return report
 
 
 def _mean(values: list[float]) -> float | None:
@@ -143,6 +160,34 @@ def _block(rows: list[dict]) -> dict:
             "precision_when_answered": _mean([r["precision"] for r in answered])}
 
 
+def _periods(results: list[dict]) -> dict[str, list[dict]]:
+    """Older and newer half by date: tune on the older one, report on the newer one."""
+    ordered = sorted(results, key=lambda r: r["date"])
+    half = len(ordered) // 2
+    return {"older half": ordered[:half], "newer half": ordered[half:]} if len(ordered) >= 2 else {}
+
+
+def _reading_block(rows: list[dict]) -> dict:
+    before = _block(rows)
+    answered = [r for r in rows if r["after_reading"]["kept"]]
+    return {"events": len(rows),
+            "before": {k: before[k] for k in ("hit_rate", "mean_recall", "precision_when_answered")},
+            "after": {"hit_rate": _mean([float(r["after_reading"]["hit"]) for r in rows]),
+                      "mean_recall": _mean([r["after_reading"]["recall"] for r in rows]),
+                      "precision_when_answered": _mean([r["after_reading"]["precision"] for r in answered]),
+                      "events_with_nothing_kept": len(rows) - len(answered)},
+            "mean_candidates_before": _mean([float(len(r["predicted"])) for r in rows]),
+            "mean_candidates_after": _mean([float(len(r["after_reading"]["kept"])) for r in rows])}
+
+
+def summarise_reading(results: list[dict], judge) -> dict:
+    rows = [r for r in results if "after_reading" in r]
+    out = {"model": judge.name, "model_calls": judge.calls, "unparsed_replies": judge.unparsed,
+           "overall": _reading_block(rows) if rows else None}
+    out["by_period"] = {name: _reading_block(part) for name, part in _periods(rows).items() if part}
+    return out
+
+
 def summarise(results: list[dict]) -> dict:
     by_basis, by_size, by_length = defaultdict(list), defaultdict(list), defaultdict(list)
     for r in results:
@@ -152,6 +197,7 @@ def summarise(results: list[dict]) -> dict:
         w = r["message_words"]
         by_length["under 8 words" if w < 8 else "8-30 words" if w <= 30 else "over 30 words"].append(r)
     return {"overall": _block(results),
+            "by_period": {k: _block(v) for k, v in _periods(results).items()},
             "by_basis": {k: _block(v) for k, v in sorted(by_basis.items())},
             "by_pages_modified": {k: _block(v) for k, v in sorted(by_size.items())},
             "by_message_length": {k: _block(v) for k, v in by_length.items()}}
@@ -175,11 +221,23 @@ def to_markdown(report: dict, title: str = "Replay report") -> str:
            f"Corpus at `{report['head'][:8]}`, folders: {', '.join(report['roots'])}. "
            f"At most {report['candidate_cap']} candidates per event.", "",
            "## Overall", "", *table({"All scored events": s["overall"]}), "",
+           "## By period (tune on the older half, report on the newer half)", "", *table(s.get("by_period", {})), "",
            "## By how the pages were found", "", *table(s["by_basis"]), "",
            "## By number of pages the commit modified", "", *table(s["by_pages_modified"]), "",
            "## By length of the commit message", "", *table(s["by_message_length"]), "",
            "## Commits left out", ""]
     out += [f"- {n} × {why}" for why, n in report["skipped"].items()] or ["- none"]
+    reading = report.get("reading_step")
+    if reading and reading.get("overall"):
+        out += ["", f"## Reading step ({reading['model']})", "",
+                f"{reading['model_calls']} model calls, {reading['unparsed_replies']} unparsed replies (kept by default).", "",
+                "| Group | Events | Hit rate before | after | Recall before | after | Precision before | after | Candidates before | after |",
+                "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |"]
+        for name, b in {"All judged events": reading["overall"], **reading["by_period"]}.items():
+            out.append(f'| {name} | {b["events"]} | {pct(b["before"]["hit_rate"])} | {pct(b["after"]["hit_rate"])} | '
+                       f'{pct(b["before"]["mean_recall"])} | {pct(b["after"]["mean_recall"])} | '
+                       f'{pct(b["before"]["precision_when_answered"])} | {pct(b["after"]["precision_when_answered"])} | '
+                       f'{b["mean_candidates_before"]} | {b["mean_candidates_after"]} |')
     out += ["", "## Every scored event", "",
             "| Date | Commit | Message | Truth | Found | Recall |", "| --- | --- | --- | ---: | ---: | ---: |"]
     for r in report["events"]:

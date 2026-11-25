@@ -112,15 +112,17 @@ pip install -e ".[dev,mcp,smolagents]"
 pytest
 ```
 
-43 tests cover the detectors, routing, search, both page stores, the gate
+54 tests cover the detectors, routing, search, both page stores, the gate
 (including stale pages and proposals changed after approval), the audit log,
-the agent loop, the replay, and the construction of all three runtimes.
+the agent loop, the replay, vector and hybrid search, the reading-step
+judge, and the construction of all three runtimes.
 
 ## What this does not do yet
 
 - It has no benchmark of draft quality, and the page-mapping benchmark covers
   the deterministic first pass only, not the agent's reading step.
-- Search is lexical. For a large corpus, connect a vector index.
+- Search is lexical by default. Vector and hybrid search are built in
+  (`DOCLOOP_SEARCH`, `DOCLOOP_EMBEDDER`) but not yet benchmarked with a live model.
 - It does not fetch pull requests or tickets. You give it a change event file.
 
 ## Licence

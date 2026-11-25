@@ -65,6 +65,38 @@ By message length:
 - **No event named its pages,** so the explicit-reference rule, which is the
   most reliable path, was never exercised on this corpus.
 
+## Going beyond the first pass
+
+Two options change what is measured. Both need a model, so they need a key.
+
+```
+pip install -e ".[agent,vector]"
+set HF_TOKEN=hf_...                      (Windows)   export HF_TOKEN=hf_...   (macOS, Linux)
+
+docloop replay --repo ../openbb-docs --roots content content-odp ^
+    --search hybrid --embedder hf:BAAI/bge-small-en-v1.5 ^
+    --judge-model openai/gpt-oss-120b:fastest --judge-max 20 ^
+    --report replay.md --out replay.json
+```
+
+- `--search vector` or `hybrid` replaces the word-matching search with an
+  embeddings index, or fuses the two rankings. Embedders: `hf:<model>`,
+  `openai:<model>`, or `local:<model>` (sentence-transformers, no key).
+- `--judge-model` adds the reading step. For each candidate, the model reads
+  the page and answers keep or drop, with the sentence it relies on. The
+  report then shows hit rate, recall and precision before and after reading.
+- `--judge-max N` judges only the newest N events, to try it cheaply first.
+
+Embeddings and verdicts are cached under `.docloop/`, so a rerun costs nothing
+for work already done. A reply the judge cannot parse keeps the page and is
+counted as unparsed: an unreadable answer must never drop a page silently.
+
+Every report splits the events into an older and a newer half by date. Tune
+on the older half. Report the newer half.
+
+These two modes are covered by tests with stand-in models. As of this commit
+they have not been run against a live model, so there is no result to show yet.
+
 ## What this benchmark is for
 
 It gives a number to move. Changes worth testing against it, in order:

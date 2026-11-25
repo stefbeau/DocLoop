@@ -35,6 +35,12 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--repo", required=True); p.add_argument("--roots", nargs="+", required=True)
     p.add_argument("--exclude", nargs="*", default=[]); p.add_argument("--limit", type=int, default=200)
     p.add_argument("--max-pages", type=int, default=10); p.add_argument("--report", help="also write a Markdown report here")
+    p.add_argument("--search", choices=["lexical", "vector", "hybrid"], default="lexical")
+    p.add_argument("--embedder", help="for vector or hybrid: hf:<model>, openai:<model> or local:<model>")
+    p.add_argument("--judge-model", help="add the reading step: a model keeps or drops each candidate")
+    p.add_argument("--base-url", help="OpenAI-compatible endpoint for the judge model")
+    p.add_argument("--judge-max", type=int, help="judge only the newest N events, to limit cost")
+    p.add_argument("--out", help="write the full JSON result here")
     args = parser.parse_args(argv)
     for stream in (sys.stdout, sys.stderr):  # never crash on a console that cannot show a character
         if hasattr(stream, "reconfigure"):
@@ -43,10 +49,34 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "replay":
         from pathlib import Path
         from .replay import replay, to_markdown
-        report = replay(args.repo, args.roots, args.limit, args.max_pages, exclude=args.exclude)
+        import os
+        home = Path(args.home or os.environ.get("DOCLOOP_HOME", ".docloop"))
+        try:
+            from .embeddings import make_searcher
+            searcher = make_searcher(args.search, args.embedder, home / "embeddings")
+            judge = None
+            if args.judge_model:
+                from .judge import Judge, make_chat_model
+                judge = Judge(make_chat_model(args.judge_model, args.base_url), home / "judge-cache.json")
+        except ImportError as exc:
+            print(f"docloop: {exc}. Install the extras first: pip install -e \".[agent,vector]\"", file=sys.stderr)
+            return 1
+        except ValueError as exc:
+            print(f"docloop: {exc}", file=sys.stderr)
+            return 1
+        note = (lambda n, subject: print(f"  [{n}] {subject[:70]}", file=sys.stderr)) if (judge or searcher) else None
+        report = replay(args.repo, args.roots, args.limit, args.max_pages, exclude=args.exclude,
+                        searcher=searcher, judge=judge, judge_max=args.judge_max, progress=note)
+        report["search"] = args.search if args.search == "lexical" else f"{args.search} ({args.embedder})"
         if args.report:
             Path(args.report).write_text(to_markdown(report), encoding="utf-8")
-        print(json.dumps({k: report[k] for k in ("head", "roots", "summary", "skipped")}, indent=2))
+        if args.out:
+            Path(args.out).write_text(json.dumps(report, indent=2), encoding="utf-8")
+        shown = {"search": report["search"], "overall": report["summary"]["overall"],
+                 "by_period": report["summary"]["by_period"]}
+        if "reading_step" in report:
+            shown["reading_step"] = report["reading_step"]
+        print(json.dumps(shown, indent=2))
         return 0
     try:
         ws = Workspace(args.docs, args.home)

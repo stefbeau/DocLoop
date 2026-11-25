@@ -76,8 +76,11 @@ def search(query: str, store: PageStore, limit: int = MAX_CANDIDATES) -> list[Ca
     return [Candidate(pid, titles[pid], "search", round(score, 2)) for pid, score in results[:limit] if score >= MIN_SCORE]
 
 
-def find_pages(event: ChangeEvent, store: PageStore) -> list[Candidate]:
+def find_pages(event: ChangeEvent, store: PageStore, searcher=None) -> list[Candidate]:
+    """`searcher(query, store)` replaces the built-in lexical search, for example with a vector index."""
     named = explicit_references(event, store)
     if named:
         return [Candidate(pid, store.get(pid).title, "explicit reference", 1.0) for pid in named]
-    return search(event.title + "\n" + event.body, store)
+    query = event.title + "\n" + event.body
+    found = searcher(query, store) if searcher else search(query, store)
+    return [c for c in found if store.exists(c.page_id)][:MAX_CANDIDATES]   # real ids only, whatever the searcher
