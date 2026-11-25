@@ -128,7 +128,7 @@ class LeadAgent:
                     except Exception as exc:  # the model reads the error and corrects course
                         result = f"ERROR: {exc.args[0] if exc.args else exc}"
                 shown = ", ".join(f"{k}={str(v)[:40]!r}" for k, v in args.items() if k != "new_body")
-                self.log(f"{pad}→ {name}({shown})" + ("  [failed]" if result.startswith("ERROR") else ""))
+                self.log(f"{pad}-> {name}({shown})" + ("  [failed]" if result.startswith("ERROR") else ""))
                 messages.append({"role": "tool", "tool_call_id": call["id"], "content": result})
         return "Stopped: step limit reached before the task was finished."
 
@@ -170,6 +170,14 @@ def demo_script(event_file: str, ws: Workspace) -> list[Callable]:
     ]
 
 
+def _safe_console() -> None:
+    """Never crash on a console that cannot show a character (older Windows code pages)."""
+    import sys
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(errors="backslashreplace")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="docloop-agent", description="Run the lead agent on one change event.")
     parser.add_argument("event_file")
@@ -178,6 +186,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--base-url", help="OpenAI-compatible endpoint. Default: $OPENAI_BASE_URL")
     parser.add_argument("--demo", action="store_true", help="scripted run of the retire-csv example, no model needed")
     args = parser.parse_args(argv)
+    _safe_console()
     ws = Workspace(args.docs, args.home)
     if args.demo:
         model: Model = ScriptedModel(demo_script(args.event_file, ws))

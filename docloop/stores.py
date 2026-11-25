@@ -143,7 +143,8 @@ class GitMarkdownStore(PageStore):
 
     def get(self, page_id: str) -> Page:
         path = self._path(page_id)
-        text = path.read_bytes().decode("utf-8-sig", errors="replace")
+        # Agents always see "\n" line endings, whatever Git checked out on this machine.
+        text = path.read_bytes().decode("utf-8-sig", errors="replace").replace("\r\n", "\n")
         meta, body = split_front_matter(text)
         title = meta.get("title")
         if not title:
@@ -154,7 +155,14 @@ class GitMarkdownStore(PageStore):
                     keywords=_as_list(meta.get("keywords")))
 
     def write(self, page_id: str, body: str) -> None:
-        self._path(page_id).write_text(body, encoding="utf-8")
+        path = self._path(page_id)
+        # Keep the file's own line endings: a Windows checkout stays CRLF, and
+        # nothing is ever translated twice.
+        crlf = b"\r\n" in path.read_bytes()
+        text = body.replace("\r\n", "\n")
+        if crlf:
+            text = text.replace("\n", "\r\n")
+        path.write_bytes(text.encode("utf-8"))
 
     def commit(self) -> str | None:
         """The Git commit the docs folder is at, or None if it is not a clone."""

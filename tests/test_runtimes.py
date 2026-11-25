@@ -29,7 +29,7 @@ def test_scripted_run_reaches_the_gate_and_stops(ws):
     assert status["mode"] == "both" and status["proposals"] == ["charts/exporting-data"] and status["notice_drafted"]
     assert status["readiness"]["state"] == "AWAITING_APPROVAL"          # everything ready except the human approval
     assert "CSV (legacy)** or" in ws.read_page("charts/exporting-data")["body"]   # docs untouched
-    assert any(line.startswith("    →") for line in log), "the subagent's calls should be logged, indented"
+    assert any(line.startswith("    ->") for line in log), "the subagent's calls should be logged, indented"
 
 
 def test_tool_errors_go_back_to_the_model(ws):

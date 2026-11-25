@@ -36,6 +36,9 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--exclude", nargs="*", default=[]); p.add_argument("--limit", type=int, default=200)
     p.add_argument("--max-pages", type=int, default=10); p.add_argument("--report", help="also write a Markdown report here")
     args = parser.parse_args(argv)
+    for stream in (sys.stdout, sys.stderr):  # never crash on a console that cannot show a character
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(errors="backslashreplace")
 
     if args.cmd == "replay":
         from pathlib import Path

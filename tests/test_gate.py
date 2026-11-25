@@ -84,3 +84,20 @@ def test_audit_log_records_every_step(ws):
     ws.apply("fix-screenshot")
     actions = [line.split('"action": "')[1].split('"')[0] for line in (ws.home / "audit.jsonl").read_text().splitlines()]
     assert actions == ["routed", "edit_proposed", "approved", "applied"]
+
+
+def test_windows_line_endings_survive_a_round_trip(ws):
+    """A CRLF checkout must stay CRLF, with no doubled carriage returns."""
+    from pathlib import Path
+    path = Path(ws.store.get(PAGE).location)
+    path.write_bytes(path.read_bytes().replace(b"\r\n", b"\n").replace(b"\n", b"\r\n"))
+    body = ws.read_page(PAGE)["body"]
+    assert "\r" not in body, "agents should always see plain newlines"
+    new = body.replace("You can export", "You can always export")
+    ws.propose_edit("crlf", PAGE, new, "test")
+    ws.approve("crlf", "A. Writer", "approved")
+    assert ws.apply("crlf")["written"] == [PAGE]
+    raw = path.read_bytes()
+    assert b"\r\r\n" not in raw and b"You can always export" in raw
+    assert raw.count(b"\r\n") == raw.count(b"\n"), "every line ending is still CRLF"
+    assert ws.read_page(PAGE)["body"] == new
