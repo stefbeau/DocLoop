@@ -1,0 +1,28 @@
+{
+  "entries": [
+    {
+      "id": "getting-started",
+      "visibility": "public"
+    },
+    {
+      "id": "charts/exporting-data",
+      "visibility": "public"
+    },
+    {
+      "id": "charts/file-formats",
+      "visibility": "internal"
+    },
+    {
+      "id": "charts/saving-a-view",
+      "visibility": "public"
+    },
+    {
+      "id": "charts/old-print-dialog",
+      "visibility": "public"
+    },
+    {
+      "id": "account/internal-runbook",
+      "visibility": "internal"
+    }
+  ]
+}

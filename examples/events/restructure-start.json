@@ -1,0 +1,8 @@
+{
+  "id": "restructure-start",
+  "title": "Reorganize the Getting started page",
+  "source": "ticket",
+  "labels": [],
+  "body": "Readers want the first chart before installation details. Reorganize the sections of getting-started.",
+  "comments": []
+}

@@ -1,0 +1,46 @@
+{
+  "pages": [
+    {
+      "id": "account/internal-runbook",
+      "title": "Support runbook",
+      "body": "---\ntitle: Support runbook\nvisibility: internal\n---\n# Support runbook\n\nEscalation steps for the support team. Not for customers.\n",
+      "visibility": "internal",
+      "url": "https://help.example.com/account/internal-runbook"
+    },
+    {
+      "id": "account/team-workspaces",
+      "title": "Managing team workspaces",
+      "body": "# Managing team workspaces\n\nA team workspace groups people who share sources and charts.\n\n## Add a member\n\nOpen **Team > Members** and select **Invite**.\n\n## Roles\n\nOwners manage billing. Editors create charts. Viewers can only read.\n",
+      "visibility": "public",
+      "url": "https://help.example.com/account/team-workspaces"
+    },
+    {
+      "id": "charts/exporting-data",
+      "title": "Exporting data",
+      "body": "---\ntitle: Exporting data\n---\n# Exporting data\n\nYou can export the data behind any chart.\n\n## Export a chart\n\n1. Open the chart.\n2. Select **Export**.\n3. Choose **CSV (legacy)** or **CSV** from the Export menu.\n\nThe legacy CSV format keeps the column order used before version 4.\n\n## Supported formats\n\nSee [Supported file formats](file-formats.md).\n",
+      "visibility": "public",
+      "url": "https://help.example.com/charts/exporting-data"
+    },
+    {
+      "id": "charts/file-formats",
+      "title": "Supported file formats",
+      "body": "# Supported file formats\n\nAtlas Charts reads and writes these formats.\n\n| Format | Import | Export |\n| --- | --- | --- |\n| CSV | Yes | Yes |\n| CSV (legacy) | No | Yes |\n| XLSX | Yes | Yes |\n| JSON | Yes | No |\n",
+      "visibility": "public",
+      "url": "https://help.example.com/charts/file-formats"
+    },
+    {
+      "id": "charts/saving-a-view",
+      "title": "Saving a view",
+      "body": "# Saving a view\n\nA view stores the filters, sorting and chart type you chose.\n\n## Save\n\nSelect **Save view** and give it a name.\n\n## Who can see a view\n\nSaved views are visible only to you.\n",
+      "visibility": "public",
+      "url": "https://help.example.com/charts/saving-a-view"
+    },
+    {
+      "id": "getting-started",
+      "title": "Getting started",
+      "body": "# Getting started\n\nAtlas Charts turns your data into shareable charts.\n\n## Install\n\nDownload the desktop app or sign in on the web.\n\n## Configure\n\nConnect a data source under **Settings > Sources**.\n\n## First chart\n\nSelect **New chart**, pick a source, and choose a chart type.\n",
+      "visibility": "public",
+      "url": "https://help.example.com/getting-started"
+    }
+  ]
+}

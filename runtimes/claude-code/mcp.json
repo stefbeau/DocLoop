@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "docloop": {
+      "command": "python",
+      "args": ["-m", "docloop.mcp_server"],
+      "env": { "DOCLOOP_DOCS": "docs" }
+    }
+  }
+}

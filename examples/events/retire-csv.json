@@ -1,0 +1,12 @@
+{
+  "id": "retire-csv",
+  "title": "Retire the legacy CSV export",
+  "source": "pull_request",
+  "labels": [
+    "deprecation"
+  ],
+  "body": "The legacy CSV export option will be removed on 15-JAN-2027. Users must use the CSV option in the Export menu instead.",
+  "comments": [
+    "Product: please notify customers at least two weeks before."
+  ]
+}

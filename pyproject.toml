@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "docloop"
+version = "0.1.0"
+description = "Keep documentation in step with product changes: one lead agent, a skill library, deterministic tools and a human gate."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Stéphane Beau" }]
+dependencies = []
+
+[project.optional-dependencies]
+mcp = ["mcp>=1.2"]
+agent = ["openai>=1.40"]
+smolagents = ["smolagents[gradio]>=1.26"]
+dev = ["pytest>=8"]
+
+[project.scripts]
+docloop = "docloop.cli:main"
+docloop-agent = "docloop.agent:main"
+
+[tool.setuptools]
+packages = ["docloop"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

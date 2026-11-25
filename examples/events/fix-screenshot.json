@@ -1,0 +1,10 @@
+{
+  "id": "fix-screenshot",
+  "title": "Outdated screenshot on the export page",
+  "source": "issue",
+  "labels": [
+    "docs"
+  ],
+  "body": "The page docs/charts/exporting-data.md shows an outdated screenshot of the Export menu.",
+  "comments": []
+}

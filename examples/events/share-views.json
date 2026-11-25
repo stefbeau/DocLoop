@@ -1,0 +1,10 @@
+{
+  "id": "share-views",
+  "title": "Saved views can now be shared with a team",
+  "source": "release_note",
+  "labels": [
+    "enhancement"
+  ],
+  "body": "Users can now share a saved view with their team workspace. Views stay private by default. The documentation for saving a view needs an update.",
+  "comments": []
+}
