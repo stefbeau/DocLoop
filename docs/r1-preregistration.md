@@ -56,3 +56,14 @@ Each pass must show a measured gain on the replay benchmark for the content it i
 - A pass is **kept for a corpus** if, on the newer half, it raises the share of events with a right page in the top 3 by at least 2 points, or the mean reciprocal rank by at least 0.02.
 - Pass 2 (hybrid) is compared with pass 1 (words only). Pass 3 (reading) is compared with the list in search order.
 - A pass kept on fewer than three of the four corpora is published as "corpus-dependent", with the corpora where it helped and where it did not.
+
+## Amendment 1 (26 November 2026, before any R1 model run)
+
+Made after looking at commit subjects of the two new corpora, and at the word-search figures of none. It fixes the settings the specification left open; it changes no target.
+
+- Every corpus is replayed at a pinned commit, with `--limit 300` (newest 300 commits touching the folders), at most 10 pages modified, existing replay filters. The pins, folders and the one skip rule (`(automated)` on the Hub corpus) are in `benchmarks/r1-corpora.json`.
+- OpenBB docs are replayed from `OpenBB-finance/openbb-docs`, the repository whose head `692a7bce` the earlier report used.
+- The GOV.UK service manual has many commits whose message is just "update <file>.md". Those name the page, so they are easy for the first pass. They are kept, and the corpus is labelled with this.
+- Prometheus docs has only about 280 commits under `docs`, so fewer than 300 events will be scored; the 60-event floor applies.
+- A hybrid run that silently fell back to word search is invalid: the benchmark stops with an error instead of reporting it.
+- Real cost: the reader makes up to 8 model calls per scored event, on the account that owns the `HF_TOKEN` secret.
