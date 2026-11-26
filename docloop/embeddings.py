@@ -23,6 +23,7 @@ from .impact import MAX_CANDIDATES, search as lexical_search
 from .models import Candidate, Page
 from .stores import PageStore, split_front_matter
 
+DEFAULT_EMBEDDER = "hf:BAAI/bge-small-en-v1.5"
 CHUNK_WORDS = 220
 BATCH = 32
 
@@ -174,3 +175,19 @@ def make_searcher(mode: str, embedder_spec: str | None, cache_dir: str | Path) -
     embedder = CachedEmbedder(make_embedder(embedder_spec), cache_dir)
     fn = vector_search if mode == "vector" else hybrid_search
     return lambda query, store: fn(query, store, embedder)
+
+
+def default_searcher(embedder_spec: str | None, cache_dir: str | Path, factory=None, env=None) -> tuple[Searcher | None, str]:
+    """Hybrid search, the product default. Returns (searcher, label).
+
+    If no embedder can be built, returns (None, "lexical (fallback: reason)") so the word search runs and
+    the reason is shown wherever the label is shown. It is never a silent downgrade.
+    """
+    env = os.environ if env is None else env
+    spec = embedder_spec or env.get("DOCLOOP_EMBEDDER") or DEFAULT_EMBEDDER
+    try:
+        embedder = CachedEmbedder((factory or make_embedder)(spec), cache_dir)
+    except (ImportError, ValueError, OSError) as exc:
+        reason = str(exc).strip().splitlines()[0] if str(exc).strip() else type(exc).__name__
+        return None, f"lexical (fallback: {reason})"
+    return (lambda query, store: hybrid_search(query, store, embedder)), f"hybrid ({spec})"

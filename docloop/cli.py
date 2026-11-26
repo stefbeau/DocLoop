@@ -51,7 +51,8 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--repo", required=True); p.add_argument("--roots", nargs="+", required=True)
     p.add_argument("--exclude", nargs="*", default=[]); p.add_argument("--limit", type=int, default=200)
     p.add_argument("--max-pages", type=int, default=10); p.add_argument("--report", help="also write a Markdown report here")
-    p.add_argument("--search", choices=["lexical", "vector", "hybrid"], default="lexical")
+    p.add_argument("--search", choices=["lexical", "vector", "hybrid"], default="hybrid",
+                   help="hybrid (default) falls back to words, and says so in the report, if no embedder works")
     p.add_argument("--embedder", help="for vector or hybrid: hf:<model>, openai:<model> or local:<model>")
     p.add_argument("--judge-model", help="add the reading step: a model keeps or drops each candidate")
     p.add_argument("--base-url", help="OpenAI-compatible endpoint for the judge model")
@@ -79,8 +80,14 @@ def main(argv: list[str] | None = None) -> int:
         import os
         home = Path(args.home or os.environ.get("DOCLOOP_HOME", ".docloop"))
         try:
-            from .embeddings import make_searcher
-            searcher = make_searcher(args.search, args.embedder, home / "embeddings")
+            from .embeddings import default_searcher, make_searcher
+            if args.search == "hybrid":
+                searcher, label = default_searcher(args.embedder, home / "embeddings")
+            else:
+                searcher = make_searcher(args.search, args.embedder, home / "embeddings")
+                label = args.search if args.search == "lexical" else f"{args.search} ({args.embedder})"
+            if label.startswith("lexical (fallback"):
+                print(f"docloop: {label}", file=sys.stderr)
             judge = None
             if args.judge_model:
                 from .judge import Judge, make_chat_model
@@ -102,7 +109,7 @@ def main(argv: list[str] | None = None) -> int:
             print(f"docloop: the model provider refused the request.\n  {_provider_hint(exc)}\n"
                   "  Work already done is cached under .docloop, so a rerun resumes where this stopped.", file=sys.stderr)
             return 1
-        report["search"] = args.search if args.search == "lexical" else f"{args.search} ({args.embedder})"
+        report["search"] = label
         if args.report:
             Path(args.report).write_text(to_markdown(report), encoding="utf-8")
         if args.out:
@@ -111,6 +118,7 @@ def main(argv: list[str] | None = None) -> int:
                  "by_period": report["summary"]["by_period"]}
         if "reading_step" in report:
             shown["reading_step"] = report["reading_step"]
+            shown["triage_step"] = report["triage_step"]
         print(json.dumps(shown, indent=2))
         return 0
     try:

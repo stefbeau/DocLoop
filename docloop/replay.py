@@ -137,7 +137,11 @@ def replay(repo: str | Path, roots: list[str], limit: int = 200, max_pages: int 
             "precision": round(len(hits) / len(predicted), 3) if predicted else None,
             "reciprocal_rank": round(1 / rank, 3) if rank else 0.0,
             "hit": bool(hits), "new_pages": len(change["added"])})
+        if judge and not found:
+            results[-1]["triage"] = {"likely": [], "also_check": []}   # nothing to read: counted, with nothing likely
         if kept is not None:
+            results[-1]["triage"] = {"likely": [p for p in predicted if p in set(kept)],
+                                     "also_check": [p for p in predicted if p not in set(kept)]}
             kept_hits = [p for p in kept if p in truth]
             results[-1]["after_reading"] = {
                 "kept": kept, "recall": round(len(kept_hits) / len(truth), 3),
@@ -147,6 +151,7 @@ def replay(repo: str | Path, roots: list[str], limit: int = 200, max_pages: int 
               "events": results}
     if judge:
         report["reading_step"] = summarise_reading(results, judge)
+        report["triage_step"] = summarise_triage(results)
     return report
 
 
@@ -236,6 +241,56 @@ def _reading_block(rows: list[dict]) -> dict:
                 "mrr_before": _mrr(rows, _as_ranked), "mrr_after": _mrr(rows, _reordered)}}
 
 
+def _tiers(r: dict) -> tuple[list[str], list[str]] | None:
+    """Likely and also-check pages of one event, or None if the reader never saw it (judge limit)."""
+    if "triage" in r:
+        return r["triage"]["likely"], r["triage"]["also_check"]
+    if "after_reading" in r:   # an earlier report, saved before tiers were recorded
+        kept = set(r["after_reading"]["kept"])
+        return [p for p in r["predicted"] if p in kept], [p for p in r["predicted"] if p not in kept]
+    return ([], []) if not r["predicted"] else None
+
+
+def _triage_block(rows: list[dict]) -> dict:
+    """The R1 measures. Hit rate and recall are of the full list: the reader reorders, it never shrinks it."""
+    tiers = [_tiers(r) for r in rows]
+    full = _block(rows)
+    with_likely = [(r, t) for r, t in zip(rows, tiers) if t[0]]
+    right = kept_right = wrong = wrong_below = 0
+    for r, (likely, also) in zip(rows, tiers):
+        truth = set(r["truth"])
+        for page in r["predicted"]:
+            if page in truth:
+                right += 1
+                kept_right += page in likely
+            else:
+                wrong += 1
+                wrong_below += page in also
+
+    def precision_likely(r, t):
+        return len([p for p in t[0] if p in r["truth"]]) / len(t[0])
+
+    def ordered(r, t):
+        return t[0] + t[1]
+
+    return {"events": len(rows), "hit_rate": full["hit_rate"], "mean_recall": full["mean_recall"],
+            "precision_likely": _mean([precision_likely(r, t) for r, t in with_likely]),
+            "precision_full_list": full["precision_when_answered"],
+            "events_with_empty_likely": len(rows) - len(with_likely),
+            "right_in_likely": round(kept_right / right, 3) if right else None,
+            "wrong_in_also_check": round(wrong_below / wrong, 3) if wrong else None,
+            "top_3_hit_search_order": _at(rows, _as_ranked, 3)["hit_rate"],
+            "top_3_hit_likely_first": _at([dict(r, predicted=ordered(r, t)) for r, t in zip(rows, tiers)], _as_ranked, 3)["hit_rate"],
+            "mrr_search_order": _mrr(rows, _as_ranked),
+            "mrr_likely_first": _mrr([dict(r, predicted=ordered(r, t)) for r, t in zip(rows, tiers)], _as_ranked)}
+
+
+def summarise_triage(results: list[dict]) -> dict:
+    rows = [r for r in results if _tiers(r) is not None]
+    return {"overall": _triage_block(rows) if rows else None,
+            "by_period": {name: _triage_block(part) for name, part in _periods(rows).items() if part}}
+
+
 def summarise_reading(results: list[dict], judge=None, model: str = "") -> dict:
     rows = [r for r in results if "after_reading" in r]
     out = {"model": judge.name if judge else model,
@@ -254,6 +309,7 @@ def rescore(report: dict) -> dict:
         new = summarise_reading(report["events"], model=old.get("model", ""))
         new["model_calls"], new["unparsed_replies"] = old.get("model_calls"), old.get("unparsed_replies")
         report["reading_step"] = new
+        report["triage_step"] = summarise_triage(report["events"])
     return report
 
 
@@ -326,6 +382,25 @@ def to_markdown(report: dict, title: str = "Replay report") -> str:
             out.append(f'| {name} | {pct(ro["top_3_before"]["hit_rate"])} | {pct(ro["top_3_after"]["hit_rate"])} | '
                        f'{pct(ro["top_3_before"]["mean_recall"])} | {pct(ro["top_3_after"]["mean_recall"])} | '
                        f'{ro["mrr_before"]:.2f} | {ro["mrr_after"]:.2f} |')
+    triage = report.get("triage_step")
+    if triage and triage.get("overall"):
+        from .targets import TARGETS
+        blocks = {"All judged events": triage["overall"], **triage["by_period"]}
+        out += ["", "## Reading as sorting: likely first, nothing deleted (R1)", "",
+                f"Targets, on the newer half: hit rate {TARGETS['hit_rate']:.0%}, recall {TARGETS['mean_recall']:.0%}, "
+                f"precision of the likely list {TARGETS['precision_likely']:.0%}, right pages in likely "
+                f"{TARGETS['right_in_likely']:.0%}, wrong pages in also check {TARGETS['wrong_in_also_check']:.0%}.", "",
+                "| Group | Events | Hit rate | Recall | Precision, likely | Precision, full list | Right in likely | Wrong in also check | Empty likely |",
+                "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |"]
+        for name, b in blocks.items():
+            out.append(f'| {name} | {b["events"]} | {pct(b["hit_rate"])} | {pct(b["mean_recall"])} | {pct(b["precision_likely"])} | '
+                       f'{pct(b["precision_full_list"])} | {pct(b["right_in_likely"])} | {pct(b["wrong_in_also_check"])} | '
+                       f'{b["events_with_empty_likely"]} |')
+        out += ["", "| Group | Right page in top 3, search order | likely first | MRR, search order | likely first |",
+                "| --- | ---: | ---: | ---: | ---: |"]
+        for name, b in blocks.items():
+            out.append(f'| {name} | {pct(b["top_3_hit_search_order"])} | {pct(b["top_3_hit_likely_first"])} | '
+                       f'{b["mrr_search_order"]:.2f} | {b["mrr_likely_first"]:.2f} |')
     out += ["", "## Every scored event", "",
             "| Date | Commit | Message | Truth | Found | Recall |", "| --- | --- | --- | ---: | ---: | ---: |"]
     for r in report["events"]:

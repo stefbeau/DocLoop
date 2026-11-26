@@ -75,7 +75,7 @@ def test_replay_cli_defaults_to_hybrid_and_labels_the_report(history, tmp_path, 
     from docloop.cli import main
     monkeypatch.setattr(emb, "make_embedder", lambda spec: FakeEmbedder())
     out = tmp_path / "r.json"
-    assert main(["replay", "--repo", str(history), "--roots", "docs", "--home", str(tmp_path / "h"),
+    assert main(["--home", str(tmp_path / "h"), "replay", "--repo", str(history), "--roots", "docs",
                  "--out", str(out)]) == 0
     assert json.loads(out.read_text())["search"].startswith("hybrid (")
 
@@ -89,7 +89,7 @@ def test_replay_cli_fallback_is_written_in_the_report(history, tmp_path, monkeyp
 
     monkeypatch.setattr(emb, "make_embedder", broken)
     out = tmp_path / "r.json"
-    assert main(["replay", "--repo", str(history), "--roots", "docs", "--home", str(tmp_path / "h"),
+    assert main(["--home", str(tmp_path / "h"), "replay", "--repo", str(history), "--roots", "docs",
                  "--out", str(out)]) == 0
     assert json.loads(out.read_text())["search"].startswith("lexical (fallback")
 
