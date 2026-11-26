@@ -88,7 +88,6 @@ def test_summary_is_per_corpus_states_misses_and_never_averages(tmp_path):
         assert name in md
     assert "average" not in md.lower() and "mean across" not in md.lower()
     assert re.search(r"OpenBB docs.*missed", md, re.S), "the miss is published, not hidden"
-    assert "not met" not in md.split("## Verdict")[1].split("##")[0] or True
     assert (tmp_path / "out" / "r1-summary.json").is_file()
 
 
@@ -108,3 +107,13 @@ def test_summary_of_an_incomplete_set_says_so(tmp_path):
     _write(tmp_path / "in", [_fake_result("hub", CORPORA[0], _report(GOOD))])
     summary = summarize(tmp_path / "in", tmp_path / "out")
     assert summary["verdict"]["passed"] is None and summary["missing"] == ["openbb", "prometheus", "service-manual"]
+
+
+def test_the_benchmark_workflow_runs_exactly_the_registered_corpora_and_needs_the_secret():
+    from docloop.r1 import load_config
+    text = (ROOT / ".github" / "workflows" / "r1-benchmark.yml").read_text(encoding="utf-8")
+    slugs = re.search(r"slug:\s*\[([^\]]*)\]", text).group(1).replace(" ", "").split(",")
+    assert slugs == [c["slug"] for c in load_config()["corpora"]]
+    assert "secrets.HF_TOKEN" in text and "workflow_dispatch" in text
+    assert "--force" not in text and "push -f" not in text, "no force-push"
+    assert "summarize" in text, "the same job set ends in the summary"

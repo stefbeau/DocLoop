@@ -1,0 +1,58 @@
+name: r1-benchmark
+# Runs the four registered corpora with hybrid search and the reading pass, then writes the summary
+# to a new branch. Needs the repository secret HF_TOKEN (the reader and the embedder are models).
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  corpus:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        slug: [hub, openbb, prometheus, service-manual]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[agent,vector]"
+      - name: The secret must exist
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: test -n "$HF_TOKEN" || { echo "::error::Add the repository secret HF_TOKEN (Settings, Secrets and variables, Actions)"; exit 1; }
+      - name: Run the corpus
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python -m docloop.r1 run --corpus ${{ matrix.slug }} --workdir work --out out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: r1-${{ matrix.slug }}
+          path: out
+  publish:
+    needs: corpus
+    if: ${{ always() && needs.corpus.result != 'cancelled' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: r1-*
+          path: runs
+          merge-multiple: true
+      - run: python -m docloop.r1 summarize --in runs --out docs/benchmarks/r1
+      - run: cp runs/*.json runs/*.md docs/benchmarks/r1/ 2>/dev/null || true
+      - name: Commit the results to a new branch (never force)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "r1-results-${{ github.run_id }}"
+          git add docs/benchmarks/r1
+          git commit -m "R1 benchmark results (run ${{ github.run_id }})"
+          git push origin "r1-results-${{ github.run_id }}"

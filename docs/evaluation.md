@@ -242,3 +242,30 @@ part, and report on the newer part.
 
 The replay idea and the page registry come from `docdrift`, an earlier
 prototype of this project that planned the same evaluation on the same corpus.
+
+
+## Release R1: accuracy targets (in progress)
+
+The targets, the four corpora and the rules were written down before any R1
+measurement: [r1-preregistration.md](r1-preregistration.md). Hybrid search is now
+the default, and the reading step sorts candidates into "likely" and "also
+check" instead of deleting any.
+
+What is measured so far, with no model (word search, pass 1):
+
+| Corpus | Events | Hit rate, newer half | Recall, newer half | Report |
+| --- | ---: | ---: | ---: | --- |
+| Prometheus docs | 273 | 83% | 81% | [table](benchmarks/prometheus-docs-replay.md) |
+| GOV.UK service manual (2016) | 260 | 49% | 47% | [table](benchmarks/service-manual-replay.md) |
+
+The saved OpenBB run, rescored with the registered measures and no new model
+calls, misses every R1 target on its newer half (hit rate 73%, recall 51%,
+precision of the likely list 38%). The reading pass does help there: the share
+of events with a right page in the top 3 rises from 43% to 60%.
+
+Hybrid search and reading on all four corpora run in the `r1-benchmark`
+workflow, which needs the repository secret `HF_TOKEN`. Its results are written
+to a new branch and then reviewed; a missed target is published as a miss.
+
+To run one corpus yourself: `python -m docloop.r1 run --corpus prometheus --workdir work --out out`
+(needs `HF_TOKEN`), then `python -m docloop.r1 summarize --in out --out docs/benchmarks/r1`.
