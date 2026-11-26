@@ -11,6 +11,8 @@ notice, and stops. A named person approves before anything is written.
 This is the second version of a system that first ran as a seven-agent
 pipeline. [What changed and why](docs/evolution.md).
 
+Site with the benchmarks and a recipe to reproduce them: https://stefbeau.github.io/DocLoop/ (built from `site_src/` and `docs/` by the `site` workflow).
+
 ## Try it in one minute, with no API key
 
 ```
