@@ -300,3 +300,64 @@ def test_a_pass_kept_on_fewer_than_three_corpora_is_published_as_corpus_dependen
     assert pass_scope({"a": True, "b": True, "c": True, "d": False}) == "kept"
     assert pass_scope({"a": True, "b": True, "c": False, "d": False}) == "corpus-dependent"
     assert pass_scope({"a": False, "b": False, "c": False, "d": False}) == "removed"
+
+
+# --- the workspace (agent tools, MCP) follows the same default --------------------------------------------------------
+
+def test_workspace_defaults_to_hybrid_and_says_which_search_ran(tmp_path, monkeypatch):
+    import shutil
+
+    import docloop.embeddings as emb
+    from docloop.workspace import Workspace
+    monkeypatch.delenv("DOCLOOP_SEARCH", raising=False)
+    monkeypatch.delenv("DOCLOOP_EMBEDDER", raising=False)
+    monkeypatch.setattr(emb, "make_embedder", lambda spec: FakeEmbedder())
+    shutil.copytree(ROOT / "examples" / "docs", tmp_path / "docs")
+    ws = Workspace(tmp_path / "docs", tmp_path / "state")
+    found = ws.search_pages("bring colleagues and teammates onboard")
+    assert found["search"].startswith("hybrid (")
+    assert "account/team-workspaces" in [r["page_id"] for r in found["results"]]
+
+
+def test_workspace_falls_back_to_words_and_says_so_when_the_embedder_cannot_be_built(tmp_path, monkeypatch):
+    import shutil
+
+    import docloop.embeddings as emb
+    from docloop.workspace import Workspace
+    monkeypatch.delenv("DOCLOOP_SEARCH", raising=False)
+
+    def broken(spec):
+        raise ImportError("no vector extras")
+
+    monkeypatch.setattr(emb, "make_embedder", broken)
+    shutil.copytree(ROOT / "examples" / "docs", tmp_path / "docs")
+    found = Workspace(tmp_path / "docs", tmp_path / "state").search_pages("export csv")
+    assert found["search"].startswith("lexical (fallback") and found["results"]
+
+
+def test_workspace_falls_back_when_the_provider_fails_during_a_search(tmp_path, monkeypatch):
+    import shutil
+
+    import docloop.embeddings as emb
+    from docloop.workspace import Workspace
+    monkeypatch.delenv("DOCLOOP_SEARCH", raising=False)
+
+    class Down:
+        name = "down"
+
+        def embed(self, texts):
+            raise RuntimeError("402 Payment Required")
+
+    monkeypatch.setattr(emb, "make_embedder", lambda spec: Down())
+    shutil.copytree(ROOT / "examples" / "docs", tmp_path / "docs")
+    found = Workspace(tmp_path / "docs", tmp_path / "state").search_pages("export csv")
+    assert found["search"].startswith("lexical (fallback") and "402" in found["search"] and found["results"]
+
+
+def test_explicit_lexical_in_the_environment_is_respected(tmp_path, monkeypatch):
+    import shutil
+
+    from docloop.workspace import Workspace
+    monkeypatch.setenv("DOCLOOP_SEARCH", "lexical")
+    shutil.copytree(ROOT / "examples" / "docs", tmp_path / "docs")
+    assert Workspace(tmp_path / "docs", tmp_path / "state").search_pages("export csv")["search"] == "lexical"
