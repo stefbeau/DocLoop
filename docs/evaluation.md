@@ -244,28 +244,32 @@ The replay idea and the page registry come from `docdrift`, an earlier
 prototype of this project that planned the same evaluation on the same corpus.
 
 
-## Release R1: accuracy targets (in progress)
+## Release R1: accuracy targets (result: not met)
 
-The targets, the four corpora and the rules were written down before any R1
-measurement: [r1-preregistration.md](r1-preregistration.md). Hybrid search is now
-the default, and the reading step sorts candidates into "likely" and "also
-check" instead of deleting any.
+Run on 27 November 2026 with the settings registered beforehand
+([r1-preregistration.md](r1-preregistration.md)): hybrid search, the reader
+`openai/gpt-oss-120b:fastest`, four corpora, newer half of each. Full tables:
+[benchmarks/r1/r1-report.md](benchmarks/r1/r1-report.md). No target was changed.
 
-What is measured so far, with no model (word search, pass 1):
+| Corpus | Hit rate (target 90%) | Recall (80%) | Precision of likely (60%) | Right pages in likely (95%) | Wrong pages in also check (85%) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Hugging Face Hub docs | 91% met | 85% met | 59% missed | 83% missed | 84% missed |
+| OpenBB docs | 72% missed | 51% missed | 36% missed | 73% missed | 71% missed |
+| Prometheus docs | 92% met | 90% met | 47% missed | 69% missed | 81% missed |
+| GOV.UK service manual (2016) | 69% missed | 66% missed | 34% missed | 79% missed | 73% missed |
 
-| Corpus | Events | Hit rate, newer half | Recall, newer half | Report |
-| --- | ---: | ---: | ---: | --- |
-| Prometheus docs | 273 | 83% | 81% | [table](benchmarks/prometheus-docs-replay.md) |
-| GOV.UK service manual (2016) | 260 | 48% | 47% | [table](benchmarks/service-manual-replay.md) |
+- Hit rate and recall are met on two of four corpora (Hub, Prometheus). Precision of
+  the likely list and the reader's sorting are missed on all four. The literal
+  full-list precision is 9% to 18%.
+- Hybrid search raised the share of events with a right page in the top 3 on all
+  four corpora (by 6 to 12 points). The reading pass raised it on three
+  (by 6 to 10 points) and did not on Prometheus (-2 points). By the registered rule
+  both passes are kept.
+- The claim that can be made: on corpora whose commit messages describe the change
+  in some detail, hybrid search finds a right page for about nine changes in ten.
+  The claim cannot be made for the OpenBB and service manual histories.
+- The reader keeps 69% to 83% of the right pages, well under the 95% target, so
+  "likely" is a prioritised list for the reviewer, not a filter.
 
-The saved OpenBB run, rescored with the registered measures and no new model
-calls, misses every R1 target on its newer half (hit rate 72%, recall 51%,
-precision of the likely list 38%). The reading pass does help there: the share
-of events with a right page in the top 3 rises from 42% to 60%.
-
-Hybrid search and reading on all four corpora run in the `r1-benchmark`
-workflow, which needs the repository secret `HF_TOKEN`. Its results are written
-to a new branch and then reviewed; a missed target is published as a miss.
-
-To run one corpus yourself: `python -m docloop.r1 run --corpus prometheus --workdir work --out out`
-(needs `HF_TOKEN`), then `python -m docloop.r1 summarize --in out --out docs/benchmarks/r1`.
+Limits are in the report: commit messages are a proxy for real change events, one
+reader model on one date, and the service manual is archived.
