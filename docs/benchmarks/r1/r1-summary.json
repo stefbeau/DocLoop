@@ -1,0 +1,98 @@
+{
+ "verdict": {
+  "passed": false,
+  "corpora": {
+   "OpenBB docs": {
+    "status": "evaluated",
+    "events": 80,
+    "all_met": false,
+    "measures": {
+     "hit_rate": {
+      "value": 0.725,
+      "target": 0.9,
+      "met": false
+     },
+     "mean_recall": {
+      "value": 0.508,
+      "target": 0.8,
+      "met": false
+     },
+     "precision_likely": {
+      "value": 0.369,
+      "target": 0.6,
+      "met": false
+     },
+     "right_in_likely": {
+      "value": 0.75,
+      "target": 0.95,
+      "met": false
+     },
+     "wrong_in_also_check": {
+      "value": 0.703,
+      "target": 0.85,
+      "met": false
+     }
+    },
+    "literal_precision_full_list": {
+     "value": 0.138,
+     "target": 0.6,
+     "met": false
+    }
+   }
+  }
+ },
+ "missing": [
+  "hub",
+  "prometheus",
+  "service-manual"
+ ],
+ "pass_scope": {},
+ "corpora": {
+  "OpenBB docs": {
+   "head": "692a7bce357542fb5c37a94ecdf51ddcdb5d876e",
+   "events": 80,
+   "search": "hybrid (hf:BAAI/bge-small-en-v1.5)",
+   "reader": "openai/gpt-oss-120b:fastest",
+   "model_calls": 640,
+   "unparsed_replies": 0,
+   "newer_half": {
+    "hit_rate": 0.725,
+    "mean_recall": 0.508,
+    "precision_likely": 0.369,
+    "precision_full_list": 0.138,
+    "right_in_likely": 0.75,
+    "wrong_in_also_check": 0.703
+   },
+   "passes": {
+    "pass1_words": {
+     "figures": {
+      "top_3_hit": 0.325,
+      "mrr": 0.289
+     }
+    },
+    "pass2_hybrid": {
+     "figures": {
+      "top_3_hit": 0.425,
+      "mrr": 0.393
+     },
+     "gain": {
+      "hit_at_3_gain": 0.1,
+      "mrr_gain": 0.104,
+      "kept": true
+     }
+    },
+    "pass3_reading": {
+     "figures": {
+      "top_3_hit": 0.55,
+      "mrr": 0.456
+     },
+     "gain": {
+      "hit_at_3_gain": 0.125,
+      "mrr_gain": 0.063,
+      "kept": true
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,4426 @@
+{
+ "repo": "work/openbb",
+ "head": "692a7bce357542fb5c37a94ecdf51ddcdb5d876e",
+ "roots": [
+  "content",
+  "content-odp"
+ ],
+ "candidate_cap": 8,
+ "summary": {
+  "overall": {
+   "events": 80,
+   "hit_rate": 0.688,
+   "mean_recall": 0.506,
+   "mean_reciprocal_rank": 0.442,
+   "answered": 80,
+   "precision_when_answered": 0.116
+  },
+  "by_period": {
+   "older half": {
+    "events": 40,
+    "hit_rate": 0.65,
+    "mean_recall": 0.505,
+    "mean_reciprocal_rank": 0.492,
+    "answered": 40,
+    "precision_when_answered": 0.094
+   },
+   "newer half": {
+    "events": 40,
+    "hit_rate": 0.725,
+    "mean_recall": 0.508,
+    "mean_reciprocal_rank": 0.393,
+    "answered": 40,
+    "precision_when_answered": 0.138
+   }
+  },
+  "by_basis": {
+   "hybrid": {
+    "events": 80,
+    "hit_rate": 0.688,
+    "mean_recall": 0.506,
+    "mean_reciprocal_rank": 0.442,
+    "answered": 80,
+    "precision_when_answered": 0.116
+   }
+  },
+  "by_pages_modified": {
+   "1 page": {
+    "events": 41,
+    "hit_rate": 0.634,
+    "mean_recall": 0.634,
+    "mean_reciprocal_rank": 0.41,
+    "answered": 41,
+    "precision_when_answered": 0.079
+   },
+   "2-3 pages": {
+    "events": 23,
+    "hit_rate": 0.652,
+    "mean_recall": 0.413,
+    "mean_reciprocal_rank": 0.424,
+    "answered": 23,
+    "precision_when_answered": 0.13
+   },
+   "4+ pages": {
+    "events": 16,
+    "hit_rate": 0.875,
+    "mean_recall": 0.314,
+    "mean_reciprocal_rank": 0.552,
+    "answered": 16,
+    "precision_when_answered": 0.188
+   }
+  },
+  "by_message_length": {
+   "over 30 words": {
+    "events": 7,
+    "hit_rate": 1.0,
+    "mean_recall": 0.512,
+    "mean_reciprocal_rank": 0.551,
+    "answered": 7,
+    "precision_when_answered": 0.179
+   },
+   "8-30 words": {
+    "events": 26,
+    "hit_rate": 0.885,
+    "mean_recall": 0.728,
+    "mean_reciprocal_rank": 0.59,
+    "answered": 26,
+    "precision_when_answered": 0.173
+   },
+   "under 8 words": {
+    "events": 47,
+    "hit_rate": 0.532,
+    "mean_recall": 0.383,
+    "mean_reciprocal_rank": 0.345,
+    "answered": 47,
+    "precision_when_answered": 0.074
+   }
+  }
+ },
+ "skipped": {
+  "message shorter than 3 words": 23,
+  "more than 10 pages modified (bulk edit, not one change)": 12,
+  "no existing page modified (new pages, assets or config only)": 8
+ },
+ "events": [
+  {
+   "sha": "692a7bce",
+   "date": "2026-09-29",
+   "subject": "V5 docs",
+   "message_words": 383,
+   "truth": [
+    "content/odp/desktop/api-keys",
+    "content/odp/desktop/backends",
+    "content/odp/desktop/environments",
+    "content/odp/desktop/index",
+    "content/odp/desktop/installation",
+    "content/odp/desktop/troubleshooting",
+    "content/odp/desktop/uninstall",
+    "content/odp/index"
+   ],
+   "predicted": [
+    "content/odp/python/index",
+    "content/odp/python/developer/index",
+    "content/odp/python/extensions/index",
+    "content/odp/python/developer/extension_types/from_fastapi",
+    "content/workspace/getting-started/platform-installer",
+    "content/odp/cli/index",
+    "content/odp/cli/installation",
+    "content/odp/index"
+   ],
+   "basis": "hybrid",
+   "recall": 0.125,
+   "precision": 0.125,
+   "reciprocal_rank": 0.125,
+   "hit": true,
+   "new_pages": 79,
+   "triage": {
+    "likely": [
+     "content/odp/python/developer/extension_types/from_fastapi",
+     "content/workspace/getting-started/platform-installer",
+     "content/odp/cli/index",
+     "content/odp/cli/installation",
+     "content/odp/index"
+    ],
+    "also_check": [
+     "content/odp/python/index",
+     "content/odp/python/developer/index",
+     "content/odp/python/extensions/index"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/odp/python/developer/extension_types/from_fastapi",
+     "content/workspace/getting-started/platform-installer",
+     "content/odp/cli/index",
+     "content/odp/cli/installation",
+     "content/odp/index"
+    ],
+    "recall": 0.125,
+    "precision": 0.2,
+    "hit": true
+   }
+  },
+  {
+   "sha": "28697f6a",
+   "date": "2026-07-21",
+   "subject": "Add documentation for Workspace Lite",
+   "message_words": 36,
+   "truth": [
+    "content/agents/agent-rita",
+    "content/workspace/developers/open-source-agent"
+   ],
+   "predicted": [
+    "content/odp/desktop/backends",
+    "content/workspace/developers/ai-features/custom-agent-features",
+    "content/workspace/index",
+    "content/workspace/developers/ai-features/user-feedback",
+    "content/workspace/developers/open-source-agent",
+    "content/odp/python/quickstart/workspace",
+    "content/agents/workspace-mcp-tools",
+    "content/workspace/developers/widget-types/vega-lite"
+   ],
+   "basis": "hybrid",
+   "recall": 0.5,
+   "precision": 0.125,
+   "reciprocal_rank": 0.2,
+   "hit": true,
+   "new_pages": 5,
+   "triage": {
+    "likely": [
+     "content/workspace/developers/ai-features/custom-agent-features"
+    ],
+    "also_check": [
+     "content/odp/desktop/backends",
+     "content/workspace/index",
+     "content/workspace/developers/ai-features/user-feedback",
+     "content/workspace/developers/open-source-agent",
+     "content/odp/python/quickstart/workspace",
+     "content/agents/workspace-mcp-tools",
+     "content/workspace/developers/widget-types/vega-lite"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/developers/ai-features/custom-agent-features"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "aa6a6f12",
+   "date": "2026-07-20",
+   "subject": "mcp auth",
+   "message_words": 12,
+   "truth": [
+    "content/workspace/developers/json-specs/apps-json-reference",
+    "content/workspace/developers/json-specs/widgets-json-reference",
+    "content/workspace/developers/widget-types/html"
+   ],
+   "predicted": [
+    "content/agents/workspace-mcp-tools",
+    "content/odp/python/extensions/interface/openbb-mcp",
+    "content/workspace/developers/widget-types/iframe",
+    "content/workspace/developers/json-specs/widgets-json-reference",
+    "content/workspace/analysts/ai-features/mcp-tools",
+    "content/odp/python/settings/mcp_settings",
+    "content/agents/workspace-mcp-overview",
+    "content/workspace/developers/widget-configuration/matching-widget-to-mcp-tool"
+   ],
+   "basis": "hybrid",
+   "recall": 0.333,
+   "precision": 0.125,
+   "reciprocal_rank": 0.25,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/odp/python/extensions/interface/openbb-mcp",
+     "content/workspace/developers/widget-types/iframe",
+     "content/workspace/developers/json-specs/widgets-json-reference",
+     "content/workspace/analysts/ai-features/mcp-tools",
+     "content/odp/python/settings/mcp_settings",
+     "content/agents/workspace-mcp-overview",
+     "content/workspace/developers/widget-configuration/matching-widget-to-mcp-tool"
+    ],
+    "also_check": [
+     "content/agents/workspace-mcp-tools"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/odp/python/extensions/interface/openbb-mcp",
+     "content/workspace/developers/widget-types/iframe",
+     "content/workspace/developers/json-specs/widgets-json-reference",
+     "content/workspace/analysts/ai-features/mcp-tools",
+     "content/odp/python/settings/mcp_settings",
+     "content/agents/workspace-mcp-overview",
+     "content/workspace/developers/widget-configuration/matching-widget-to-mcp-tool"
+    ],
+    "recall": 0.333,
+    "precision": 0.143,
+    "hit": true
+   }
+  },
+  {
+   "sha": "4e85fbde",
+   "date": "2026-07-10",
+   "subject": "update iframe auth docs",
+   "message_words": 10,
+   "truth": [
+    "content/workspace/developers/json-specs/widgets-json-reference",
+    "content/workspace/developers/widget-configuration/render-functions",
+    "content/workspace/developers/widget-parameters/cell-click-grouping",
+    "content/workspace/developers/widget-types/iframe"
+   ],
+   "predicted": [
+    "content/workspace/developers/widget-types/iframe",
+    "content/workspace/developers/widget-parameters/cell-click-grouping",
+    "content/workspace/developers/json-specs/widgets-json-reference",
+    "content/odp/desktop/api-keys",
+    "content/workspace/index",
+    "content/agents/workspace-mcp-tools",
+    "content/workspace/developers/widget-configuration/render-functions",
+    "content/odp/desktop/index"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.5,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/workspace/developers/widget-types/iframe",
+     "content/workspace/developers/json-specs/widgets-json-reference",
+     "content/workspace/developers/widget-configuration/render-functions"
+    ],
+    "also_check": [
+     "content/workspace/developers/widget-parameters/cell-click-grouping",
+     "content/odp/desktop/api-keys",
+     "content/workspace/index",
+     "content/agents/workspace-mcp-tools",
+     "content/odp/desktop/index"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/developers/widget-types/iframe",
+     "content/workspace/developers/json-specs/widgets-json-reference",
+     "content/workspace/developers/widget-configuration/render-functions"
+    ],
+    "recall": 0.75,
+    "precision": 1.0,
+    "hit": true
+   }
+  },
+  {
+   "sha": "649c584e",
+   "date": "2026-07-08",
+   "subject": "Update the workspace MCP docs to feature hosted MCP vs sidecar",
+   "message_words": 23,
+   "truth": [
+    "content/agents/app-builder-resources",
+    "content/agents/workspace-mcp-overview",
+    "content/agents/workspace-mcp-quickstart",
+    "content/agents/workspace-mcp-tools"
+   ],
+   "predicted": [
+    "content/agents/workspace-mcp-overview",
+    "content/agents/workspace-mcp-tools",
+    "content/agents/workspace-mcp-quickstart",
+    "content/workspace/developers/widget-types/iframe",
+    "content/odp/python/quickstart/mcp",
+    "content/workspace/developers/openbb-ai-sdk",
+    "content/workspace/developers/ai-features/custom-agent-features",
+    "content/agents/app-builder-resources"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.5,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/agents/workspace-mcp-overview",
+     "content/agents/workspace-mcp-tools",
+     "content/agents/workspace-mcp-quickstart",
+     "content/odp/python/quickstart/mcp"
+    ],
+    "also_check": [
+     "content/workspace/developers/widget-types/iframe",
+     "content/workspace/developers/openbb-ai-sdk",
+     "content/workspace/developers/ai-features/custom-agent-features",
+     "content/agents/app-builder-resources"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/agents/workspace-mcp-overview",
+     "content/agents/workspace-mcp-tools",
+     "content/agents/workspace-mcp-quickstart",
+     "content/odp/python/quickstart/mcp"
+    ],
+    "recall": 0.75,
+    "precision": 0.75,
+    "hit": true
+   }
+  },
+  {
+   "sha": "9698f864",
+   "date": "2026-06-12",
+   "subject": "Custom agent features and user feedback docs",
+   "message_words": 19,
+   "truth": [
+    "content/workspace/developers/ai-features/custom-agent-features",
+    "content/workspace/developers/json-specs/agents-json-reference",
+    "content/workspace/developers/openbb-ai-sdk"
+   ],
+   "predicted": [
+    "content/workspace/analysts/ai-features/copilot-output",
+    "content/workspace/developers/openbb-ai-sdk",
+    "content/workspace/developers/ai-features/custom-agent-features",
+    "content/workspace/developers/json-specs/agents-json-reference",
+    "content/workspace/index",
+    "content/workspace/developers/apps/index",
+    "content/workspace/developers/widget-configuration/render-functions",
+    "content/workspace/developers/ai-features/share-step-by-step-reasoning"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.375,
+   "reciprocal_rank": 0.5,
+   "hit": true,
+   "new_pages": 1,
+   "triage": {
+    "likely": [
+     "content/workspace/analysts/ai-features/copilot-output",
+     "content/workspace/developers/openbb-ai-sdk",
+     "content/workspace/developers/ai-features/custom-agent-features",
+     "content/workspace/developers/json-specs/agents-json-reference",
+     "content/workspace/index"
+    ],
+    "also_check": [
+     "content/workspace/developers/apps/index",
+     "content/workspace/developers/widget-configuration/render-functions",
+     "content/workspace/developers/ai-features/share-step-by-step-reasoning"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/analysts/ai-features/copilot-output",
+     "content/workspace/developers/openbb-ai-sdk",
+     "content/workspace/developers/ai-features/custom-agent-features",
+     "content/workspace/developers/json-specs/agents-json-reference",
+     "content/workspace/index"
+    ],
+    "recall": 1.0,
+    "precision": 0.6,
+    "hit": true
+   }
+  },
+  {
+   "sha": "295ed04e",
+   "date": "2026-06-08",
+   "subject": "docs for iframe / mcp",
+   "message_words": 11,
+   "truth": [
+    "content/workspace/developers/json-specs/widgets-json-reference"
+   ],
+   "predicted": [
+    "content/workspace/developers/json-specs/widgets-json-reference",
+    "content/odp/python/extensions/interface/openbb-mcp",
+    "content/workspace/developers/widget-configuration/render-functions",
+    "content/workspace/developers/widget-configuration/matching-widget-to-mcp-tool",
+    "content/workspace/developers/ai-features/create-html-artifacts",
+    "content/odp/python/settings/mcp_settings",
+    "content/workspace/developers/widget-types/file-viewer",
+    "content/odp/cli/structure-and-navigation"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 1,
+   "triage": {
+    "likely": [
+     "content/odp/python/extensions/interface/openbb-mcp",
+     "content/odp/python/settings/mcp_settings"
+    ],
+    "also_check": [
+     "content/workspace/developers/json-specs/widgets-json-reference",
+     "content/workspace/developers/widget-configuration/render-functions",
+     "content/workspace/developers/widget-configuration/matching-widget-to-mcp-tool",
+     "content/workspace/developers/ai-features/create-html-artifacts",
+     "content/workspace/developers/widget-types/file-viewer",
+     "content/odp/cli/structure-and-navigation"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/odp/python/extensions/interface/openbb-mcp",
+     "content/odp/python/settings/mcp_settings"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "9c8225f8",
+   "date": "2026-05-21",
+   "subject": "Document Workspace MCP and app builder resources",
+   "message_words": 32,
+   "truth": [
+    "content/workspace/developers/json-specs/apps-json-reference"
+   ],
+   "predicted": [
+    "content/odp/python/extensions/interface/openbb-api",
+    "content/workspace/developers/agent-skills",
+    "content/workspace/developers/json-specs/apps-json-reference",
+    "content/workspace/analysts/apps",
+    "content/odp/python/quickstart/mcp",
+    "content/workspace/developers/widget-configuration/matching-widget-to-mcp-tool",
+    "content/odp/desktop/environments",
+    "content/workspace/developers/ai-features/mcp-tools"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 0.333,
+   "hit": true,
+   "new_pages": 4,
+   "triage": {
+    "likely": [
+     "content/workspace/developers/agent-skills",
+     "content/workspace/developers/json-specs/apps-json-reference",
+     "content/odp/python/quickstart/mcp",
+     "content/workspace/developers/ai-features/mcp-tools"
+    ],
+    "also_check": [
+     "content/odp/python/extensions/interface/openbb-api",
+     "content/workspace/analysts/apps",
+     "content/workspace/developers/widget-configuration/matching-widget-to-mcp-tool",
+     "content/odp/desktop/environments"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/developers/agent-skills",
+     "content/workspace/developers/json-specs/apps-json-reference",
+     "content/odp/python/quickstart/mcp",
+     "content/workspace/developers/ai-features/mcp-tools"
+    ],
+    "recall": 1.0,
+    "precision": 0.25,
+    "hit": true
+   }
+  },
+  {
+   "sha": "0f393b61",
+   "date": "2026-05-15",
+   "subject": "Add cron job and data update support",
+   "message_words": 18,
+   "truth": [
+    "content/workspace/developers/json-specs/widgets-json-reference",
+    "content/workspace/developers/widget-configuration/refetch-interval"
+   ],
+   "predicted": [
+    "content/workspace/getting-started/enterprise/index",
+    "content/workspace/getting-started/enterprise/data-control",
+    "content/workspace/index",
+    "content/snowflake/index",
+    "content/odp/python/developer/architecture_overview",
+    "content/odp/cli/data-sources",
+    "content/odp/cli/quickstart",
+    "content/workspace/developers/data-integration"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 1,
+   "triage": {
+    "likely": [
+     "content/workspace/getting-started/enterprise/index",
+     "content/workspace/index",
+     "content/odp/python/developer/architecture_overview",
+     "content/odp/cli/quickstart",
+     "content/workspace/developers/data-integration"
+    ],
+    "also_check": [
+     "content/workspace/getting-started/enterprise/data-control",
+     "content/snowflake/index",
+     "content/odp/cli/data-sources"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/getting-started/enterprise/index",
+     "content/workspace/index",
+     "content/odp/python/developer/architecture_overview",
+     "content/odp/cli/quickstart",
+     "content/workspace/developers/data-integration"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "d0963554",
+   "date": "2026-05-08",
+   "subject": "vega lite docs",
+   "message_words": 3,
+   "truth": [
+    "content/workspace/developers/json-specs/widgets-json-reference"
+   ],
+   "predicted": [
+    "content/workspace/developers/ai-features/citations-for-documents",
+    "content/odp/cli/index",
+    "content/odp/python/extensions/data-processing/technical",
+    "content/workspace/analysts/ai-features/copilot-output",
+    "content/odp/python/developer/extension_types/from_fastapi",
+    "content/workspace/developers/openbb-ai-sdk",
+    "content/workspace/developers/widget-types/newsfeed",
+    "content/workspace/developers/widget-types/file-viewer"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 1,
+   "triage": {
+    "likely": [],
+    "also_check": [
+     "content/workspace/developers/ai-features/citations-for-documents",
+     "content/odp/cli/index",
+     "content/odp/python/extensions/data-processing/technical",
+     "content/workspace/analysts/ai-features/copilot-output",
+     "content/odp/python/developer/extension_types/from_fastapi",
+     "content/workspace/developers/openbb-ai-sdk",
+     "content/workspace/developers/widget-types/newsfeed",
+     "content/workspace/developers/widget-types/file-viewer"
+    ]
+   },
+   "after_reading": {
+    "kept": [],
+    "recall": 0.0,
+    "precision": null,
+    "hit": false
+   }
+  },
+  {
+   "sha": "fc66265f",
+   "date": "2026-05-08",
+   "subject": "Fix/git installation",
+   "message_words": 18,
+   "truth": [
+    "content/odp/python/installation"
+   ],
+   "predicted": [
+    "content/odp/cli/installation",
+    "content/odp/desktop/troubleshooting",
+    "content/workspace/getting-started/faqs",
+    "content/workspace/getting-started/pwa",
+    "content/odp/cli/configuration",
+    "content/odp/python/installation",
+    "content/odp/python/extensions/data-processing/technical",
+    "content/odp/desktop/installation"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 0.167,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/odp/python/installation"
+    ],
+    "also_check": [
+     "content/odp/cli/installation",
+     "content/odp/desktop/troubleshooting",
+     "content/workspace/getting-started/faqs",
+     "content/workspace/getting-started/pwa",
+     "content/odp/cli/configuration",
+     "content/odp/python/extensions/data-processing/technical",
+     "content/odp/desktop/installation"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/odp/python/installation"
+    ],
+    "recall": 1.0,
+    "precision": 1.0,
+    "hit": true
+   }
+  },
+  {
+   "sha": "e36e4c9e",
+   "date": "2026-04-25",
+   "subject": "add docs for chartview new things",
+   "message_words": 6,
+   "truth": [
+    "content/workspace/developers/json-specs/widgets-json-reference",
+    "content/workspace/developers/widget-types/aggrid-table-charts"
+   ],
+   "predicted": [
+    "content/workspace/developers/json-specs/widgets-json-reference",
+    "content/odp/cli/openbbuserdata",
+    "content/odp/python/developer/extension_types/charting",
+    "content/odp/python/developer/standardization",
+    "content/workspace/developers/widget-types/plotly-charts",
+    "content/workspace/analysts/widgets/interacting-with-data",
+    "content/workspace/developers/apps/index",
+    "content/workspace/developers/json-specs/apps-json-reference"
+   ],
+   "basis": "hybrid",
+   "recall": 0.5,
+   "precision": 0.125,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/workspace/developers/json-specs/widgets-json-reference",
+     "content/workspace/analysts/widgets/interacting-with-data",
+     "content/workspace/developers/json-specs/apps-json-reference"
+    ],
+    "also_check": [
+     "content/odp/cli/openbbuserdata",
+     "content/odp/python/developer/extension_types/charting",
+     "content/odp/python/developer/standardization",
+     "content/workspace/developers/widget-types/plotly-charts",
+     "content/workspace/developers/apps/index"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/developers/json-specs/widgets-json-reference",
+     "content/workspace/analysts/widgets/interacting-with-data",
+     "content/workspace/developers/json-specs/apps-json-reference"
+    ],
+    "recall": 0.5,
+    "precision": 0.333,
+    "hit": true
+   }
+  },
+  {
+   "sha": "b01c1e42",
+   "date": "2026-04-22",
+   "subject": "fix youtube dev video",
+   "message_words": 4,
+   "truth": [
+    "content/workspace/developers/data-integration"
+   ],
+   "predicted": [
+    "content/workspace/developers/widget-types/youtube",
+    "content/workspace/analysts/excel-addin/excel-installation",
+    "content/snowflake/index",
+    "content/workspace/analysts/excel-addin/troubleshooting",
+    "content/workspace/getting-started/faqs",
+    "content/odp/python/developer/how-to/tests",
+    "content/workspace/developers/json-specs/apps-json-reference",
+    "content/workspace/developers/ai-features/create-html-artifacts"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/workspace/developers/widget-types/youtube",
+     "content/workspace/analysts/excel-addin/excel-installation"
+    ],
+    "also_check": [
+     "content/snowflake/index",
+     "content/workspace/analysts/excel-addin/troubleshooting",
+     "content/workspace/getting-started/faqs",
+     "content/odp/python/developer/how-to/tests",
+     "content/workspace/developers/json-specs/apps-json-reference",
+     "content/workspace/developers/ai-features/create-html-artifacts"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/developers/widget-types/youtube",
+     "content/workspace/analysts/excel-addin/excel-installation"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "fecb2571",
+   "date": "2026-04-03",
+   "subject": "Apply security patches and clean up",
+   "message_words": 14,
+   "truth": [
+    "content/odp/python/extensions/interface/openbb-api",
+    "content/odp/python/index"
+   ],
+   "predicted": [
+    "content/odp/python/developer/architecture_overview",
+    "content/odp/python/developer/how-to/deprecating_endpoints",
+    "content/odp/desktop/environments",
+    "content/odp/python/extensions/data-processing/technical",
+    "content/odp/cli/installation",
+    "content/odp/desktop/troubleshooting",
+    "content/odp/python/extensions/interface/openbb-api",
+    "content/odp/python/extensions/data-processing/quantitative"
+   ],
+   "basis": "hybrid",
+   "recall": 0.5,
+   "precision": 0.125,
+   "reciprocal_rank": 0.143,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/odp/cli/installation"
+    ],
+    "also_check": [
+     "content/odp/python/developer/architecture_overview",
+     "content/odp/python/developer/how-to/deprecating_endpoints",
+     "content/odp/desktop/environments",
+     "content/odp/python/extensions/data-processing/technical",
+     "content/odp/desktop/troubleshooting",
+     "content/odp/python/extensions/interface/openbb-api",
+     "content/odp/python/extensions/data-processing/quantitative"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/odp/cli/installation"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "af693b5e",
+   "date": "2026-03-24",
+   "subject": "Docs Improvement",
+   "message_words": 77,
+   "truth": [
+    "content/workspace/analysts/ai-features/copilot-context",
+    "content/workspace/analysts/ai-features/generative-ui",
+    "content/workspace/analysts/ai-features/mcp-tools",
+    "content/workspace/analysts/widgets/sandbox-widgets"
+   ],
+   "predicted": [
+    "content/workspace/analysts/ai-features/generative-ui",
+    "content/odp/cli/configuration",
+    "content/workspace/developers/openbb-ai-sdk",
+    "content/odp/cli/index",
+    "content/odp/desktop/api-keys",
+    "content/odp/python/settings/user_settings/preferences",
+    "content/snowflake/index",
+    "content/workspace/analysts/ai-features/copilot-output"
+   ],
+   "basis": "hybrid",
+   "recall": 0.25,
+   "precision": 0.125,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 1,
+   "triage": {
+    "likely": [
+     "content/workspace/analysts/ai-features/generative-ui"
+    ],
+    "also_check": [
+     "content/odp/cli/configuration",
+     "content/workspace/developers/openbb-ai-sdk",
+     "content/odp/cli/index",
+     "content/odp/desktop/api-keys",
+     "content/odp/python/settings/user_settings/preferences",
+     "content/snowflake/index",
+     "content/workspace/analysts/ai-features/copilot-output"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/analysts/ai-features/generative-ui"
+    ],
+    "recall": 0.25,
+    "precision": 1.0,
+    "hit": true
+   }
+  },
+  {
+   "sha": "4f5fdcee",
+   "date": "2026-03-23",
+   "subject": "allow global formatterFn",
+   "message_words": 10,
+   "truth": [
+    "content/workspace/developers/json-specs/widgets-json-reference"
+   ],
+   "predicted": [
+    "content/odp/python/settings/system_settings",
+    "content/odp/python/extensions/interface/openbb-mcp",
+    "content/workspace/developers/widget-parameters/parameter-grouping",
+    "content/workspace/developers/json-specs/widgets-json-reference",
+    "content/workspace/developers/widget-types/aggrid-table-charts",
+    "content/workspace/developers/json-specs/apps-json-reference",
+    "content/odp/python/extensions/interface/openbb-api",
+    "content/odp/cli/configuration"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 0.25,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/odp/python/settings/system_settings",
+     "content/odp/python/extensions/interface/openbb-mcp",
+     "content/workspace/developers/widget-parameters/parameter-grouping",
+     "content/workspace/developers/json-specs/widgets-json-reference",
+     "content/workspace/developers/widget-types/aggrid-table-charts",
+     "content/workspace/developers/json-specs/apps-json-reference",
+     "content/odp/python/extensions/interface/openbb-api",
+     "content/odp/cli/configuration"
+    ],
+    "also_check": []
+   },
+   "after_reading": {
+    "kept": [
+     "content/odp/python/settings/system_settings",
+     "content/odp/python/extensions/interface/openbb-mcp",
+     "content/workspace/developers/widget-parameters/parameter-grouping",
+     "content/workspace/developers/json-specs/widgets-json-reference",
+     "content/workspace/developers/widget-types/aggrid-table-charts",
+     "content/workspace/developers/json-specs/apps-json-reference",
+     "content/odp/python/extensions/interface/openbb-api",
+     "content/odp/cli/configuration"
+    ],
+    "recall": 1.0,
+    "precision": 0.125,
+    "hit": true
+   }
+  },
+  {
+   "sha": "b7623b48",
+   "date": "2026-02-16",
+   "subject": "Add advanced features to Widgets.json reference",
+   "message_words": 22,
+   "truth": [
+    "content/workspace/developers/json-specs/widgets-json-reference"
+   ],
+   "predicted": [
+    "content/workspace/developers/json-specs/widgets-json-reference",
+    "content/odp/python/extensions/interface/openbb-api",
+    "content/workspace/developers/data-integration",
+    "content/workspace/developers/openbb-ai-sdk",
+    "content/workspace/getting-started/faqs",
+    "content/workspace/developers/widget-types/newsfeed",
+    "content/workspace/developers/json-specs/agents-json-reference",
+    "content/workspace/analysts/dashboards/index"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/workspace/developers/json-specs/widgets-json-reference",
+     "content/workspace/developers/data-integration"
+    ],
+    "also_check": [
+     "content/odp/python/extensions/interface/openbb-api",
+     "content/workspace/developers/openbb-ai-sdk",
+     "content/workspace/getting-started/faqs",
+     "content/workspace/developers/widget-types/newsfeed",
+     "content/workspace/developers/json-specs/agents-json-reference",
+     "content/workspace/analysts/dashboards/index"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/developers/json-specs/widgets-json-reference",
+     "content/workspace/developers/data-integration"
+    ],
+    "recall": 1.0,
+    "precision": 0.5,
+    "hit": true
+   }
+  },
+  {
+   "sha": "149ed66c",
+   "date": "2026-01-29",
+   "subject": "update name for rita",
+   "message_words": 4,
+   "truth": [
+    "content/snowflake/index"
+   ],
+   "predicted": [
+    "content/workspace/developers/widget-parameters/input-form",
+    "content/odp/cli/routines/advanced-routines",
+    "content/workspace/developers/widget-types/plotly-charts",
+    "content/odp/python/developer/extension_types/from_fastapi",
+    "content/workspace/developers/widget-parameters/cell-click-grouping",
+    "content/workspace/developers/widget-types/live-grid",
+    "content/odp/desktop/api-keys",
+    "content/odp/desktop/environments"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 0,
+   "triage": {
+    "likely": [],
+    "also_check": [
+     "content/workspace/developers/widget-parameters/input-form",
+     "content/odp/cli/routines/advanced-routines",
+     "content/workspace/developers/widget-types/plotly-charts",
+     "content/odp/python/developer/extension_types/from_fastapi",
+     "content/workspace/developers/widget-parameters/cell-click-grouping",
+     "content/workspace/developers/widget-types/live-grid",
+     "content/odp/desktop/api-keys",
+     "content/odp/desktop/environments"
+    ]
+   },
+   "after_reading": {
+    "kept": [],
+    "recall": 0.0,
+    "precision": null,
+    "hit": false
+   }
+  },
+  {
+   "sha": "5b29ec81",
+   "date": "2026-01-19",
+   "subject": "Feat/update docs for release",
+   "message_words": 57,
+   "truth": [
+    "content/workspace/analysts/widgets/core-widgets",
+    "content/workspace/developers/json-specs/widgets-json-reference",
+    "content/workspace/getting-started/enterprise/team-collaboration"
+   ],
+   "predicted": [
+    "content/workspace/index",
+    "content/workspace/developers/widget-types/html",
+    "content/workspace/developers/ai-features/highlight-widget-citations",
+    "content/workspace/analysts/widgets/ai-generated-widgets",
+    "content/workspace/developers/json-specs/widgets-json-reference",
+    "content/workspace/developers/openbb-ai-sdk",
+    "content/workspace/developers/ai-features/citations-for-documents",
+    "content/workspace/analysts/ai-features/copilot-output"
+   ],
+   "basis": "hybrid",
+   "recall": 0.333,
+   "precision": 0.125,
+   "reciprocal_rank": 0.2,
+   "hit": true,
+   "new_pages": 3,
+   "triage": {
+    "likely": [
+     "content/workspace/developers/json-specs/widgets-json-reference"
+    ],
+    "also_check": [
+     "content/workspace/index",
+     "content/workspace/developers/widget-types/html",
+     "content/workspace/developers/ai-features/highlight-widget-citations",
+     "content/workspace/analysts/widgets/ai-generated-widgets",
+     "content/workspace/developers/openbb-ai-sdk",
+     "content/workspace/developers/ai-features/citations-for-documents",
+     "content/workspace/analysts/ai-features/copilot-output"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/developers/json-specs/widgets-json-reference"
+    ],
+    "recall": 0.333,
+    "precision": 1.0,
+    "hit": true
+   }
+  },
+  {
+   "sha": "a3dfa0db",
+   "date": "2026-01-15",
+   "subject": "Improve Developer Section of Python Docs",
+   "message_words": 47,
+   "truth": [
+    "content/python/developer/extension_types/index",
+    "content/python/developer/extension_types/obbject",
+    "content/python/developer/extension_types/provider",
+    "content/python/developer/extension_types/router",
+    "content/python/extensions/index",
+    "content/python/extensions/interface/openbb-api",
+    "content/python/settings/environment_variables",
+    "content/python/settings/system_settings"
+   ],
+   "predicted": [
+    "content/python/extensions/interface/openbb-api",
+    "content/python/developer/architecture_overview",
+    "content/python/index",
+    "content/python/developer/extension_types/provider",
+    "content/workspace/developers/widget-types/highcharts",
+    "content/python/developer/extension_types/obbject",
+    "content/python/developer/how-to/index",
+    "content/workspace/developers/json-specs/widgets-json-reference"
+   ],
+   "basis": "hybrid",
+   "recall": 0.375,
+   "precision": 0.375,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 4,
+   "triage": {
+    "likely": [
+     "content/python/developer/extension_types/provider",
+     "content/python/developer/extension_types/obbject",
+     "content/python/developer/how-to/index"
+    ],
+    "also_check": [
+     "content/python/extensions/interface/openbb-api",
+     "content/python/developer/architecture_overview",
+     "content/python/index",
+     "content/workspace/developers/widget-types/highcharts",
+     "content/workspace/developers/json-specs/widgets-json-reference"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/python/developer/extension_types/provider",
+     "content/python/developer/extension_types/obbject",
+     "content/python/developer/how-to/index"
+    ],
+    "recall": 0.25,
+    "precision": 0.667,
+    "hit": true
+   }
+  },
+  {
+   "sha": "47ec6391",
+   "date": "2026-01-01",
+   "subject": "docs: document ai flag for widget AI visibility",
+   "message_words": 6,
+   "truth": [
+    "content/workspace/analysts/widgets/overview"
+   ],
+   "predicted": [
+    "content/workspace/developers/openbb-ai-sdk",
+    "content/workspace/developers/ai-features/citations-for-documents",
+    "content/workspace/analysts/ai-features/copilot-reasoning",
+    "content/python/extensions/interface/openbb-api",
+    "content/workspace/analysts/ai-features/copilot-context",
+    "content/workspace/analysts/widgets/ai-generated-widgets",
+    "content/workspace/analysts/ai-features/copilot-output",
+    "content/workspace/analysts/widgets/interacting-with-data"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/workspace/developers/openbb-ai-sdk",
+     "content/python/extensions/interface/openbb-api",
+     "content/workspace/analysts/ai-features/copilot-context",
+     "content/workspace/analysts/widgets/ai-generated-widgets",
+     "content/workspace/analysts/widgets/interacting-with-data"
+    ],
+    "also_check": [
+     "content/workspace/developers/ai-features/citations-for-documents",
+     "content/workspace/analysts/ai-features/copilot-reasoning",
+     "content/workspace/analysts/ai-features/copilot-output"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/developers/openbb-ai-sdk",
+     "content/python/extensions/interface/openbb-api",
+     "content/workspace/analysts/ai-features/copilot-context",
+     "content/workspace/analysts/widgets/ai-generated-widgets",
+     "content/workspace/analysts/widgets/interacting-with-data"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "460f4dcb",
+   "date": "2025-12-27",
+   "subject": "MCP tools added to docs",
+   "message_words": 4,
+   "truth": [
+    "content/workspace/developers/ai-features/custom-agent-features",
+    "content/workspace/developers/ai-features/interact-with-dashboard"
+   ],
+   "predicted": [
+    "content/python/extensions/interface/openbb-mcp",
+    "content/workspace/analysts/ai-features/mcp-tools",
+    "content/workspace/analysts/ai-features/copilot-context",
+    "content/python/settings/mcp_settings",
+    "content/python/quickstart/mcp",
+    "content/workspace/developers/openbb-ai-sdk",
+    "content/python/extensions/index",
+    "content/desktop/backends"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 1,
+   "triage": {
+    "likely": [
+     "content/python/extensions/interface/openbb-mcp"
+    ],
+    "also_check": [
+     "content/workspace/analysts/ai-features/mcp-tools",
+     "content/workspace/analysts/ai-features/copilot-context",
+     "content/python/settings/mcp_settings",
+     "content/python/quickstart/mcp",
+     "content/workspace/developers/openbb-ai-sdk",
+     "content/python/extensions/index",
+     "content/desktop/backends"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/python/extensions/interface/openbb-mcp"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "e8320193",
+   "date": "2025-11-28",
+   "subject": "fix video + accordion",
+   "message_words": 3,
+   "truth": [
+    "content/workspace/index"
+   ],
+   "predicted": [
+    "content/workspace/developers/widget-types/html",
+    "content/workspace/developers/json-specs/apps-json-reference",
+    "content/workspace/analysts/excel-addin/excel-installation",
+    "content/workspace/analysts/ai-features/generative-ui",
+    "content/workspace/developers/ai-features/create-charts",
+    "content/cli/routines/advanced-routines",
+    "content/workspace/analysts/ai-features/copilot-output",
+    "content/desktop/api-keys"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/workspace/analysts/excel-addin/excel-installation"
+    ],
+    "also_check": [
+     "content/workspace/developers/widget-types/html",
+     "content/workspace/developers/json-specs/apps-json-reference",
+     "content/workspace/analysts/ai-features/generative-ui",
+     "content/workspace/developers/ai-features/create-charts",
+     "content/cli/routines/advanced-routines",
+     "content/workspace/analysts/ai-features/copilot-output",
+     "content/desktop/api-keys"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/analysts/excel-addin/excel-installation"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "53517883",
+   "date": "2025-11-26",
+   "subject": "Multi file viewer PDF with only POST examples",
+   "message_words": 8,
+   "truth": [
+    "content/workspace/developers/widget-types/file-viewer"
+   ],
+   "predicted": [
+    "content/workspace/developers/widget-types/file-viewer",
+    "content/workspace/developers/json-specs/widgets-json-reference",
+    "content/workspace/developers/ai-features/citations-for-documents",
+    "content/python/extensions/interface/openbb-api",
+    "content/workspace/developers/ai-features/parse-pdf-context",
+    "content/python/extensions/interface/openbb-mcp",
+    "content/cli/routines/advanced-routines",
+    "content/workspace/developers/widget-types/ssrm_mode"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/workspace/developers/widget-types/file-viewer",
+     "content/workspace/developers/json-specs/widgets-json-reference"
+    ],
+    "also_check": [
+     "content/workspace/developers/ai-features/citations-for-documents",
+     "content/python/extensions/interface/openbb-api",
+     "content/workspace/developers/ai-features/parse-pdf-context",
+     "content/python/extensions/interface/openbb-mcp",
+     "content/cli/routines/advanced-routines",
+     "content/workspace/developers/widget-types/ssrm_mode"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/developers/widget-types/file-viewer",
+     "content/workspace/developers/json-specs/widgets-json-reference"
+    ],
+    "recall": 1.0,
+    "precision": 0.5,
+    "hit": true
+   }
+  },
+  {
+   "sha": "62b98f71",
+   "date": "2025-11-25",
+   "subject": "Improve newsfeed style docs + improve docs ordering",
+   "message_words": 7,
+   "truth": [
+    "content/workspace/developers/widget-types/aggrid-table-charts",
+    "content/workspace/developers/widget-types/highcharts",
+    "content/workspace/developers/widget-types/newsfeed",
+    "content/workspace/developers/widget-types/omni",
+    "content/workspace/developers/widget-types/ssrm_mode",
+    "content/workspace/developers/widget-types/tradingview-charts"
+   ],
+   "predicted": [
+    "content/python/settings/user_settings/preferences",
+    "content/workspace/developers/widget-types/newsfeed",
+    "content/workspace/analysts/ai-features/orchestrator-mode",
+    "content/workspace/developers/ai-features/citations-for-documents",
+    "content/workspace/developers/widget-parameters/parameter-positioning",
+    "content/cli/configuration",
+    "content/workspace/developers/widget-types/html",
+    "content/cli/quickstart"
+   ],
+   "basis": "hybrid",
+   "recall": 0.167,
+   "precision": 0.125,
+   "reciprocal_rank": 0.5,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [],
+    "also_check": [
+     "content/python/settings/user_settings/preferences",
+     "content/workspace/developers/widget-types/newsfeed",
+     "content/workspace/analysts/ai-features/orchestrator-mode",
+     "content/workspace/developers/ai-features/citations-for-documents",
+     "content/workspace/developers/widget-parameters/parameter-positioning",
+     "content/cli/configuration",
+     "content/workspace/developers/widget-types/html",
+     "content/cli/quickstart"
+    ]
+   },
+   "after_reading": {
+    "kept": [],
+    "recall": 0.0,
+    "precision": null,
+    "hit": false
+   }
+  },
+  {
+   "sha": "cdd9be94",
+   "date": "2025-11-16",
+   "subject": "Update Docs Style",
+   "message_words": 3,
+   "truth": [
+    "content/workspace/index"
+   ],
+   "predicted": [
+    "content/workspace/analysts/ai-features/generative-ui",
+    "content/workspace/getting-started/enterprise/administration",
+    "content/workspace/developers/widget-types/html",
+    "content/workspace/developers/ai-features/citations-for-documents",
+    "content/workspace/analysts/widgets/overview",
+    "content/desktop/api-keys",
+    "content/workspace/getting-started/platform-installer",
+    "content/cli/configuration"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 0,
+   "triage": {
+    "likely": [],
+    "also_check": [
+     "content/workspace/analysts/ai-features/generative-ui",
+     "content/workspace/getting-started/enterprise/administration",
+     "content/workspace/developers/widget-types/html",
+     "content/workspace/developers/ai-features/citations-for-documents",
+     "content/workspace/analysts/widgets/overview",
+     "content/desktop/api-keys",
+     "content/workspace/getting-started/platform-installer",
+     "content/cli/configuration"
+    ]
+   },
+   "after_reading": {
+    "kept": [],
+    "recall": 0.0,
+    "precision": null,
+    "hit": false
+   }
+  },
+  {
+   "sha": "d55981a8",
+   "date": "2025-11-13",
+   "subject": "Update apps-json-reference.md",
+   "message_words": 4,
+   "truth": [
+    "content/workspace/developers/json-specs/apps-json-reference"
+   ],
+   "predicted": [
+    "content/python/extensions/interface/openbb-api",
+    "content/workspace/developers/widget-types/live-grid",
+    "content/workspace/developers/data-integration",
+    "content/workspace/developers/widget-types/highcharts",
+    "content/workspace/developers/json-specs/apps-json-reference",
+    "content/workspace/index",
+    "content/workspace/developers/json-specs/agents-json-reference",
+    "content/workspace/analysts/dashboards/index"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 0.2,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/workspace/developers/json-specs/apps-json-reference"
+    ],
+    "also_check": [
+     "content/python/extensions/interface/openbb-api",
+     "content/workspace/developers/widget-types/live-grid",
+     "content/workspace/developers/data-integration",
+     "content/workspace/developers/widget-types/highcharts",
+     "content/workspace/index",
+     "content/workspace/developers/json-specs/agents-json-reference",
+     "content/workspace/analysts/dashboards/index"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/developers/json-specs/apps-json-reference"
+    ],
+    "recall": 1.0,
+    "precision": 1.0,
+    "hit": true
+   }
+  },
+  {
+   "sha": "bdc5685c",
+   "date": "2025-11-13",
+   "subject": "new groupby docs",
+   "message_words": 10,
+   "truth": [
+    "content/workspace/developers/json-specs/widgets-json-reference",
+    "content/workspace/developers/widget-configuration/render-functions",
+    "content/workspace/developers/widget-parameters/cell-click-grouping"
+   ],
+   "predicted": [
+    "content/workspace/developers/widget-configuration/render-functions",
+    "content/workspace/developers/widget-parameters/cell-click-grouping",
+    "content/workspace/developers/json-specs/widgets-json-reference",
+    "content/python/extensions/data-processing/quantitative",
+    "content/workspace/analysts/dashboards/index",
+    "content/workspace/developers/widget-types/plotly-charts",
+    "content/cli/interactive-charts",
+    "content/workspace/index"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.375,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/workspace/developers/widget-configuration/render-functions"
+    ],
+    "also_check": [
+     "content/workspace/developers/widget-parameters/cell-click-grouping",
+     "content/workspace/developers/json-specs/widgets-json-reference",
+     "content/python/extensions/data-processing/quantitative",
+     "content/workspace/analysts/dashboards/index",
+     "content/workspace/developers/widget-types/plotly-charts",
+     "content/cli/interactive-charts",
+     "content/workspace/index"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/developers/widget-configuration/render-functions"
+    ],
+    "recall": 0.333,
+    "precision": 1.0,
+    "hit": true
+   }
+  },
+  {
+   "sha": "4a72fd50",
+   "date": "2025-10-22",
+   "subject": "Update ODP Screenshots",
+   "message_words": 3,
+   "truth": [
+    "content/desktop/api-keys",
+    "content/desktop/backends",
+    "content/desktop/environments",
+    "content/desktop/installation"
+   ],
+   "predicted": [
+    "content/python/installation",
+    "content/workspace/getting-started/platform-installer",
+    "content/workspace/analysts/widgets/overview",
+    "content/python/extensions/index",
+    "content/workspace/analysts/widgets/interacting-with-data",
+    "content/cli/index",
+    "content/desktop/environments",
+    "content/desktop/installation"
+   ],
+   "basis": "hybrid",
+   "recall": 0.5,
+   "precision": 0.25,
+   "reciprocal_rank": 0.143,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/workspace/getting-started/platform-installer",
+     "content/workspace/analysts/widgets/overview",
+     "content/workspace/analysts/widgets/interacting-with-data",
+     "content/cli/index",
+     "content/desktop/environments",
+     "content/desktop/installation"
+    ],
+    "also_check": [
+     "content/python/installation",
+     "content/python/extensions/index"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/getting-started/platform-installer",
+     "content/workspace/analysts/widgets/overview",
+     "content/workspace/analysts/widgets/interacting-with-data",
+     "content/cli/index",
+     "content/desktop/environments",
+     "content/desktop/installation"
+    ],
+    "recall": 0.5,
+    "precision": 0.333,
+    "hit": true
+   }
+  },
+  {
+   "sha": "02f70a8c",
+   "date": "2025-10-21",
+   "subject": "Add missing screenshots",
+   "message_words": 3,
+   "truth": [
+    "content/workspace/analysts/ai-features/mcp-tools"
+   ],
+   "predicted": [
+    "content/workspace/analysts/widgets/overview",
+    "content/workspace/developers/widget-types/file-viewer",
+    "content/platform/usage/examples/economic_indicators",
+    "content/cli/quickstart",
+    "content/workspace/developers/widget-configuration/render-functions",
+    "content/workspace/analysts/ai-features/generative-ui",
+    "content/workspace/analysts/dashboards/index",
+    "content/platform/developer_guide/extensions"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/workspace/analysts/widgets/overview",
+     "content/workspace/developers/widget-types/file-viewer",
+     "content/cli/quickstart",
+     "content/workspace/developers/widget-configuration/render-functions",
+     "content/workspace/analysts/dashboards/index"
+    ],
+    "also_check": [
+     "content/platform/usage/examples/economic_indicators",
+     "content/workspace/analysts/ai-features/generative-ui",
+     "content/platform/developer_guide/extensions"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/analysts/widgets/overview",
+     "content/workspace/developers/widget-types/file-viewer",
+     "content/cli/quickstart",
+     "content/workspace/developers/widget-configuration/render-functions",
+     "content/workspace/analysts/dashboards/index"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "4e6b985b",
+   "date": "2025-09-30",
+   "subject": "Matching widget to mcp tool",
+   "message_words": 13,
+   "truth": [
+    "content/workspace/developers/json-specs/widgets-json-reference"
+   ],
+   "predicted": [
+    "content/workspace/developers/ai-features/highlight-widget-citations",
+    "content/workspace/analysts/ai-features/mcp-tools",
+    "content/workspace/analysts/excel-addin/troubleshooting",
+    "content/workspace/developers/json-specs/apps-json-reference",
+    "content/platform/usage/extensions/toolkit_extensions",
+    "content/workspace/analysts/widgets/interacting-with-data",
+    "content/workspace/developers/widget-parameters/parameter-grouping",
+    "content/workspace/developers/openbb-ai-sdk"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 1,
+   "triage": {
+    "likely": [
+     "content/workspace/developers/ai-features/highlight-widget-citations",
+     "content/workspace/analysts/ai-features/mcp-tools",
+     "content/workspace/analysts/excel-addin/troubleshooting",
+     "content/workspace/developers/json-specs/apps-json-reference",
+     "content/platform/usage/extensions/toolkit_extensions",
+     "content/workspace/analysts/widgets/interacting-with-data",
+     "content/workspace/developers/openbb-ai-sdk"
+    ],
+    "also_check": [
+     "content/workspace/developers/widget-parameters/parameter-grouping"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/developers/ai-features/highlight-widget-citations",
+     "content/workspace/analysts/ai-features/mcp-tools",
+     "content/workspace/analysts/excel-addin/troubleshooting",
+     "content/workspace/developers/json-specs/apps-json-reference",
+     "content/platform/usage/extensions/toolkit_extensions",
+     "content/workspace/analysts/widgets/interacting-with-data",
+     "content/workspace/developers/openbb-ai-sdk"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "7bb63dfe",
+   "date": "2025-09-18",
+   "subject": "AI agents revamp docs",
+   "message_words": 3,
+   "truth": [
+    "content/workspace/developers/json-specs/agents-json-reference"
+   ],
+   "predicted": [
+    "content/workspace/developers/ai-agents/ai-agents",
+    "content/workspace/developers/json-specs/agents-json-reference",
+    "content/workspace/analysts/ai-features/orchestrator-mode",
+    "content/workspace/index",
+    "content/workspace/analysts/apps",
+    "content/workspace/analysts/ai-features/copilot-basics",
+    "content/workspace/analysts/widgets/ai-generated-widgets",
+    "content/workspace/developers/apps/apps"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 0.5,
+   "hit": true,
+   "new_pages": 10,
+   "triage": {
+    "likely": [
+     "content/workspace/developers/ai-agents/ai-agents",
+     "content/workspace/index",
+     "content/workspace/analysts/apps"
+    ],
+    "also_check": [
+     "content/workspace/developers/json-specs/agents-json-reference",
+     "content/workspace/analysts/ai-features/orchestrator-mode",
+     "content/workspace/analysts/ai-features/copilot-basics",
+     "content/workspace/analysts/widgets/ai-generated-widgets",
+     "content/workspace/developers/apps/apps"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/developers/ai-agents/ai-agents",
+     "content/workspace/index",
+     "content/workspace/analysts/apps"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "82da48b6",
+   "date": "2025-09-16",
+   "subject": "MCP docs + Enterprise theme settings + orchestrator + genui",
+   "message_words": 7,
+   "truth": [
+    "content/workspace/analysts/ai-features/copilot-data-handling",
+    "content/workspace/developers/json-specs/widgets-json-reference",
+    "content/workspace/getting-started/pwa"
+   ],
+   "predicted": [
+    "content/workspace/developers/widget-types/plotly-charts",
+    "content/cli/configuration",
+    "content/workspace/analysts/widgets/interacting-with-data",
+    "content/workspace/getting-started/enterprise",
+    "content/platform/developer_guide/tutorials/add_new_provider_to_existing_extension",
+    "content/cli/data-sources",
+    "content/workspace/developers/data-integration",
+    "content/cli/routines/advanced-routines"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 8,
+   "triage": {
+    "likely": [
+     "content/workspace/developers/widget-types/plotly-charts",
+     "content/cli/configuration"
+    ],
+    "also_check": [
+     "content/workspace/analysts/widgets/interacting-with-data",
+     "content/workspace/getting-started/enterprise",
+     "content/platform/developer_guide/tutorials/add_new_provider_to_existing_extension",
+     "content/cli/data-sources",
+     "content/workspace/developers/data-integration",
+     "content/cli/routines/advanced-routines"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/developers/widget-types/plotly-charts",
+     "content/cli/configuration"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "515595ff",
+   "date": "2025-08-18",
+   "subject": "Add documentation for sparkline configuration in table widgets",
+   "message_words": 53,
+   "truth": [
+    "content/workspace/data-widgets/aggrid-table-charts",
+    "content/workspace/widgets-json-reference"
+   ],
+   "predicted": [
+    "content/workspace/widgets-json-reference",
+    "content/workspace/faqs",
+    "content/workspace/data-widgets/aggrid-table-charts",
+    "content/workspace/data-widgets/plotly-charts",
+    "content/workspace/openbb-copilot",
+    "content/workspace/data-widgets/index",
+    "content/workspace/data-widgets/omni",
+    "content/workspace/data-integration"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.25,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/workspace/widgets-json-reference",
+     "content/workspace/data-widgets/aggrid-table-charts"
+    ],
+    "also_check": [
+     "content/workspace/faqs",
+     "content/workspace/data-widgets/plotly-charts",
+     "content/workspace/openbb-copilot",
+     "content/workspace/data-widgets/index",
+     "content/workspace/data-widgets/omni",
+     "content/workspace/data-integration"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/widgets-json-reference",
+     "content/workspace/data-widgets/aggrid-table-charts"
+    ],
+    "recall": 1.0,
+    "precision": 1.0,
+    "hit": true
+   }
+  },
+  {
+   "sha": "6ca03621",
+   "date": "2025-08-06",
+   "subject": "add plotly raw data to docs",
+   "message_words": 13,
+   "truth": [
+    "content/workspace/data-widgets/plotly-charts",
+    "content/workspace/widgets-json-reference"
+   ],
+   "predicted": [
+    "content/cli/interactive-charts",
+    "content/workspace/data-widgets/highcharts",
+    "content/workspace/data-widgets/plotly-charts",
+    "content/workspace/data-widgets/live-grid",
+    "content/workspace/widgets-json-reference",
+    "content/platform/usage/extensions/toolkit_extensions",
+    "content/workspace/openbb-copilot",
+    "content/platform/developer_guide/tutorials/add_new_provider_to_existing_extension"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.25,
+   "reciprocal_rank": 0.333,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/cli/interactive-charts",
+     "content/workspace/data-widgets/plotly-charts",
+     "content/workspace/widgets-json-reference",
+     "content/platform/usage/extensions/toolkit_extensions"
+    ],
+    "also_check": [
+     "content/workspace/data-widgets/highcharts",
+     "content/workspace/data-widgets/live-grid",
+     "content/workspace/openbb-copilot",
+     "content/platform/developer_guide/tutorials/add_new_provider_to_existing_extension"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/cli/interactive-charts",
+     "content/workspace/data-widgets/plotly-charts",
+     "content/workspace/widgets-json-reference",
+     "content/platform/usage/extensions/toolkit_extensions"
+    ],
+    "recall": 1.0,
+    "precision": 0.5,
+    "hit": true
+   }
+  },
+  {
+   "sha": "4c35a6d2",
+   "date": "2025-07-30",
+   "subject": "Update obb-widget.md",
+   "message_words": 3,
+   "truth": [
+    "content/excel/obb-widget"
+   ],
+   "predicted": [
+    "content/platform/developer_guide/data_provider",
+    "content/workspace/widget-parameters/input-form",
+    "content/platform/installation",
+    "content/workspace/data-integration",
+    "content/platform/developer_guide/tutorials/add_new_provider_to_existing_extension",
+    "content/excel/obb-widget",
+    "content/workspace/widget-parameters/cell-click-grouping",
+    "content/workspace/widgets-json-reference"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 0.167,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [],
+    "also_check": [
+     "content/platform/developer_guide/data_provider",
+     "content/workspace/widget-parameters/input-form",
+     "content/platform/installation",
+     "content/workspace/data-integration",
+     "content/platform/developer_guide/tutorials/add_new_provider_to_existing_extension",
+     "content/excel/obb-widget",
+     "content/workspace/widget-parameters/cell-click-grouping",
+     "content/workspace/widgets-json-reference"
+    ]
+   },
+   "after_reading": {
+    "kept": [],
+    "recall": 0.0,
+    "precision": null,
+    "hit": false
+   }
+  },
+  {
+   "sha": "5741a37e",
+   "date": "2025-07-29",
+   "subject": "Updates for Platform V4.4.5",
+   "message_words": 14,
+   "truth": [
+    "content/platform/installation",
+    "content/platform/settings/environment_variables",
+    "content/platform/usage/extensions/data_extensions",
+    "content/platform/usage/extensions/toolkit_extensions"
+   ],
+   "predicted": [
+    "content/platform/faqs/data_providers",
+    "content/platform/faqs/platform_vs_sdk",
+    "content/workspace/core-widgets",
+    "content/workspace/installation",
+    "content/platform/installation",
+    "content/platform/developer_guide/extensions",
+    "content/cli/configuration",
+    "content/cli/installation"
+   ],
+   "basis": "hybrid",
+   "recall": 0.25,
+   "precision": 0.125,
+   "reciprocal_rank": 0.2,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/workspace/installation",
+     "content/platform/installation",
+     "content/cli/installation"
+    ],
+    "also_check": [
+     "content/platform/faqs/data_providers",
+     "content/platform/faqs/platform_vs_sdk",
+     "content/workspace/core-widgets",
+     "content/platform/developer_guide/extensions",
+     "content/cli/configuration"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/installation",
+     "content/platform/installation",
+     "content/cli/installation"
+    ],
+    "recall": 0.25,
+    "precision": 0.333,
+    "hit": true
+   }
+  },
+  {
+   "sha": "35ce2f93",
+   "date": "2025-07-24",
+   "subject": "Improve significantly AI agent docs",
+   "message_words": 16,
+   "truth": [
+    "content/workspace/data-widgets/index",
+    "content/workspace/faqs",
+    "content/workspace/openbb-copilot",
+    "content/workspace/widget-configuration/render-functions"
+   ],
+   "predicted": [
+    "content/workspace/index",
+    "content/workspace/ai-generated",
+    "content/platform/developer_guide/data_provider",
+    "content/workspace/core-widgets",
+    "content/platform/developer_guide/tutorials/add_extension",
+    "content/workspace/faqs",
+    "content/workspace/ai-agents",
+    "content/workspace/apps-json-reference"
+   ],
+   "basis": "hybrid",
+   "recall": 0.25,
+   "precision": 0.125,
+   "reciprocal_rank": 0.167,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/workspace/index",
+     "content/workspace/ai-generated",
+     "content/workspace/faqs",
+     "content/workspace/ai-agents"
+    ],
+    "also_check": [
+     "content/platform/developer_guide/data_provider",
+     "content/workspace/core-widgets",
+     "content/platform/developer_guide/tutorials/add_extension",
+     "content/workspace/apps-json-reference"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/index",
+     "content/workspace/ai-generated",
+     "content/workspace/faqs",
+     "content/workspace/ai-agents"
+    ],
+    "recall": 0.25,
+    "precision": 0.25,
+    "hit": true
+   }
+  },
+  {
+   "sha": "10f4e80b",
+   "date": "2025-06-18",
+   "subject": "Add widget parameter positioning documentation and enhance widgets.json reference",
+   "message_words": 10,
+   "truth": [
+    "content/workspace/data-widgets/file-viewer",
+    "content/workspace/widget-configuration/render-functions",
+    "content/workspace/widget-parameters/text-input",
+    "content/workspace/widgets-json-reference"
+   ],
+   "predicted": [
+    "content/workspace/widgets-json-reference",
+    "content/workspace/faqs",
+    "content/workspace/data-integration",
+    "content/workspace/data-widgets/index",
+    "content/workspace/core-widgets",
+    "content/workspace/apps-json-reference",
+    "content/workspace/data-widgets/highcharts",
+    "content/workspace/widget-parameters/parameter-grouping"
+   ],
+   "basis": "hybrid",
+   "recall": 0.25,
+   "precision": 0.125,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 2,
+   "triage": {
+    "likely": [
+     "content/workspace/widgets-json-reference",
+     "content/workspace/data-integration",
+     "content/workspace/data-widgets/index",
+     "content/workspace/core-widgets",
+     "content/workspace/data-widgets/highcharts",
+     "content/workspace/widget-parameters/parameter-grouping"
+    ],
+    "also_check": [
+     "content/workspace/faqs",
+     "content/workspace/apps-json-reference"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/widgets-json-reference",
+     "content/workspace/data-integration",
+     "content/workspace/data-widgets/index",
+     "content/workspace/core-widgets",
+     "content/workspace/data-widgets/highcharts",
+     "content/workspace/widget-parameters/parameter-grouping"
+    ],
+    "recall": 0.25,
+    "precision": 0.167,
+    "hit": true
+   }
+  },
+  {
+   "sha": "1e0d3029",
+   "date": "2025-06-17",
+   "subject": "warning on platform installer for workspace",
+   "message_words": 5,
+   "truth": [
+    "content/workspace/platform-installer"
+   ],
+   "predicted": [
+    "content/platform/installation",
+    "content/platform/developer_guide/dependency_management",
+    "content/workspace/platform-installer",
+    "content/workspace/data-integration",
+    "content/workspace/gallery",
+    "content/platform/getting_started/quickstart-workspace",
+    "content/workspace/faqs",
+    "content/platform/developer_guide/deprecating_endpoints"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 0.333,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/platform/installation",
+     "content/platform/developer_guide/dependency_management",
+     "content/workspace/platform-installer",
+     "content/platform/getting_started/quickstart-workspace"
+    ],
+    "also_check": [
+     "content/workspace/data-integration",
+     "content/workspace/gallery",
+     "content/workspace/faqs",
+     "content/platform/developer_guide/deprecating_endpoints"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/platform/installation",
+     "content/platform/developer_guide/dependency_management",
+     "content/workspace/platform-installer",
+     "content/platform/getting_started/quickstart-workspace"
+    ],
+    "recall": 1.0,
+    "precision": 0.25,
+    "hit": true
+   }
+  },
+  {
+   "sha": "557ea864",
+   "date": "2025-06-12",
+   "subject": "Update multi file section",
+   "message_words": 4,
+   "truth": [
+    "content/workspace/data-widgets/file-viewer"
+   ],
+   "predicted": [
+    "content/workspace/data-widgets/file-viewer",
+    "content/workspace/enterprise",
+    "content/workspace/faqs",
+    "content/bot/changelog/index",
+    "content/cli/routines/advanced-routines",
+    "content/platform/installation",
+    "content/platform/developer_guide/metadata",
+    "content/workspace/platform-installer"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/workspace/data-widgets/file-viewer",
+     "content/cli/routines/advanced-routines"
+    ],
+    "also_check": [
+     "content/workspace/enterprise",
+     "content/workspace/faqs",
+     "content/bot/changelog/index",
+     "content/platform/installation",
+     "content/platform/developer_guide/metadata",
+     "content/workspace/platform-installer"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/data-widgets/file-viewer",
+     "content/cli/routines/advanced-routines"
+    ],
+    "recall": 1.0,
+    "precision": 0.5,
+    "hit": true
+   }
+  },
+  {
+   "sha": "cc28994a",
+   "date": "2025-05-23",
+   "subject": "update to show what the structure is of app",
+   "message_words": 6,
+   "truth": [
+    "content/workspace/apps"
+   ],
+   "predicted": [
+    "content/workspace/faqs",
+    "content/bot/changelog/version1_0_8",
+    "content/platform/user_guides/add_toolkit_extension",
+    "content/bot/changelog/version1_0_2",
+    "content/platform/user_guides/add_data_to_existing_endpoint",
+    "content/bot/changelog/version1_0_7",
+    "content/workspace/widgets-json-reference",
+    "content/bot/changelog/version1_0_3"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 1,
+   "triage": {
+    "likely": [],
+    "also_check": [
+     "content/workspace/faqs",
+     "content/bot/changelog/version1_0_8",
+     "content/platform/user_guides/add_toolkit_extension",
+     "content/bot/changelog/version1_0_2",
+     "content/platform/user_guides/add_data_to_existing_endpoint",
+     "content/bot/changelog/version1_0_7",
+     "content/workspace/widgets-json-reference",
+     "content/bot/changelog/version1_0_3"
+    ]
+   },
+   "after_reading": {
+    "kept": [],
+    "recall": 0.0,
+    "precision": null,
+    "hit": false
+   }
+  },
+  {
+   "sha": "aafa7479",
+   "date": "2025-05-21",
+   "subject": "Fix some broken URLs and get rid of useless loading bar",
+   "message_words": 10,
+   "truth": [
+    "content/platform/getting_started/quickstart-workspace",
+    "content/workspace/faqs"
+   ],
+   "predicted": [
+    "content/platform/user_guides/add_data_to_existing_endpoint",
+    "content/bot/changelog/version1_0_8",
+    "content/platform/developer_guide/http_requests",
+    "content/bot/changelog/version1_0_0",
+    "content/platform/getting_started/historical_prices",
+    "content/bot/changelog/version1_0_6",
+    "content/workspace/core-widgets",
+    "content/bot/changelog/version1_0_7"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/platform/user_guides/add_data_to_existing_endpoint",
+     "content/bot/changelog/version1_0_8",
+     "content/bot/changelog/version1_0_0",
+     "content/bot/changelog/version1_0_6",
+     "content/bot/changelog/version1_0_7"
+    ],
+    "also_check": [
+     "content/platform/developer_guide/http_requests",
+     "content/platform/getting_started/historical_prices",
+     "content/workspace/core-widgets"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/platform/user_guides/add_data_to_existing_endpoint",
+     "content/bot/changelog/version1_0_8",
+     "content/bot/changelog/version1_0_0",
+     "content/bot/changelog/version1_0_6",
+     "content/bot/changelog/version1_0_7"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "4d401ea4",
+   "date": "2025-05-16",
+   "subject": "Update excel installation docs",
+   "message_words": 4,
+   "truth": [
+    "content/excel/getting-started/installation"
+   ],
+   "predicted": [
+    "content/excel/getting-started/installation",
+    "content/platform/installation",
+    "content/excel/templates",
+    "content/excel/help",
+    "content/excel/index",
+    "content/workspace/installation",
+    "content/platform/developer_guide/dependency_management",
+    "content/platform/user_guides/add_endpoint_to_existing_provider"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/excel/getting-started/installation"
+    ],
+    "also_check": [
+     "content/platform/installation",
+     "content/excel/templates",
+     "content/excel/help",
+     "content/excel/index",
+     "content/workspace/installation",
+     "content/platform/developer_guide/dependency_management",
+     "content/platform/user_guides/add_endpoint_to_existing_provider"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/excel/getting-started/installation"
+    ],
+    "recall": 1.0,
+    "precision": 1.0,
+    "hit": true
+   }
+  },
+  {
+   "sha": "677f7420",
+   "date": "2025-05-16",
+   "subject": "Update excel docs",
+   "message_words": 3,
+   "truth": [
+    "content/excel/getting-started/installation"
+   ],
+   "predicted": [
+    "content/excel/getting-started/installation",
+    "content/excel/index",
+    "content/excel/help",
+    "content/workspace/enterprise",
+    "content/bot/reference/discord/alerts/update",
+    "content/workspace/data-widgets/highcharts",
+    "content/platform/user_guides/add_data_to_existing_endpoint",
+    "content/cli/quickstart"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/cli/quickstart"
+    ],
+    "also_check": [
+     "content/excel/getting-started/installation",
+     "content/excel/index",
+     "content/excel/help",
+     "content/workspace/enterprise",
+     "content/bot/reference/discord/alerts/update",
+     "content/workspace/data-widgets/highcharts",
+     "content/platform/user_guides/add_data_to_existing_endpoint"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/cli/quickstart"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "2d247afb",
+   "date": "2025-05-06",
+   "subject": "updates some links and enterprise",
+   "message_words": 5,
+   "truth": [
+    "content/workspace/data-widgets/index",
+    "content/workspace/enterprise",
+    "content/workspace/widgets-json-reference"
+   ],
+   "predicted": [
+    "content/workspace/enterprise",
+    "content/workspace/index",
+    "content/bot/changelog/index",
+    "content/bot/changelog/version2_0_0",
+    "content/bot/changelog/version1_0_8",
+    "content/bot/changelog/version1_0_2",
+    "content/bot/changelog/version1_0_7",
+    "content/bot/changelog/version1_0_0"
+   ],
+   "basis": "hybrid",
+   "recall": 0.333,
+   "precision": 0.125,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/workspace/index",
+     "content/bot/changelog/index",
+     "content/bot/changelog/version2_0_0"
+    ],
+    "also_check": [
+     "content/workspace/enterprise",
+     "content/bot/changelog/version1_0_8",
+     "content/bot/changelog/version1_0_2",
+     "content/bot/changelog/version1_0_7",
+     "content/bot/changelog/version1_0_0"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/index",
+     "content/bot/changelog/index",
+     "content/bot/changelog/version2_0_0"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "64c9a3ea",
+   "date": "2025-05-02",
+   "subject": "i like long branch names",
+   "message_words": 4,
+   "truth": [
+    "content/workspace/apps",
+    "content/workspace/data-widgets/index",
+    "content/workspace/data-widgets/input-form",
+    "content/workspace/data-widgets/input-parameters",
+    "content/workspace/data-widgets/settings",
+    "content/workspace/data-widgets/tradingview-charts",
+    "content/workspace/enterprise",
+    "content/workspace/faqs",
+    "content/workspace/render-functions",
+    "content/workspace/widgets-json-reference"
+   ],
+   "predicted": [
+    "content/platform/user_guides/commitments_of_traders",
+    "content/platform/developer_guide/github",
+    "content/platform/faqs/platform_vs_sdk",
+    "content/bot/reference/discord/discovery/senate",
+    "content/platform/user_guides/add_endpoint_to_existing_provider",
+    "content/bot/reference/telegram/crypto/bigprints",
+    "content/platform/user_guides/add_data_to_existing_endpoint",
+    "content/bot/reference/discord/nft/collection"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 3,
+   "triage": {
+    "likely": [],
+    "also_check": [
+     "content/platform/user_guides/commitments_of_traders",
+     "content/platform/developer_guide/github",
+     "content/platform/faqs/platform_vs_sdk",
+     "content/bot/reference/discord/discovery/senate",
+     "content/platform/user_guides/add_endpoint_to_existing_provider",
+     "content/bot/reference/telegram/crypto/bigprints",
+     "content/platform/user_guides/add_data_to_existing_endpoint",
+     "content/bot/reference/discord/nft/collection"
+    ]
+   },
+   "after_reading": {
+    "kept": [],
+    "recall": 0.0,
+    "precision": null,
+    "hit": false
+   }
+  },
+  {
+   "sha": "dafd8213",
+   "date": "2025-05-01",
+   "subject": "Remove registry file req for decorator, add to boilerplate code",
+   "message_words": 9,
+   "truth": [
+    "content/workspace/data-widgets/index"
+   ],
+   "predicted": [
+    "content/workspace/data-widgets/index",
+    "content/platform/user_guides/add_data_to_existing_endpoint",
+    "content/cli/routines/advanced-routines",
+    "content/platform/user_guides/add_endpoint_to_existing_provider",
+    "content/platform/user_guides/add_data_provider_extension",
+    "content/bot/reference/telegram/overview/watchlist_remove",
+    "content/workspace/core-widgets",
+    "content/platform/developer_guide/http_requests"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/workspace/data-widgets/index"
+    ],
+    "also_check": [
+     "content/platform/user_guides/add_data_to_existing_endpoint",
+     "content/cli/routines/advanced-routines",
+     "content/platform/user_guides/add_endpoint_to_existing_provider",
+     "content/platform/user_guides/add_data_provider_extension",
+     "content/bot/reference/telegram/overview/watchlist_remove",
+     "content/workspace/core-widgets",
+     "content/platform/developer_guide/http_requests"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/workspace/data-widgets/index"
+    ],
+    "recall": 1.0,
+    "precision": 1.0,
+    "hit": true
+   }
+  },
+  {
+   "sha": "7aa576eb",
+   "date": "2025-04-30",
+   "subject": "Refactor overall docs",
+   "message_words": 3,
+   "truth": [
+    "content/workspace/custom-backend/Widgets/live_grid",
+    "content/workspace/custom-backend/advanced-controls/render-functions",
+    "content/workspace/custom-backend/faqs",
+    "content/workspace/enterprise",
+    "content/workspace/index",
+    "content/workspace/openbb-copilot",
+    "content/workspace/platform-installer"
+   ],
+   "predicted": [
+    "content/bot/reference/telegram/flow/flowsum/top",
+    "content/platform/developer_guide/documentation_development",
+    "content/bot/reference/discord/flow/sumtop",
+    "content/cli/routines/advanced-routines",
+    "content/bot/reference/discord/charts/cw",
+    "content/platform/developer_guide/metadata",
+    "content/bot/reference/discord/flow/sumweek",
+    "content/platform/user_guides/basic_syntax"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 19,
+   "triage": {
+    "likely": [],
+    "also_check": [
+     "content/bot/reference/telegram/flow/flowsum/top",
+     "content/platform/developer_guide/documentation_development",
+     "content/bot/reference/discord/flow/sumtop",
+     "content/cli/routines/advanced-routines",
+     "content/bot/reference/discord/charts/cw",
+     "content/platform/developer_guide/metadata",
+     "content/bot/reference/discord/flow/sumweek",
+     "content/platform/user_guides/basic_syntax"
+    ]
+   },
+   "after_reading": {
+    "kept": [],
+    "recall": 0.0,
+    "precision": null,
+    "hit": false
+   }
+  },
+  {
+   "sha": "05842d75",
+   "date": "2025-04-07",
+   "subject": "Update Platform Architecture Overview & Markdown Generator",
+   "message_words": 6,
+   "truth": [
+    "content/platform/developer_guide/architecture_overview",
+    "content/platform/developer_guide/contributing",
+    "content/platform/developer_guide/metadata",
+    "content/platform/installation",
+    "content/platform/settings_and_environment_variables",
+    "content/platform/user_guides/add_command_examples",
+    "content/platform/user_guides/metadata"
+   ],
+   "predicted": [
+    "content/platform/developer_guide/contributing",
+    "content/platform/developer_guide/documentation_development",
+    "content/platform/developer_guide/architecture_overview",
+    "content/bot/changelog/version1_0_2",
+    "content/platform/developer_guide/tests",
+    "content/bot/changelog/version1_0_7",
+    "content/cli/index",
+    "content/bot/changelog/version1_0_0"
+   ],
+   "basis": "hybrid",
+   "recall": 0.286,
+   "precision": 0.25,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/platform/developer_guide/architecture_overview"
+    ],
+    "also_check": [
+     "content/platform/developer_guide/contributing",
+     "content/platform/developer_guide/documentation_development",
+     "content/bot/changelog/version1_0_2",
+     "content/platform/developer_guide/tests",
+     "content/bot/changelog/version1_0_7",
+     "content/cli/index",
+     "content/bot/changelog/version1_0_0"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/platform/developer_guide/architecture_overview"
+    ],
+    "recall": 0.143,
+    "precision": 1.0,
+    "hit": true
+   }
+  },
+  {
+   "sha": "44254be6",
+   "date": "2025-01-22",
+   "subject": "Update copilot docs for widgets 2.0",
+   "message_words": 5,
+   "truth": [
+    "content/terminal/openbb-copilot"
+   ],
+   "predicted": [
+    "content/terminal/widgets",
+    "content/terminal/openbb-copilot",
+    "content/terminal/custom-backend/widgets.json",
+    "content/terminal/tutorials/index",
+    "content/terminal/upload-files",
+    "content/bot/changelog/version1_0_2",
+    "content/terminal/tutorials/earnings-update",
+    "content/bot/changelog/index"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 0.5,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/terminal/widgets",
+     "content/terminal/openbb-copilot",
+     "content/terminal/custom-backend/widgets.json",
+     "content/terminal/tutorials/index",
+     "content/terminal/upload-files"
+    ],
+    "also_check": [
+     "content/bot/changelog/version1_0_2",
+     "content/terminal/tutorials/earnings-update",
+     "content/bot/changelog/index"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/terminal/widgets",
+     "content/terminal/openbb-copilot",
+     "content/terminal/custom-backend/widgets.json",
+     "content/terminal/tutorials/index",
+     "content/terminal/upload-files"
+    ],
+    "recall": 1.0,
+    "precision": 0.2,
+    "hit": true
+   }
+  },
+  {
+   "sha": "c11c5047",
+   "date": "2024-12-23",
+   "subject": "WiP - first pass at rewrite for custom backend",
+   "message_words": 7,
+   "truth": [
+    "content/terminal/custom-backend/custom-backend",
+    "content/terminal/custom-backend/widgets.json"
+   ],
+   "predicted": [
+    "content/terminal/custom-backend/custom-backend",
+    "content/platform/getting_started/create_new_router_extension",
+    "content/platform/getting_started/api_requests",
+    "content/terminal/custom-backend/widgets.json",
+    "content/excel/data-connectors",
+    "content/platform/user_guides/add_data_to_existing_endpoint",
+    "content/terminal/openbb-copilot",
+    "content/bot/changelog/version1_0_1"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.25,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 11,
+   "triage": {
+    "likely": [
+     "content/terminal/custom-backend/custom-backend",
+     "content/platform/getting_started/create_new_router_extension",
+     "content/platform/getting_started/api_requests",
+     "content/excel/data-connectors",
+     "content/platform/user_guides/add_data_to_existing_endpoint",
+     "content/terminal/openbb-copilot"
+    ],
+    "also_check": [
+     "content/terminal/custom-backend/widgets.json",
+     "content/bot/changelog/version1_0_1"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/terminal/custom-backend/custom-backend",
+     "content/platform/getting_started/create_new_router_extension",
+     "content/platform/getting_started/api_requests",
+     "content/excel/data-connectors",
+     "content/platform/user_guides/add_data_to_existing_endpoint",
+     "content/terminal/openbb-copilot"
+    ],
+    "recall": 0.5,
+    "precision": 0.167,
+    "hit": true
+   }
+  },
+  {
+   "sha": "637b2151",
+   "date": "2024-12-09",
+   "subject": "Platform Install Page - Fix/Clarify Extras Install",
+   "message_words": 7,
+   "truth": [
+    "content/platform/installation"
+   ],
+   "predicted": [
+    "content/platform/installation",
+    "content/platform/developer_guide/dependency_management",
+    "content/cli/installation",
+    "content/platform/developer_guide/index",
+    "content/bot/changelog/version1_0_8",
+    "content/platform/developer_guide/tests",
+    "content/bot/changelog/version1_0_0",
+    "content/platform/user_guides/add_endpoint_to_existing_provider"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/platform/installation",
+     "content/platform/developer_guide/dependency_management",
+     "content/platform/developer_guide/index"
+    ],
+    "also_check": [
+     "content/cli/installation",
+     "content/bot/changelog/version1_0_8",
+     "content/platform/developer_guide/tests",
+     "content/bot/changelog/version1_0_0",
+     "content/platform/user_guides/add_endpoint_to_existing_provider"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/platform/installation",
+     "content/platform/developer_guide/dependency_management",
+     "content/platform/developer_guide/index"
+    ],
+    "recall": 1.0,
+    "precision": 0.333,
+    "hit": true
+   }
+  },
+  {
+   "sha": "735419c2",
+   "date": "2024-12-06",
+   "subject": "Copilot docs overhaul",
+   "message_words": 3,
+   "truth": [
+    "content/terminal/openbb-copilot"
+   ],
+   "predicted": [
+    "content/terminal/bring-your-own-copilot",
+    "content/terminal/openbb-copilot",
+    "content/terminal/tutorials/ai-insights",
+    "content/terminal/tutorials/earnings-update",
+    "content/bot/changelog/index",
+    "content/terminal/tutorials/ai",
+    "content/platform/developer_guide/documentation_development",
+    "content/terminal/enterprise"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 0.5,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/terminal/tutorials/ai-insights",
+     "content/terminal/tutorials/earnings-update",
+     "content/terminal/tutorials/ai",
+     "content/terminal/enterprise"
+    ],
+    "also_check": [
+     "content/terminal/bring-your-own-copilot",
+     "content/terminal/openbb-copilot",
+     "content/bot/changelog/index",
+     "content/platform/developer_guide/documentation_development"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/terminal/tutorials/ai-insights",
+     "content/terminal/tutorials/earnings-update",
+     "content/terminal/tutorials/ai",
+     "content/terminal/enterprise"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "0be248ae",
+   "date": "2024-12-02",
+   "subject": "Updates To Settings & Environment Variables Page + Installer Patch Instructions",
+   "message_words": 8,
+   "truth": [
+    "content/platform/installation",
+    "content/platform/user_guides/rest_api",
+    "content/platform/user_guides/settings_and_environment_variables"
+   ],
+   "predicted": [
+    "content/platform/user_guides/settings_and_environment_variables",
+    "content/cli/configuration",
+    "content/bot/changelog/version1_0_8",
+    "content/terminal/platform-installer",
+    "content/bot/changelog/version1_0_2",
+    "content/platform/user_guides/rest_api",
+    "content/bot/changelog/version1_0_6",
+    "content/platform/user_guides/basic_syntax"
+   ],
+   "basis": "hybrid",
+   "recall": 0.667,
+   "precision": 0.25,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/cli/configuration",
+     "content/terminal/platform-installer"
+    ],
+    "also_check": [
+     "content/platform/user_guides/settings_and_environment_variables",
+     "content/bot/changelog/version1_0_8",
+     "content/bot/changelog/version1_0_2",
+     "content/platform/user_guides/rest_api",
+     "content/bot/changelog/version1_0_6",
+     "content/platform/user_guides/basic_syntax"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/cli/configuration",
+     "content/terminal/platform-installer"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "95c6cf36",
+   "date": "2024-11-25",
+   "subject": "csp settings for docs",
+   "message_words": 4,
+   "truth": [
+    "content/terminal/index",
+    "content/terminal/platform-installer"
+   ],
+   "predicted": [
+    "content/cli/configuration",
+    "content/platform/user_guides/settings_and_environment_variables",
+    "content/platform/user_guides/rest_api",
+    "content/bot/usage/customizing/index",
+    "content/cli/data-sources",
+    "content/cli/openbbuserdata",
+    "content/bot/reference/telegram/darkpool/bigprintsdp",
+    "content/terminal/dashboards"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/terminal/dashboards"
+    ],
+    "also_check": [
+     "content/cli/configuration",
+     "content/platform/user_guides/settings_and_environment_variables",
+     "content/platform/user_guides/rest_api",
+     "content/bot/usage/customizing/index",
+     "content/cli/data-sources",
+     "content/cli/openbbuserdata",
+     "content/bot/reference/telegram/darkpool/bigprintsdp"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/terminal/dashboards"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "d338e500",
+   "date": "2024-11-25",
+   "subject": "update custom-backend for endpoint param and type",
+   "message_words": 8,
+   "truth": [
+    "content/terminal/custom-backend/widgets.json"
+   ],
+   "predicted": [
+    "content/terminal/data-connector",
+    "content/terminal/custom-backend/custom-backend",
+    "content/terminal/api-endpoints",
+    "content/platform/user_guides/add_toolkit_extension",
+    "content/terminal/custom-backend/widgets.json",
+    "content/terminal/platform-installer",
+    "content/platform/user_guides/add_data_to_existing_endpoint",
+    "content/platform/user_guides/add_data_provider_extension"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 0.2,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/terminal/data-connector",
+     "content/terminal/custom-backend/custom-backend",
+     "content/platform/user_guides/add_toolkit_extension",
+     "content/terminal/custom-backend/widgets.json",
+     "content/terminal/platform-installer",
+     "content/platform/user_guides/add_data_to_existing_endpoint"
+    ],
+    "also_check": [
+     "content/terminal/api-endpoints",
+     "content/platform/user_guides/add_data_provider_extension"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/terminal/data-connector",
+     "content/terminal/custom-backend/custom-backend",
+     "content/platform/user_guides/add_toolkit_extension",
+     "content/terminal/custom-backend/widgets.json",
+     "content/terminal/platform-installer",
+     "content/platform/user_guides/add_data_to_existing_endpoint"
+    ],
+    "recall": 1.0,
+    "precision": 0.167,
+    "hit": true
+   }
+  },
+  {
+   "sha": "857c7bfc",
+   "date": "2024-11-19",
+   "subject": "[Platform] Remove GitHub Container Registry Reference From Install",
+   "message_words": 8,
+   "truth": [
+    "content/platform/installation"
+   ],
+   "predicted": [
+    "content/platform/installation",
+    "content/platform/developer_guide/dependency_management",
+    "content/platform/user_guides/add_data_to_existing_endpoint",
+    "content/cli/installation",
+    "content/platform/faqs/platform_vs_sdk",
+    "content/cli/configuration",
+    "content/platform/developer_guide/documentation_development",
+    "content/bot/reference/discord/discovery/ipolist"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/platform/installation"
+    ],
+    "also_check": [
+     "content/platform/developer_guide/dependency_management",
+     "content/platform/user_guides/add_data_to_existing_endpoint",
+     "content/cli/installation",
+     "content/platform/faqs/platform_vs_sdk",
+     "content/cli/configuration",
+     "content/platform/developer_guide/documentation_development",
+     "content/bot/reference/discord/discovery/ipolist"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/platform/installation"
+    ],
+    "recall": 1.0,
+    "precision": 1.0,
+    "hit": true
+   }
+  },
+  {
+   "sha": "e4920844",
+   "date": "2024-11-19",
+   "subject": "Update COT Page",
+   "message_words": 3,
+   "truth": [
+    "content/platform/user_guides/extensions"
+   ],
+   "predicted": [
+    "content/bot/reference/discord/alerts/update",
+    "content/platform/developer_guide/commitment_of_traders",
+    "content/bot/changelog/index",
+    "content/bot/changelog/version2_0_0",
+    "content/bot/changelog/version1_0_2",
+    "content/bot/changelog/version1_0_8",
+    "content/bot/changelog/version1_0_0",
+    "content/bot/changelog/version1_0_1"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 1,
+   "triage": {
+    "likely": [],
+    "also_check": [
+     "content/bot/reference/discord/alerts/update",
+     "content/platform/developer_guide/commitment_of_traders",
+     "content/bot/changelog/index",
+     "content/bot/changelog/version2_0_0",
+     "content/bot/changelog/version1_0_2",
+     "content/bot/changelog/version1_0_8",
+     "content/bot/changelog/version1_0_0",
+     "content/bot/changelog/version1_0_1"
+    ]
+   },
+   "after_reading": {
+    "kept": [],
+    "recall": 0.0,
+    "precision": null,
+    "hit": false
+   }
+  },
+  {
+   "sha": "b6972cdd",
+   "date": "2024-11-08",
+   "subject": "fix TOC on terminal tutorials",
+   "message_words": 4,
+   "truth": [
+    "content/terminal/tutorials/index"
+   ],
+   "predicted": [
+    "content/terminal/tutorials/index",
+    "content/bot/reference/telegram/info/start",
+    "content/terminal/database-integrations/database-integrations",
+    "content/bot/reference/discord/info/support",
+    "content/excel/help",
+    "content/bot/changelog/version1_0_7",
+    "content/platform/user_guides/add_data_to_existing_endpoint",
+    "content/bot/reference/discord/discovery/senate"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [],
+    "also_check": [
+     "content/terminal/tutorials/index",
+     "content/bot/reference/telegram/info/start",
+     "content/terminal/database-integrations/database-integrations",
+     "content/bot/reference/discord/info/support",
+     "content/excel/help",
+     "content/bot/changelog/version1_0_7",
+     "content/platform/user_guides/add_data_to_existing_endpoint",
+     "content/bot/reference/discord/discovery/senate"
+    ]
+   },
+   "after_reading": {
+    "kept": [],
+    "recall": 0.0,
+    "precision": null,
+    "hit": false
+   }
+  },
+  {
+   "sha": "680cb01f",
+   "date": "2024-11-08",
+   "subject": "Add Error Section To Platform FAQ & Update Extensions Page.",
+   "message_words": 8,
+   "truth": [
+    "content/platform/faqs/index",
+    "content/platform/installation",
+    "content/platform/user_guides/extensions"
+   ],
+   "predicted": [
+    "content/platform/installation",
+    "content/platform/developer_guide/contributing",
+    "content/platform/developer_guide/tests",
+    "content/platform/user_guides/add_data_to_existing_endpoint",
+    "content/platform/developer_guide/index",
+    "content/platform/faqs/data_providers",
+    "content/platform/faqs/index",
+    "content/platform/user_guides/add_data_provider_extension"
+   ],
+   "basis": "hybrid",
+   "recall": 0.667,
+   "precision": 0.25,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 1,
+   "triage": {
+    "likely": [
+     "content/platform/faqs/data_providers",
+     "content/platform/faqs/index",
+     "content/platform/user_guides/add_data_provider_extension"
+    ],
+    "also_check": [
+     "content/platform/installation",
+     "content/platform/developer_guide/contributing",
+     "content/platform/developer_guide/tests",
+     "content/platform/user_guides/add_data_to_existing_endpoint",
+     "content/platform/developer_guide/index"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/platform/faqs/data_providers",
+     "content/platform/faqs/index",
+     "content/platform/user_guides/add_data_provider_extension"
+    ],
+    "recall": 0.333,
+    "precision": 0.333,
+    "hit": true
+   }
+  },
+  {
+   "sha": "c088c0bd",
+   "date": "2024-10-29",
+   "subject": "Add instructions on running ngrok to connect open source platform",
+   "message_words": 8,
+   "truth": [
+    "content/terminal/platform-installer"
+   ],
+   "predicted": [
+    "content/terminal/platform-installer",
+    "content/platform/getting_started/create_new_provider_extension",
+    "content/terminal/custom-backend/custom-backend",
+    "content/platform/installation",
+    "content/cli/installation",
+    "content/platform/developer_guide/extensions",
+    "content/platform/getting_started/create_new_router_extension",
+    "content/platform/user_guides/extensions"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/terminal/platform-installer",
+     "content/platform/installation"
+    ],
+    "also_check": [
+     "content/platform/getting_started/create_new_provider_extension",
+     "content/terminal/custom-backend/custom-backend",
+     "content/cli/installation",
+     "content/platform/developer_guide/extensions",
+     "content/platform/getting_started/create_new_router_extension",
+     "content/platform/user_guides/extensions"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/terminal/platform-installer",
+     "content/platform/installation"
+    ],
+    "recall": 1.0,
+    "precision": 0.5,
+    "hit": true
+   }
+  },
+  {
+   "sha": "30b9b64b",
+   "date": "2024-10-24",
+   "subject": "Update docs + S3 bucket pictures",
+   "message_words": 4,
+   "truth": [
+    "content/pro/openbb-copilot"
+   ],
+   "predicted": [
+    "content/bot/reference/discord/alerts/update",
+    "content/pro/upload-files",
+    "content/pro/tutorials/earnings-update",
+    "content/bot/changelog/version1_0_3",
+    "content/platform/developer_guide/dependency_management",
+    "content/platform/developer_guide/metadata",
+    "content/pro/tutorials/data-to-charts",
+    "content/platform/user_guides/add_endpoint_to_existing_provider"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/pro/upload-files"
+    ],
+    "also_check": [
+     "content/bot/reference/discord/alerts/update",
+     "content/pro/tutorials/earnings-update",
+     "content/bot/changelog/version1_0_3",
+     "content/platform/developer_guide/dependency_management",
+     "content/platform/developer_guide/metadata",
+     "content/pro/tutorials/data-to-charts",
+     "content/platform/user_guides/add_endpoint_to_existing_provider"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/pro/upload-files"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "0b21d8bd",
+   "date": "2024-10-10",
+   "subject": "adding instructions for users on safari/brave to do https",
+   "message_words": 7,
+   "truth": [
+    "content/pro/custom-backend/custom-backend",
+    "content/pro/platform-installer"
+   ],
+   "predicted": [
+    "content/excel/data-connectors",
+    "content/bot/reference/discord/crypto/ir",
+    "content/excel/help",
+    "content/bot/reference/discord/crypto/compfees",
+    "content/platform/user_guides/add_data_provider_extension",
+    "content/platform/getting_started/create_new_router_extension",
+    "content/pro/dashboards",
+    "content/bot/usage/telegram"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/excel/data-connectors",
+     "content/excel/help"
+    ],
+    "also_check": [
+     "content/bot/reference/discord/crypto/ir",
+     "content/bot/reference/discord/crypto/compfees",
+     "content/platform/user_guides/add_data_provider_extension",
+     "content/platform/getting_started/create_new_router_extension",
+     "content/pro/dashboards",
+     "content/bot/usage/telegram"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/excel/data-connectors",
+     "content/excel/help"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "7e041c8a",
+   "date": "2024-10-06",
+   "subject": "Update docs & create new tutorials",
+   "message_words": 5,
+   "truth": [
+    "content/pro/tutorials/ai",
+    "content/pro/tutorials/bring-data",
+    "content/pro/tutorials/data-to-charts",
+    "content/pro/tutorials/index",
+    "content/pro/tutorials/layouts-watchlist",
+    "content/pro/tutorials/overlay"
+   ],
+   "predicted": [
+    "content/pro/tutorials/index",
+    "content/platform/getting_started/create_new_provider_extension",
+    "content/platform/user_guides/add_toolkit_extension",
+    "content/bot/changelog/version1_0_7",
+    "content/platform/installation",
+    "content/bot/changelog/version1_0_6",
+    "content/platform/user_guides/add_data_provider_extension",
+    "content/bot/changelog/version1_0_2"
+   ],
+   "basis": "hybrid",
+   "recall": 0.167,
+   "precision": 0.125,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 3,
+   "triage": {
+    "likely": [
+     "content/pro/tutorials/index",
+     "content/bot/changelog/version1_0_6",
+     "content/bot/changelog/version1_0_2"
+    ],
+    "also_check": [
+     "content/platform/getting_started/create_new_provider_extension",
+     "content/platform/user_guides/add_toolkit_extension",
+     "content/bot/changelog/version1_0_7",
+     "content/platform/installation",
+     "content/platform/user_guides/add_data_provider_extension"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/pro/tutorials/index",
+     "content/bot/changelog/version1_0_6",
+     "content/bot/changelog/version1_0_2"
+    ],
+    "recall": 0.167,
+    "precision": 0.333,
+    "hit": true
+   }
+  },
+  {
+   "sha": "393db879",
+   "date": "2024-10-06",
+   "subject": "Docs for Platform Installer API - Widget filtering",
+   "message_words": 7,
+   "truth": [
+    "content/excel/index",
+    "content/pro/custom-backend/custom-backend",
+    "content/pro/enterprise",
+    "content/pro/index",
+    "content/pro/native-integrations/index"
+   ],
+   "predicted": [
+    "content/pro/widgets",
+    "content/pro/custom-backend/custom-backend",
+    "content/platform/user_guides/add_data_provider_extension",
+    "content/platform/user_guides/settings_and_environment_variables",
+    "content/platform/developer_guide/architecture_overview",
+    "content/bot/changelog/version1_0_2",
+    "content/platform/user_guides/add_endpoint_to_existing_provider",
+    "content/bot/changelog/version1_0_1"
+   ],
+   "basis": "hybrid",
+   "recall": 0.2,
+   "precision": 0.125,
+   "reciprocal_rank": 0.5,
+   "hit": true,
+   "new_pages": 1,
+   "triage": {
+    "likely": [],
+    "also_check": [
+     "content/pro/widgets",
+     "content/pro/custom-backend/custom-backend",
+     "content/platform/user_guides/add_data_provider_extension",
+     "content/platform/user_guides/settings_and_environment_variables",
+     "content/platform/developer_guide/architecture_overview",
+     "content/bot/changelog/version1_0_2",
+     "content/platform/user_guides/add_endpoint_to_existing_provider",
+     "content/bot/changelog/version1_0_1"
+    ]
+   },
+   "after_reading": {
+    "kept": [],
+    "recall": 0.0,
+    "precision": null,
+    "hit": false
+   }
+  },
+  {
+   "sha": "4fad9bdb",
+   "date": "2024-10-02",
+   "subject": "docs: fix naming and links",
+   "message_words": 5,
+   "truth": [
+    "content/platform/installation"
+   ],
+   "predicted": [
+    "content/platform/developer_guide/github",
+    "content/bot/reference/discord/info/support",
+    "content/bot/reference/discord/info/about",
+    "content/bot/reference/telegram/info/start",
+    "content/bot/reference/telegram/info/about",
+    "content/bot/reference/discord/discovery/house",
+    "content/bot/reference/discord/discovery/fgindex",
+    "content/bot/reference/discord/discovery/senate"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/platform/developer_guide/github",
+     "content/bot/reference/discord/info/support",
+     "content/bot/reference/discord/info/about",
+     "content/bot/reference/discord/discovery/house"
+    ],
+    "also_check": [
+     "content/bot/reference/telegram/info/start",
+     "content/bot/reference/telegram/info/about",
+     "content/bot/reference/discord/discovery/fgindex",
+     "content/bot/reference/discord/discovery/senate"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/platform/developer_guide/github",
+     "content/bot/reference/discord/info/support",
+     "content/bot/reference/discord/info/about",
+     "content/bot/reference/discord/discovery/house"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "5dd33098",
+   "date": "2024-10-02",
+   "subject": "docs: fix typo",
+   "message_words": 3,
+   "truth": [
+    "content/platform/developer_guide/architecture_overview"
+   ],
+   "predicted": [
+    "content/excel/help",
+    "content/bot/reference/discord/discovery/fgindex",
+    "content/platform/developer_guide/tests",
+    "content/bot/reference/telegram/screeners/scr/ah",
+    "content/platform/user_guides/add_data_to_existing_endpoint",
+    "content/bot/reference/discord/info/support",
+    "content/platform/user_guides/add_endpoint_to_existing_provider",
+    "content/bot/reference/telegram/info/start"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/excel/help",
+     "content/bot/reference/discord/discovery/fgindex",
+     "content/platform/developer_guide/tests",
+     "content/platform/user_guides/add_data_to_existing_endpoint",
+     "content/platform/user_guides/add_endpoint_to_existing_provider"
+    ],
+    "also_check": [
+     "content/bot/reference/telegram/screeners/scr/ah",
+     "content/bot/reference/discord/info/support",
+     "content/bot/reference/telegram/info/start"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/excel/help",
+     "content/bot/reference/discord/discovery/fgindex",
+     "content/platform/developer_guide/tests",
+     "content/platform/user_guides/add_data_to_existing_endpoint",
+     "content/platform/user_guides/add_endpoint_to_existing_provider"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "41bcab5f",
+   "date": "2024-09-24",
+   "subject": "fix youtube video and broken link",
+   "message_words": 6,
+   "truth": [
+    "content/cli/index",
+    "content/pro/index"
+   ],
+   "predicted": [
+    "content/pro/tutorials/report",
+    "content/excel/getting-started/basics",
+    "content/bot/changelog/version1_0_8",
+    "content/bot/changelog/version1_0_6",
+    "content/bot/changelog/version1_0_0",
+    "content/bot/changelog/version2_0_0",
+    "content/bot/reference/telegram/info/start",
+    "content/bot/changelog/version1_0_2"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/pro/tutorials/report",
+     "content/excel/getting-started/basics",
+     "content/bot/changelog/version1_0_2"
+    ],
+    "also_check": [
+     "content/bot/changelog/version1_0_8",
+     "content/bot/changelog/version1_0_6",
+     "content/bot/changelog/version1_0_0",
+     "content/bot/changelog/version2_0_0",
+     "content/bot/reference/telegram/info/start"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/pro/tutorials/report",
+     "content/excel/getting-started/basics",
+     "content/bot/changelog/version1_0_2"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "a3a71dbc",
+   "date": "2024-09-16",
+   "subject": "Update Copilot docs (#15)",
+   "message_words": 3,
+   "truth": [
+    "content/pro/api-endpoints",
+    "content/pro/custom-backend/custom-backend"
+   ],
+   "predicted": [
+    "content/pro/openbb-copilot",
+    "content/pro/bring-your-own-copilot",
+    "content/pro/tutorials/index",
+    "content/bot/changelog/index",
+    "content/pro/upload-files",
+    "content/bot/changelog/version1_0_8",
+    "content/pro/widgets",
+    "content/bot/changelog/version1_0_2"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/pro/bring-your-own-copilot",
+     "content/pro/tutorials/index",
+     "content/bot/changelog/version1_0_2"
+    ],
+    "also_check": [
+     "content/pro/openbb-copilot",
+     "content/bot/changelog/index",
+     "content/pro/upload-files",
+     "content/bot/changelog/version1_0_8",
+     "content/pro/widgets"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/pro/bring-your-own-copilot",
+     "content/pro/tutorials/index",
+     "content/bot/changelog/version1_0_2"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "d86c06ed",
+   "date": "2024-09-11",
+   "subject": "add api endpoints",
+   "message_words": 3,
+   "truth": [
+    "content/pro/api-endpoints",
+    "content/pro/custom-backend/widgets.json",
+    "content/pro/upload-files"
+   ],
+   "predicted": [
+    "content/pro/api-endpoints",
+    "content/platform/user_guides/add_command_examples",
+    "content/pro/custom-backend/custom-backend",
+    "content/platform/user_guides/rest_api",
+    "content/platform/developer_guide/deprecating_endpoints",
+    "content/pro/openbb-copilot",
+    "content/platform/user_guides/add_data_to_existing_endpoint",
+    "content/platform/user_guides/add_data_provider_extension"
+   ],
+   "basis": "hybrid",
+   "recall": 0.333,
+   "precision": 0.125,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 1,
+   "triage": {
+    "likely": [
+     "content/pro/api-endpoints",
+     "content/platform/user_guides/rest_api",
+     "content/pro/openbb-copilot"
+    ],
+    "also_check": [
+     "content/platform/user_guides/add_command_examples",
+     "content/pro/custom-backend/custom-backend",
+     "content/platform/developer_guide/deprecating_endpoints",
+     "content/platform/user_guides/add_data_to_existing_endpoint",
+     "content/platform/user_guides/add_data_provider_extension"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/pro/api-endpoints",
+     "content/platform/user_guides/rest_api",
+     "content/pro/openbb-copilot"
+    ],
+    "recall": 0.333,
+    "precision": 0.333,
+    "hit": true
+   }
+  },
+  {
+   "sha": "0b315040",
+   "date": "2024-09-09",
+   "subject": "Update Copilot docs",
+   "message_words": 3,
+   "truth": [
+    "content/pro/openbb-copilot"
+   ],
+   "predicted": [
+    "content/pro/bring-your-own-copilot",
+    "content/pro/enterprise",
+    "content/pro/openbb-copilot",
+    "content/pro/tutorials/index",
+    "content/bot/changelog/index",
+    "content/pro/upload-files",
+    "content/pro/widgets",
+    "content/bot/changelog/version1_0_8"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 0.333,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/pro/enterprise",
+     "content/pro/openbb-copilot",
+     "content/pro/tutorials/index",
+     "content/bot/changelog/version1_0_8"
+    ],
+    "also_check": [
+     "content/pro/bring-your-own-copilot",
+     "content/bot/changelog/index",
+     "content/pro/upload-files",
+     "content/pro/widgets"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/pro/enterprise",
+     "content/pro/openbb-copilot",
+     "content/pro/tutorials/index",
+     "content/bot/changelog/version1_0_8"
+    ],
+    "recall": 1.0,
+    "precision": 0.25,
+    "hit": true
+   }
+  },
+  {
+   "sha": "9fa8b8bf",
+   "date": "2024-09-09",
+   "subject": "[BugFix] Platform Markdown Script - Ensure Reference & Data Model Table Cells Don't Create New Lines.",
+   "message_words": 14,
+   "truth": [
+    "content/platform/developer_guide/documentation_development"
+   ],
+   "predicted": [
+    "content/platform/user_guides/add_endpoint_to_existing_provider",
+    "content/excel/help",
+    "content/platform/user_guides/add_data_to_existing_endpoint",
+    "content/bot/changelog/version1_0_5",
+    "content/platform/getting_started/create_new_router_extension",
+    "content/bot/changelog/version1_0_6",
+    "content/platform/developer_guide/extensions",
+    "content/platform/developer_guide/documentation_development"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 0.125,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/bot/changelog/version1_0_6"
+    ],
+    "also_check": [
+     "content/platform/user_guides/add_endpoint_to_existing_provider",
+     "content/excel/help",
+     "content/platform/user_guides/add_data_to_existing_endpoint",
+     "content/bot/changelog/version1_0_5",
+     "content/platform/getting_started/create_new_router_extension",
+     "content/platform/developer_guide/extensions",
+     "content/platform/developer_guide/documentation_development"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/bot/changelog/version1_0_6"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "8c872cfb",
+   "date": "2024-09-05",
+   "subject": "Overhaul Terminal Pro docs - WIP",
+   "message_words": 5,
+   "truth": [
+    "content/excel/templates",
+    "content/pro/data-connectors/native-integrations",
+    "content/pro/index",
+    "content/pro/tutorials/bring-data",
+    "content/pro/tutorials/data-to-charts"
+   ],
+   "predicted": [
+    "content/pro/templates/pro",
+    "content/pro/templates/index",
+    "content/pro/homepage",
+    "content/pro/architecture",
+    "content/pro/tutorials/bring-data",
+    "content/platform/developer_guide/documentation_development",
+    "content/pro/copilot/bring-your-own-copilot",
+    "content/bot/changelog/version1_0_7"
+   ],
+   "basis": "hybrid",
+   "recall": 0.2,
+   "precision": 0.125,
+   "reciprocal_rank": 0.2,
+   "hit": true,
+   "new_pages": 11,
+   "triage": {
+    "likely": [
+     "content/pro/templates/pro",
+     "content/pro/tutorials/bring-data"
+    ],
+    "also_check": [
+     "content/pro/templates/index",
+     "content/pro/homepage",
+     "content/pro/architecture",
+     "content/platform/developer_guide/documentation_development",
+     "content/pro/copilot/bring-your-own-copilot",
+     "content/bot/changelog/version1_0_7"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/pro/templates/pro",
+     "content/pro/tutorials/bring-data"
+    ],
+    "recall": 0.2,
+    "precision": 0.5,
+    "hit": true
+   }
+  },
+  {
+   "sha": "36c55617",
+   "date": "2024-08-28",
+   "subject": "Max Python version as 3.12",
+   "message_words": 3,
+   "truth": [
+    "content/platform/installation"
+   ],
+   "predicted": [
+    "content/bot/reference/telegram/options/maxpain",
+    "content/bot/reference/discord/options/maxpain",
+    "content/bot/reference/telegram/options/chains",
+    "content/platform/getting_started/api_requests",
+    "content/platform/installation",
+    "content/platform/getting_started/historical_prices",
+    "content/platform/user_guides/add_data_provider_extension",
+    "content/bot/reference/discord/options/smile"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 0.2,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/platform/installation",
+     "content/platform/user_guides/add_data_provider_extension"
+    ],
+    "also_check": [
+     "content/bot/reference/telegram/options/maxpain",
+     "content/bot/reference/discord/options/maxpain",
+     "content/bot/reference/telegram/options/chains",
+     "content/platform/getting_started/api_requests",
+     "content/platform/getting_started/historical_prices",
+     "content/bot/reference/discord/options/smile"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/platform/installation",
+     "content/platform/user_guides/add_data_provider_extension"
+    ],
+    "recall": 1.0,
+    "precision": 0.5,
+    "hit": true
+   }
+  },
+  {
+   "sha": "0c4ed420",
+   "date": "2024-08-26",
+   "subject": "[BugFix] Fix URL to Data Extensions in CLI Quick Start",
+   "message_words": 8,
+   "truth": [
+    "content/cli/quickstart"
+   ],
+   "predicted": [
+    "content/cli/quickstart",
+    "content/platform/user_guides/add_data_to_existing_endpoint",
+    "content/platform/user_guides/add_endpoint_to_existing_provider",
+    "content/cli/index",
+    "content/platform/developer_guide/extensions",
+    "content/platform/user_guides/extensions",
+    "content/platform/developer_guide/http_requests",
+    "content/bot/reference/discord/info/support"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/cli/quickstart"
+    ],
+    "also_check": [
+     "content/platform/user_guides/add_data_to_existing_endpoint",
+     "content/platform/user_guides/add_endpoint_to_existing_provider",
+     "content/cli/index",
+     "content/platform/developer_guide/extensions",
+     "content/platform/user_guides/extensions",
+     "content/platform/developer_guide/http_requests",
+     "content/bot/reference/discord/info/support"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/cli/quickstart"
+    ],
+    "recall": 1.0,
+    "precision": 1.0,
+    "hit": true
+   }
+  },
+  {
+   "sha": "7721df5c",
+   "date": "2024-07-15",
+   "subject": "Remove Dev Container from Install Instructions",
+   "message_words": 6,
+   "truth": [
+    "content/platform/installation"
+   ],
+   "predicted": [
+    "content/platform/installation",
+    "content/cli/installation",
+    "content/platform/developer_guide/dependency_management",
+    "content/platform/developer_guide/documentation_development",
+    "content/excel/help",
+    "content/platform/faqs/platform_vs_sdk",
+    "content/platform/developer_guide/extensions",
+    "content/platform/user_guides/extensions"
+   ],
+   "basis": "hybrid",
+   "recall": 1.0,
+   "precision": 0.125,
+   "reciprocal_rank": 1.0,
+   "hit": true,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/platform/installation",
+     "content/platform/developer_guide/extensions",
+     "content/platform/user_guides/extensions"
+    ],
+    "also_check": [
+     "content/cli/installation",
+     "content/platform/developer_guide/dependency_management",
+     "content/platform/developer_guide/documentation_development",
+     "content/excel/help",
+     "content/platform/faqs/platform_vs_sdk"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/platform/installation",
+     "content/platform/developer_guide/extensions",
+     "content/platform/user_guides/extensions"
+    ],
+    "recall": 1.0,
+    "precision": 0.333,
+    "hit": true
+   }
+  },
+  {
+   "sha": "772bc0b1",
+   "date": "2024-07-04",
+   "subject": "Fix Broken URL",
+   "message_words": 3,
+   "truth": [
+    "content/platform/developer_guide/obbject"
+   ],
+   "predicted": [
+    "content/terminal/changelog/version3_2_4",
+    "content/terminal/changelog/version2_3_1",
+    "content/terminal/changelog/version3_2_2",
+    "content/sdk/data-available/index",
+    "content/terminal/changelog/version3_0_0",
+    "content/bot/changelog/version1_0_8",
+    "content/platform/user_guides/add_data_to_existing_endpoint",
+    "content/sdk/reference/crypto/dd/links"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/terminal/changelog/version3_2_4",
+     "content/terminal/changelog/version2_3_1",
+     "content/terminal/changelog/version3_2_2",
+     "content/sdk/data-available/index",
+     "content/terminal/changelog/version3_0_0",
+     "content/bot/changelog/version1_0_8",
+     "content/platform/user_guides/add_data_to_existing_endpoint",
+     "content/sdk/reference/crypto/dd/links"
+    ],
+    "also_check": []
+   },
+   "after_reading": {
+    "kept": [
+     "content/terminal/changelog/version3_2_4",
+     "content/terminal/changelog/version2_3_1",
+     "content/terminal/changelog/version3_2_2",
+     "content/sdk/data-available/index",
+     "content/terminal/changelog/version3_0_0",
+     "content/bot/changelog/version1_0_8",
+     "content/platform/user_guides/add_data_to_existing_endpoint",
+     "content/sdk/reference/crypto/dd/links"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "b6d6169e",
+   "date": "2024-06-24",
+   "subject": "fix: format code snippet",
+   "message_words": 4,
+   "truth": [
+    "content/platform/user_guides/basic_syntax"
+   ],
+   "predicted": [
+    "content/sdk/reference/crypto/dd/trading_pairs",
+    "content/terminal/reference/crypto/qa/summary",
+    "content/sdk/reference/stocks/fa/mgmt",
+    "content/terminal/reference/crypto/qa/raw",
+    "content/sdk/reference/qa/cusum",
+    "content/terminal/reference/stocks/qa/raw",
+    "content/terminal/changelog/version3_0_0",
+    "content/terminal/reference/economy/qa/raw"
+   ],
+   "basis": "hybrid",
+   "recall": 0.0,
+   "precision": 0.0,
+   "reciprocal_rank": 0.0,
+   "hit": false,
+   "new_pages": 0,
+   "triage": {
+    "likely": [
+     "content/sdk/reference/crypto/dd/trading_pairs",
+     "content/terminal/reference/crypto/qa/summary",
+     "content/terminal/reference/crypto/qa/raw",
+     "content/sdk/reference/qa/cusum",
+     "content/terminal/reference/stocks/qa/raw",
+     "content/terminal/reference/economy/qa/raw"
+    ],
+    "also_check": [
+     "content/sdk/reference/stocks/fa/mgmt",
+     "content/terminal/changelog/version3_0_0"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/sdk/reference/crypto/dd/trading_pairs",
+     "content/terminal/reference/crypto/qa/summary",
+     "content/terminal/reference/crypto/qa/raw",
+     "content/sdk/reference/qa/cusum",
+     "content/terminal/reference/stocks/qa/raw",
+     "content/terminal/reference/economy/qa/raw"
+    ],
+    "recall": 0.0,
+    "precision": 0.0,
+    "hit": false
+   }
+  },
+  {
+   "sha": "1e3cb774",
+   "date": "2024-06-24",
+   "subject": "Update from OpenBBTerminal 'main' c0d0989",
+   "message_words": 4,
+   "truth": [
+    "content/platform/developer_guide/index",
+    "content/platform/installation",
+    "content/platform/user_guides/basic_syntax"
+   ],
+   "predicted": [
+    "content/sdk/faqs/installation_updates",
+    "content/terminal/faqs/installation_updates",
+    "content/platform/developer_guide/dependency_management",
+    "content/terminal/changelog/version3_0_0",
+    "content/sdk/reference/forecast/rename",
+    "content/terminal/changelog/version2_4_1",
+    "content/sdk/usage/basics",
+    "content/platform/installation"
+   ],
+   "basis": "hybrid",
+   "recall": 0.333,
+   "precision": 0.125,
+   "reciprocal_rank": 0.125,
+   "hit": true,
+   "new_pages": 1,
+   "triage": {
+    "likely": [
+     "content/terminal/changelog/version3_0_0",
+     "content/sdk/usage/basics",
+     "content/platform/installation"
+    ],
+    "also_check": [
+     "content/sdk/faqs/installation_updates",
+     "content/terminal/faqs/installation_updates",
+     "content/platform/developer_guide/dependency_management",
+     "content/sdk/reference/forecast/rename",
+     "content/terminal/changelog/version2_4_1"
+    ]
+   },
+   "after_reading": {
+    "kept": [
+     "content/terminal/changelog/version3_0_0",
+     "content/sdk/usage/basics",
+     "content/platform/installation"
+    ],
+    "recall": 0.333,
+    "precision": 0.333,
+    "hit": true
+   }
+  }
+ ],
+ "reading_step": {
+  "model": "openai/gpt-oss-120b:fastest",
+  "model_calls": 640,
+  "unparsed_replies": 0,
+  "overall": {
+   "events": 80,
+   "before": {
+    "hit_rate": 0.688,
+    "mean_recall": 0.506,
+    "precision_when_answered": 0.116
+   },
+   "after": {
+    "hit_rate": 0.525,
+    "mean_recall": 0.361,
+    "precision_when_answered": 0.329,
+    "events_with_nothing_kept": 11
+   },
+   "mean_candidates_before": 8.0,
+   "mean_candidates_after": 2.7,
+   "kept_share_of_right_pages": 0.703,
+   "dropped_share_of_wrong_pages": 0.71,
+   "same_size_baseline": {
+    "top_k": 3,
+    "hit_rate": 0.475,
+    "mean_recall": 0.343,
+    "precision": 0.196
+   },
+   "reorder_instead_of_delete": {
+    "top_3_before": {
+     "hit_rate": 0.475,
+     "mean_recall": 0.343,
+     "precision": 0.196
+    },
+    "top_3_after": {
+     "hit_rate": 0.55,
+     "mean_recall": 0.38,
+     "precision": 0.229
+    },
+    "mrr_before": 0.442,
+    "mrr_after": 0.459
+   }
+  },
+  "by_period": {
+   "older half": {
+    "events": 40,
+    "before": {
+     "hit_rate": 0.65,
+     "mean_recall": 0.505,
+     "precision_when_answered": 0.094
+    },
+    "after": {
+     "hit_rate": 0.475,
+     "mean_recall": 0.35,
+     "precision_when_answered": 0.288,
+     "events_with_nothing_kept": 6
+    },
+    "mean_candidates_before": 8.0,
+    "mean_candidates_after": 2.525,
+    "kept_share_of_right_pages": 0.633,
+    "dropped_share_of_wrong_pages": 0.717,
+    "same_size_baseline": {
+     "top_k": 3,
+     "hit_rate": 0.525,
+     "mean_recall": 0.387,
+     "precision": 0.183
+    },
+    "reorder_instead_of_delete": {
+     "top_3_before": {
+      "hit_rate": 0.525,
+      "mean_recall": 0.387,
+      "precision": 0.183
+     },
+     "top_3_after": {
+      "hit_rate": 0.55,
+      "mean_recall": 0.392,
+      "precision": 0.192
+     },
+     "mrr_before": 0.492,
+     "mrr_after": 0.461
+    }
+   },
+   "newer half": {
+    "events": 40,
+    "before": {
+     "hit_rate": 0.725,
+     "mean_recall": 0.508,
+     "precision_when_answered": 0.138
+    },
+    "after": {
+     "hit_rate": 0.575,
+     "mean_recall": 0.372,
+     "precision_when_answered": 0.369,
+     "events_with_nothing_kept": 5
+    },
+    "mean_candidates_before": 8.0,
+    "mean_candidates_after": 2.875,
+    "kept_share_of_right_pages": 0.75,
+    "dropped_share_of_wrong_pages": 0.703,
+    "same_size_baseline": {
+     "top_k": 3,
+     "hit_rate": 0.425,
+     "mean_recall": 0.299,
+     "precision": 0.208
+    },
+    "reorder_instead_of_delete": {
+     "top_3_before": {
+      "hit_rate": 0.425,
+      "mean_recall": 0.299,
+      "precision": 0.208
+     },
+     "top_3_after": {
+      "hit_rate": 0.55,
+      "mean_recall": 0.369,
+      "precision": 0.267
+     },
+     "mrr_before": 0.393,
+     "mrr_after": 0.456
+    }
+   }
+  }
+ },
+ "triage_step": {
+  "overall": {
+   "events": 80,
+   "hit_rate": 0.688,
+   "mean_recall": 0.506,
+   "precision_likely": 0.329,
+   "precision_full_list": 0.116,
+   "events_with_empty_likely": 11,
+   "right_in_likely": 0.703,
+   "wrong_in_also_check": 0.71,
+   "top_3_hit_search_order": 0.475,
+   "top_3_hit_likely_first": 0.55,
+   "mrr_search_order": 0.442,
+   "mrr_likely_first": 0.459
+  },
+  "by_period": {
+   "older half": {
+    "events": 40,
+    "hit_rate": 0.65,
+    "mean_recall": 0.505,
+    "precision_likely": 0.288,
+    "precision_full_list": 0.094,
+    "events_with_empty_likely": 6,
+    "right_in_likely": 0.633,
+    "wrong_in_also_check": 0.717,
+    "top_3_hit_search_order": 0.525,
+    "top_3_hit_likely_first": 0.55,
+    "mrr_search_order": 0.492,
+    "mrr_likely_first": 0.461
+   },
+   "newer half": {
+    "events": 40,
+    "hit_rate": 0.725,
+    "mean_recall": 0.508,
+    "precision_likely": 0.369,
+    "precision_full_list": 0.138,
+    "events_with_empty_likely": 5,
+    "right_in_likely": 0.75,
+    "wrong_in_also_check": 0.703,
+    "top_3_hit_search_order": 0.425,
+    "top_3_hit_likely_first": 0.55,
+    "mrr_search_order": 0.393,
+    "mrr_likely_first": 0.456
+   }
+  }
+ },
+ "corpus": "OpenBB docs",
+ "slug": "openbb",
+ "kind": "technical",
+ "repo_url": "https://github.com/OpenBB-finance/openbb-docs",
+ "ref": "692a7bce",
+ "search": "hybrid (hf:BAAI/bge-small-en-v1.5)",
+ "reader": "openai/gpt-oss-120b:fastest",
+ "model_calls": 640,
+ "unparsed_replies": 0,
+ "check": {
+  "status": "evaluated",
+  "events": 80,
+  "all_met": false,
+  "measures": {
+   "hit_rate": {
+    "value": 0.725,
+    "target": 0.9,
+    "met": false
+   },
+   "mean_recall": {
+    "value": 0.508,
+    "target": 0.8,
+    "met": false
+   },
+   "precision_likely": {
+    "value": 0.369,
+    "target": 0.6,
+    "met": false
+   },
+   "right_in_likely": {
+    "value": 0.75,
+    "target": 0.95,
+    "met": false
+   },
+   "wrong_in_also_check": {
+    "value": 0.703,
+    "target": 0.85,
+    "met": false
+   }
+  },
+  "literal_precision_full_list": {
+   "value": 0.138,
+   "target": 0.6,
+   "met": false
+  }
+ },
+ "words_only_summary": {
+  "overall": {
+   "events": 80,
+   "hit_rate": 0.512,
+   "mean_recall": 0.398,
+   "mean_reciprocal_rank": 0.337,
+   "answered": 74,
+   "precision_when_answered": 0.152
+  },
+  "by_period": {
+   "older half": {
+    "events": 40,
+    "hit_rate": 0.6,
+    "mean_recall": 0.455,
+    "mean_reciprocal_rank": 0.386,
+    "answered": 40,
+    "precision_when_answered": 0.138
+   },
+   "newer half": {
+    "events": 40,
+    "hit_rate": 0.425,
+    "mean_recall": 0.342,
+    "mean_reciprocal_rank": 0.289,
+    "answered": 34,
+    "precision_when_answered": 0.169
+   }
+  },
+  "by_basis": {
+   "nothing returned": {
+    "events": 6,
+    "hit_rate": 0.0,
+    "mean_recall": 0.0,
+    "mean_reciprocal_rank": 0.0,
+    "answered": 0,
+    "precision_when_answered": null
+   },
+   "search": {
+    "events": 74,
+    "hit_rate": 0.554,
+    "mean_recall": 0.43,
+    "mean_reciprocal_rank": 0.365,
+    "answered": 74,
+    "precision_when_answered": 0.152
+   }
+  },
+  "by_pages_modified": {
+   "1 page": {
+    "events": 41,
+    "hit_rate": 0.488,
+    "mean_recall": 0.488,
+    "mean_reciprocal_rank": 0.331,
+    "answered": 38,
+    "precision_when_answered": 0.118
+   },
+   "2-3 pages": {
+    "events": 23,
+    "hit_rate": 0.522,
+    "mean_recall": 0.326,
+    "mean_reciprocal_rank": 0.342,
+    "answered": 22,
+    "precision_when_answered": 0.157
+   },
+   "4+ pages": {
+    "events": 16,
+    "hit_rate": 0.562,
+    "mean_recall": 0.272,
+    "mean_reciprocal_rank": 0.346,
+    "answered": 14,
+    "precision_when_answered": 0.241
+   }
+  },
+  "by_message_length": {
+   "over 30 words": {
+    "events": 7,
+    "hit_rate": 0.286,
+    "mean_recall": 0.214,
+    "mean_reciprocal_rank": 0.214,
+    "answered": 5,
+    "precision_when_answered": 0.171
+   },
+   "8-30 words": {
+    "events": 26,
+    "hit_rate": 0.654,
+    "mean_recall": 0.516,
+    "mean_reciprocal_rank": 0.465,
+    "answered": 24,
+    "precision_when_answered": 0.253
+   },
+   "under 8 words": {
+    "events": 47,
+    "hit_rate": 0.468,
+    "mean_recall": 0.36,
+    "mean_reciprocal_rank": 0.285,
+    "answered": 45,
+    "precision_when_answered": 0.097
+   }
+  }
+ },
+ "passes": {
+  "pass1_words": {
+   "figures": {
+    "top_3_hit": 0.325,
+    "mrr": 0.289
+   }
+  },
+  "pass2_hybrid": {
+   "figures": {
+    "top_3_hit": 0.425,
+    "mrr": 0.393
+   },
+   "gain": {
+    "hit_at_3_gain": 0.1,
+    "mrr_gain": 0.104,
+    "kept": true
+   }
+  },
+  "pass3_reading": {
+   "figures": {
+    "top_3_hit": 0.55,
+    "mrr": 0.456
+   },
+   "gain": {
+    "hit_at_3_gain": 0.125,
+    "mrr_gain": 0.063,
+    "kept": true
+   }
+  }
+ }
+}
