@@ -34,6 +34,31 @@ The `--demo` run replays a fixed script in place of a model, so you can watch
 the lead agent classify, route, delegate one page to a subagent, draft the
 notice and stop at the gate.
 
+## Use it on your pull requests (GitHub Action)
+
+Add `.github/workflows/docloop.yml` to a repository that holds its docs as Markdown:
+
+```yaml
+name: docloop
+on: pull_request
+permissions:
+  pull-requests: write
+jobs:
+  docs-impact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: stefbeau/DocLoop@main
+        with:
+          docs: docs        # your docs folder
+```
+
+Each pull request gets one comment, updated on every push, that lists the pages it may affect. It needs
+no API key, writes nothing to your docs, and a pull request from a fork gets the same list in the job
+summary instead of a comment. For search by meaning as well as words, set `search: hybrid` and provide
+`HF_TOKEN` or `OPENAI_API_KEY` in the step's environment. The list is a set of leads: precision is low
+(see the [measured results](https://stefbeau.github.io/DocLoop/)), so read it as a checklist, not a verdict.
+
 ## How it is put together
 
 ```
