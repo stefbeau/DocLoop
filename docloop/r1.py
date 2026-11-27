@@ -162,6 +162,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="python -m docloop.r1")
     sub = parser.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("run"); p.add_argument("--corpus", required=True); p.add_argument("--workdir", required=True); p.add_argument("--out", required=True)
+    p.add_argument("--excerpt", choices=["head", "relevant"], default="head", help="what the reader sees of a long page (head = R1)")
     p = sub.add_parser("summarize"); p.add_argument("--in", dest="in_dir", required=True); p.add_argument("--out", required=True)
     args = parser.parse_args(argv)
     if args.cmd == "summarize":
@@ -179,7 +180,7 @@ def main(argv: list[str] | None = None) -> int:
     from .judge import Judge, make_chat_model
     cache = Path(args.workdir) / "cache"
     searcher, label = default_searcher(cfg["embedder"], cache / "embeddings")
-    judge = Judge(make_chat_model(cfg["model"]), cache / f"judge-{corpus['slug']}.json")
+    judge = Judge(make_chat_model(cfg["model"]), cache / f"judge-{corpus['slug']}.json", excerpt=args.excerpt)
     repo = prepare(corpus, args.workdir)
     report = run(corpus, repo, args.out, searcher, label, judge, lambda n, s: print(f"  [{n}] {s[:60]}", file=sys.stderr))
     print(json.dumps({"corpus": corpus["name"], "events": report["summary"]["overall"]["events"], "check": report["check"]["status"],

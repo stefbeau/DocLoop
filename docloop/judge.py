@@ -12,6 +12,7 @@ import re
 from pathlib import Path
 from typing import Protocol
 
+from .impact import _tokens
 from .models import ChangeEvent, Page
 from .stores import split_front_matter
 
@@ -25,6 +26,33 @@ Drop it if it merely shares a topic or some words with the change.
 
 Reply with one JSON object and nothing else:
 {"keep": true or false, "evidence": "the sentence from the page that must change, or why you drop it"}"""
+
+
+def relevant_excerpt(body: str, query: str, limit: int = PAGE_CHARS) -> str:
+    """The parts of a long page that share the most words with the change, in page order.
+
+    The first block (title and introduction) always stays. A page that fits is returned whole.
+    Deterministic: no model, same input, same output.
+    """
+    if len(body) <= limit:
+        return body
+    blocks = [b for b in re.split(r"\n\s*\n", body) if b.strip()]
+    q = set(_tokens(query))
+    scored = [(len(q & set(_tokens(b))) / (1 + len(b) / 1500), i) for i, b in enumerate(blocks)]
+    pieces = {0: blocks[0][:limit]}
+    used = len(pieces[0])
+    for score, i in sorted(scored, key=lambda t: (-t[0], t[1])):
+        if i in pieces or score <= 0:
+            continue
+        room = limit - used - 7  # 7 = the "[...]" separator
+        if len(blocks[i]) <= room:
+            pieces[i] = blocks[i]
+        elif room >= 200:
+            pieces[i] = blocks[i][:room]
+        else:
+            continue
+        used += len(pieces[i]) + 7
+    return "\n[...]\n".join(pieces[i] for i in sorted(pieces))
 
 
 class ChatModel(Protocol):
@@ -64,14 +92,19 @@ def parse_verdict(text: str) -> dict | None:
 
 
 class Judge:
-    def __init__(self, model: ChatModel, cache_file: str | Path | None = None, name: str = ""):
+    def __init__(self, model: ChatModel, cache_file: str | Path | None = None, name: str = "", excerpt: str = "head"):
+        """`excerpt`: "head" sends the first PAGE_CHARS of a page (R1, unchanged); "relevant" sends the parts that match the change."""
+        if excerpt not in ("head", "relevant"):
+            raise ValueError("excerpt must be 'head' or 'relevant'")
+        self.excerpt = excerpt
         self.model, self.name = model, name or getattr(model, "name", "model")
         self.file = Path(cache_file) if cache_file else None
         self.cache: dict[str, dict] = json.loads(self.file.read_text()) if self.file and self.file.is_file() else {}
         self.calls = self.unparsed = 0
 
     def keep(self, event: ChangeEvent, page: Page) -> dict:
-        body = split_front_matter(page.body)[1][:PAGE_CHARS]
+        full = split_front_matter(page.body)[1]
+        body = relevant_excerpt(full, event.title + "\n" + event.body) if self.excerpt == "relevant" else full[:PAGE_CHARS]
         prompt = (f"CHANGE\n{event.title}\n{event.body}".strip()
                   + f"\n\nPAGE id: {page.id}\nPAGE title: {page.title}\n\n{body}")
         key = hashlib.sha1((self.name + "\x00" + prompt).encode("utf-8")).hexdigest()
