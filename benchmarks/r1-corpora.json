@@ -1,0 +1,19 @@
+{
+  "model": "openai/gpt-oss-120b:fastest",
+  "embedder": "hf:BAAI/bge-small-en-v1.5",
+  "corpora": [
+    {"name": "Hugging Face Hub docs", "slug": "hub", "kind": "technical",
+     "repo": "https://github.com/huggingface/hub-docs", "ref": "2c3f84c8",
+     "roots": ["docs/hub", "docs/inference-providers"], "limit": 300, "max_pages": 10,
+     "skip_message": "\\(automated\\)"},
+    {"name": "OpenBB docs", "slug": "openbb", "kind": "technical",
+     "repo": "https://github.com/OpenBB-finance/openbb-docs", "ref": "692a7bce",
+     "roots": ["content", "content-odp"], "limit": 300, "max_pages": 10, "skip_message": null},
+    {"name": "Prometheus docs", "slug": "prometheus", "kind": "technical",
+     "repo": "https://github.com/prometheus/docs", "ref": "a8a02474",
+     "roots": ["docs"], "limit": 300, "max_pages": 10, "skip_message": null},
+    {"name": "GOV.UK service manual", "slug": "service-manual", "kind": "non-technical",
+     "repo": "https://github.com/alphagov/government-service-design-manual", "ref": "4efa105e",
+     "roots": ["service-manual"], "limit": 300, "max_pages": 10, "skip_message": null}
+  ]
+}

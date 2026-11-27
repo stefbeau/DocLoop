@@ -49,11 +49,25 @@ class Workspace:
         self.store = docs if isinstance(docs, PageStore) else open_store(docs, roots, exclude)
         self.home = Path(home or os.environ.get("DOCLOOP_HOME", ".docloop"))
         self.home.mkdir(parents=True, exist_ok=True)
-        self._searcher = None
-        mode = os.environ.get("DOCLOOP_SEARCH", "lexical")
-        if mode != "lexical":
+        self._built, self.search_mode = None, "lexical"
+        mode = os.environ.get("DOCLOOP_SEARCH", "hybrid")   # hybrid is the default; "lexical" turns it off
+        if mode == "hybrid":
+            from .embeddings import default_searcher
+            self._built, self.search_mode = default_searcher(None, self.home / "embeddings")
+        elif mode != "lexical":
             from .embeddings import make_searcher
-            self._searcher = make_searcher(mode, os.environ.get("DOCLOOP_EMBEDDER"), self.home / "embeddings")
+            self._built = make_searcher(mode, os.environ.get("DOCLOOP_EMBEDDER"), self.home / "embeddings")
+            self.search_mode = mode
+
+    def _searcher(self, query: str, store) -> list:
+        """The configured search. If the embedding provider fails mid-run, the word search answers and the label says so."""
+        if self._built is not None:
+            try:
+                return self._built(query, store)
+            except Exception as exc:  # provider down, no credits, rate limit
+                first = str(exc).strip().splitlines()[0] if str(exc).strip() else type(exc).__name__
+                self._built, self.search_mode = None, f"lexical (fallback: {first})"
+        return search(query, store)
 
     # ---- helpers -------------------------------------------------------
     def _event(self, event_file: str) -> ChangeEvent:
@@ -96,7 +110,7 @@ class Workspace:
         """List pages the change touches: pages the event names first, then search results, capped at 8. Ids are always real."""
         event = self._event(event_file)
         candidates = [c.to_dict() for c in find_pages(event, self.store, self._searcher)]
-        result = {"event_id": event.id, "candidates": candidates,
+        result = {"event_id": event.id, "candidates": candidates, "search": self.search_mode,
                   "note": "pages marked 'explicit reference' are named in the event; all others are leads to read and sort"}
         self._save_state(event.id, "impact", result)
         self._audit(event.id, "impact_mapped", pages=[c["page_id"] for c in candidates])
@@ -104,8 +118,9 @@ class Workspace:
 
     def search_pages(self, query: str) -> dict:
         """Search the documentation. Returns at most 8 page ids with titles and scores."""
-        found = self._searcher(query, self.store) if self._searcher else search(query, self.store)
-        return {"query": query, "results": [c.to_dict() for c in found if self.store.exists(c.page_id)]}
+        found = self._searcher(query, self.store)
+        return {"query": query, "search": self.search_mode,
+                "results": [c.to_dict() for c in found if self.store.exists(c.page_id)]}
 
     def read_page(self, page_id: str) -> dict:
         """Read one page by id. Fails if the id does not exist."""

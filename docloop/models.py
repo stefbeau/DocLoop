@@ -78,6 +78,7 @@ class Candidate:
     title: str
     basis: str  # "explicit reference" or "search"
     score: float
+    tier: str = ""  # "likely" or "also check" once a model has read the page (pass 3); empty before
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

@@ -127,8 +127,11 @@ judge, and the construction of all three runtimes.
 
 - It has no benchmark of draft quality, and the page-mapping benchmark covers
   the deterministic first pass only, not the agent's reading step.
-- Search is lexical by default. Hybrid search (`DOCLOOP_SEARCH=hybrid`,
-  `DOCLOOP_EMBEDDER`) scores better on the one corpus benchmarked so far.
+- Search is hybrid (words plus meaning) by default, with the embedder from
+  `DOCLOOP_EMBEDDER` (built-in choice: `hf:BAAI/bge-small-en-v1.5`, needs
+  `HF_TOKEN`). If no embedder works, it falls back to word search and every
+  search result says so in its `search` field. `DOCLOOP_SEARCH=lexical` turns
+  hybrid off.
 - It does not fetch pull requests or tickets. You give it a change event file.
 
 ## Licence

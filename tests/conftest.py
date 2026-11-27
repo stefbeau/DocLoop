@@ -25,3 +25,9 @@ def cms_ws(tmp_path):
 
 def event(name: str) -> str:
     return str(EVENTS / f"{name}.json")
+
+
+@pytest.fixture(autouse=True)
+def _words_only_search_unless_a_test_says_otherwise(monkeypatch):
+    """Hybrid search is the product default and needs an embedder; the older tests check the word search."""
+    monkeypatch.setenv("DOCLOOP_SEARCH", "lexical")
