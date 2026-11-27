@@ -3,6 +3,12 @@ name: r1-benchmark
 # to a new branch. Needs the repository secret HF_TOKEN (the reader and the embedder are models).
 on:
   workflow_dispatch:
+    inputs:
+      excerpt:
+        description: "What the reader sees of a long page: head (R1 reference) or relevant (R2, see docs/r2-preregistration.md). Run head first, relevant the same day."
+        type: choice
+        options: [head, relevant]
+        default: head
 permissions:
   contents: write
 jobs:
@@ -26,7 +32,7 @@ jobs:
       - name: Run the corpus
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: python -m docloop.r1 run --corpus ${{ matrix.slug }} --workdir work --out out
+        run: python -m docloop.r1 run --corpus ${{ matrix.slug }} --workdir work --out out --excerpt ${{ inputs.excerpt }}
       - uses: actions/upload-artifact@v4
         with:
           name: r1-${{ matrix.slug }}
@@ -46,13 +52,13 @@ jobs:
           pattern: r1-*
           path: runs
           merge-multiple: true
-      - run: python -m docloop.r1 summarize --in runs --out docs/benchmarks/r1
-      - run: cp runs/*.json runs/*.md docs/benchmarks/r1/ 2>/dev/null || true
+      - run: python -m docloop.r1 summarize --in runs --out docs/benchmarks/${{ inputs.excerpt == 'relevant' && 'r2-relevant' || 'r1' }}
+      - run: cp runs/*.json runs/*.md docs/benchmarks/${{ inputs.excerpt == 'relevant' && 'r2-relevant' || 'r1' }}/ 2>/dev/null || true
       - name: Commit the results to a new branch (never force)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -b "r1-results-${{ github.run_id }}"
-          git add docs/benchmarks/r1
-          git commit -m "R1 benchmark results (run ${{ github.run_id }})"
-          git push origin "r1-results-${{ github.run_id }}"
+          git checkout -b "r1-results-${{ inputs.excerpt }}-${{ github.run_id }}"
+          git add docs/benchmarks
+          git commit -m "Benchmark results, reader excerpt ${{ inputs.excerpt }} (run ${{ github.run_id }})"
+          git push origin "r1-results-${{ inputs.excerpt }}-${{ github.run_id }}"
