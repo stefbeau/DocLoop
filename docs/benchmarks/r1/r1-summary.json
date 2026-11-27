@@ -1,0 +1,346 @@
+{
+ "verdict": {
+  "passed": false,
+  "corpora": {
+   "Hugging Face Hub docs": {
+    "status": "evaluated",
+    "events": 186,
+    "all_met": false,
+    "measures": {
+     "hit_rate": {
+      "value": 0.914,
+      "target": 0.9,
+      "met": true
+     },
+     "mean_recall": {
+      "value": 0.848,
+      "target": 0.8,
+      "met": true
+     },
+     "precision_likely": {
+      "value": 0.59,
+      "target": 0.6,
+      "met": false
+     },
+     "right_in_likely": {
+      "value": 0.827,
+      "target": 0.95,
+      "met": false
+     },
+     "wrong_in_also_check": {
+      "value": 0.835,
+      "target": 0.85,
+      "met": false
+     }
+    },
+    "literal_precision_full_list": {
+     "value": 0.179,
+     "target": 0.6,
+     "met": false
+    }
+   },
+   "OpenBB docs": {
+    "status": "evaluated",
+    "events": 80,
+    "all_met": false,
+    "measures": {
+     "hit_rate": {
+      "value": 0.725,
+      "target": 0.9,
+      "met": false
+     },
+     "mean_recall": {
+      "value": 0.508,
+      "target": 0.8,
+      "met": false
+     },
+     "precision_likely": {
+      "value": 0.364,
+      "target": 0.6,
+      "met": false
+     },
+     "right_in_likely": {
+      "value": 0.727,
+      "target": 0.95,
+      "met": false
+     },
+     "wrong_in_also_check": {
+      "value": 0.71,
+      "target": 0.85,
+      "met": false
+     }
+    },
+    "literal_precision_full_list": {
+     "value": 0.138,
+     "target": 0.6,
+     "met": false
+    }
+   },
+   "Prometheus docs": {
+    "status": "evaluated",
+    "events": 273,
+    "all_met": false,
+    "measures": {
+     "hit_rate": {
+      "value": 0.92,
+      "target": 0.9,
+      "met": true
+     },
+     "mean_recall": {
+      "value": 0.904,
+      "target": 0.8,
+      "met": true
+     },
+     "precision_likely": {
+      "value": 0.473,
+      "target": 0.6,
+      "met": false
+     },
+     "right_in_likely": {
+      "value": 0.692,
+      "target": 0.95,
+      "met": false
+     },
+     "wrong_in_also_check": {
+      "value": 0.81,
+      "target": 0.85,
+      "met": false
+     }
+    },
+    "literal_precision_full_list": {
+     "value": 0.119,
+     "target": 0.6,
+     "met": false
+    }
+   },
+   "GOV.UK service manual": {
+    "status": "evaluated",
+    "events": 260,
+    "all_met": false,
+    "measures": {
+     "hit_rate": {
+      "value": 0.692,
+      "target": 0.9,
+      "met": false
+     },
+     "mean_recall": {
+      "value": 0.661,
+      "target": 0.8,
+      "met": false
+     },
+     "precision_likely": {
+      "value": 0.335,
+      "target": 0.6,
+      "met": false
+     },
+     "right_in_likely": {
+      "value": 0.787,
+      "target": 0.95,
+      "met": false
+     },
+     "wrong_in_also_check": {
+      "value": 0.733,
+      "target": 0.85,
+      "met": false
+     }
+    },
+    "literal_precision_full_list": {
+     "value": 0.09,
+     "target": 0.6,
+     "met": false
+    }
+   }
+  }
+ },
+ "missing": [],
+ "pass_scope": {
+  "pass2_hybrid": "kept",
+  "pass3_reading": "kept"
+ },
+ "corpora": {
+  "Hugging Face Hub docs": {
+   "head": "2c3f84c811f25bbe76ddfed85baf3a2cf03a7ceb",
+   "events": 186,
+   "search": "hybrid (hf:BAAI/bge-small-en-v1.5)",
+   "reader": "openai/gpt-oss-120b:fastest",
+   "model_calls": 1488,
+   "unparsed_replies": 0,
+   "newer_half": {
+    "hit_rate": 0.914,
+    "mean_recall": 0.848,
+    "precision_likely": 0.59,
+    "precision_full_list": 0.179,
+    "right_in_likely": 0.827,
+    "wrong_in_also_check": 0.835
+   },
+   "passes": {
+    "pass1_words": {
+     "figures": {
+      "top_3_hit": 0.72,
+      "mrr": 0.636
+     }
+    },
+    "pass2_hybrid": {
+     "figures": {
+      "top_3_hit": 0.806,
+      "mrr": 0.726
+     },
+     "gain": {
+      "hit_at_3_gain": 0.086,
+      "mrr_gain": 0.09,
+      "kept": true
+     }
+    },
+    "pass3_reading": {
+     "figures": {
+      "top_3_hit": 0.903,
+      "mrr": 0.815
+     },
+     "gain": {
+      "hit_at_3_gain": 0.097,
+      "mrr_gain": 0.089,
+      "kept": true
+     }
+    }
+   }
+  },
+  "OpenBB docs": {
+   "head": "692a7bce357542fb5c37a94ecdf51ddcdb5d876e",
+   "events": 80,
+   "search": "hybrid (hf:BAAI/bge-small-en-v1.5)",
+   "reader": "openai/gpt-oss-120b:fastest",
+   "model_calls": 640,
+   "unparsed_replies": 0,
+   "newer_half": {
+    "hit_rate": 0.725,
+    "mean_recall": 0.508,
+    "precision_likely": 0.364,
+    "precision_full_list": 0.138,
+    "right_in_likely": 0.727,
+    "wrong_in_also_check": 0.71
+   },
+   "passes": {
+    "pass1_words": {
+     "figures": {
+      "top_3_hit": 0.325,
+      "mrr": 0.289
+     }
+    },
+    "pass2_hybrid": {
+     "figures": {
+      "top_3_hit": 0.425,
+      "mrr": 0.393
+     },
+     "gain": {
+      "hit_at_3_gain": 0.1,
+      "mrr_gain": 0.104,
+      "kept": true
+     }
+    },
+    "pass3_reading": {
+     "figures": {
+      "top_3_hit": 0.525,
+      "mrr": 0.455
+     },
+     "gain": {
+      "hit_at_3_gain": 0.1,
+      "mrr_gain": 0.062,
+      "kept": true
+     }
+    }
+   }
+  },
+  "Prometheus docs": {
+   "head": "a8a024746f7022f015a005c3fa58e64e08ac545a",
+   "events": 273,
+   "search": "hybrid (hf:BAAI/bge-small-en-v1.5)",
+   "reader": "openai/gpt-oss-120b:fastest",
+   "model_calls": 2141,
+   "unparsed_replies": 2,
+   "newer_half": {
+    "hit_rate": 0.92,
+    "mean_recall": 0.904,
+    "precision_likely": 0.473,
+    "precision_full_list": 0.119,
+    "right_in_likely": 0.692,
+    "wrong_in_also_check": 0.81
+   },
+   "passes": {
+    "pass1_words": {
+     "figures": {
+      "top_3_hit": 0.759,
+      "mrr": 0.622
+     }
+    },
+    "pass2_hybrid": {
+     "figures": {
+      "top_3_hit": 0.818,
+      "mrr": 0.733
+     },
+     "gain": {
+      "hit_at_3_gain": 0.059,
+      "mrr_gain": 0.111,
+      "kept": true
+     }
+    },
+    "pass3_reading": {
+     "figures": {
+      "top_3_hit": 0.796,
+      "mrr": 0.728
+     },
+     "gain": {
+      "hit_at_3_gain": -0.022,
+      "mrr_gain": -0.005,
+      "kept": false
+     }
+    }
+   }
+  },
+  "GOV.UK service manual": {
+   "head": "4efa105e0dde7beb862f99253f118e140da8d487",
+   "events": 260,
+   "search": "hybrid (hf:BAAI/bge-small-en-v1.5)",
+   "reader": "openai/gpt-oss-120b:fastest",
+   "model_calls": 2014,
+   "unparsed_replies": 0,
+   "newer_half": {
+    "hit_rate": 0.692,
+    "mean_recall": 0.661,
+    "precision_likely": 0.335,
+    "precision_full_list": 0.09,
+    "right_in_likely": 0.787,
+    "wrong_in_also_check": 0.733
+   },
+   "passes": {
+    "pass1_words": {
+     "figures": {
+      "top_3_hit": 0.431,
+      "mrr": 0.309
+     }
+    },
+    "pass2_hybrid": {
+     "figures": {
+      "top_3_hit": 0.546,
+      "mrr": 0.456
+     },
+     "gain": {
+      "hit_at_3_gain": 0.115,
+      "mrr_gain": 0.147,
+      "kept": true
+     }
+    },
+    "pass3_reading": {
+     "figures": {
+      "top_3_hit": 0.608,
+      "mrr": 0.515
+     },
+     "gain": {
+      "hit_at_3_gain": 0.062,
+      "mrr_gain": 0.059,
+      "kept": true
+     }
+    }
+   }
+  }
+ }
+}
