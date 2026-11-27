@@ -9,7 +9,7 @@ from conftest import event
 from docloop.embeddings import CachedEmbedder, chunk_page, hybrid_search, make_searcher, vector_search
 from docloop.impact import find_pages
 from docloop.judge import Judge, parse_verdict
-from docloop.models import Candidate, ChangeEvent
+from docloop.models import Candidate, ChangeEvent, Page
 from docloop.replay import replay, to_markdown
 from test_store_and_replay import history  # noqa: F401  (fixture)
 
@@ -180,3 +180,32 @@ def test_reading_report_has_fair_baseline_and_reorder_view(history, tmp_path):
     again = rescore(json.loads(json.dumps(report)))          # from the saved file, no model
     assert again["reading_step"]["overall"] == block and again["summary"] == report["summary"]
     assert "reorders the list instead of deleting" in to_markdown(again)
+
+
+def test_relevant_excerpt_keeps_the_matching_block_of_a_long_page():
+    from docloop.judge import PAGE_CHARS, relevant_excerpt
+    filler = "\n\n".join(f"Section {i} about unrelated topics such as colours and fonts. " * 30 for i in range(40))
+    body = "# Guide\nIntro text.\n\n" + filler + "\n\nTo export data use the legacy CSV export option in the menu.\n"
+    assert len(body) > PAGE_CHARS
+    head = body[:PAGE_CHARS]
+    assert "legacy CSV export" not in head
+    out = relevant_excerpt(body, "Retire the legacy CSV export")
+    assert "legacy CSV export" in out and out.startswith("# Guide") and len(out) <= PAGE_CHARS
+    assert relevant_excerpt(body, "Retire the legacy CSV export") == out  # deterministic
+
+
+def test_short_page_is_sent_whole_and_head_mode_is_unchanged(tmp_path):
+    from docloop.judge import Judge, relevant_excerpt
+    assert relevant_excerpt("short page", "anything") == "short page"
+    seen = []
+
+    class Chat:
+        def chat(self, messages):
+            seen.append(messages[-1]["content"])
+            return '{"keep": true, "evidence": "x"}'
+
+    page = Page("p", "P", "# P\n\n" + "filler words here. " * 600 + "\n\nlegacy CSV export option\n")
+    ev = ChangeEvent("e", "Retire the legacy CSV export")
+    Judge(Chat(), excerpt="head").keep(ev, page)
+    Judge(Chat(), excerpt="relevant").keep(ev, page)
+    assert "legacy CSV export option" not in seen[0] and "legacy CSV export option" in seen[1]
