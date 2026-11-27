@@ -38,8 +38,14 @@ def touches_only_docs(changed_files: list[str], docs_dir: str) -> bool:
     return bool(changed_files) and all(f.startswith(prefix) for f in changed_files)
 
 
-def render_comment(candidates: list[dict], search_mode: str, docs_dir: str) -> str:
+SHORT_WORDS = 8  # measured on commit messages: far fewer right pages are found below this length
+
+
+def render_comment(candidates: list[dict], search_mode: str, docs_dir: str, description_words: int = 99) -> str:
     lines = [MARKER, "### DocLoop: documentation that may need an update", ""]
+    if description_words < SHORT_WORDS:
+        lines += ["> The title and description are very short, so this list is less reliable. "
+                  "Say what changes for the user (a few sentences) and it gets better.", ""]
     if not candidates:
         lines += ["No page in the docs looks affected by this change. If it changes behaviour a user can see, "
                   "check the docs yourself: a search over words can miss a page.", ""]
@@ -117,7 +123,9 @@ def run(payload: dict, docs_dir: str, repo: str, api, search: str = "lexical",
         except Exception as exc:  # a missing key or package must not fail the build
             log(f"docloop: hybrid search unavailable ({exc}); using words.")
     candidates = [c.to_dict() for c in find_pages(event_from_pull_request(payload, files), store, searcher)]
-    body = render_comment(candidates, mode, docs_dir)
+    pr = payload["pull_request"]
+    words = len(((pr.get("title") or "") + " " + (pr.get("body") or "")).split())
+    body = render_comment(candidates, mode, docs_dir, words)
     try:
         if api is None:
             raise OSError("no GITHUB_TOKEN")

@@ -77,3 +77,12 @@ def test_no_match_says_so_and_does_not_invent_pages(tmp_path):
 
 def test_non_pull_request_event_is_a_noop(tmp_path):
     assert action.run({"push": {}}, str(tmp_path), "o/r", FakeApi(), log=lambda m: None) == 0
+
+
+def test_short_description_gets_a_reliability_note_and_a_full_one_does_not(tmp_path):
+    (tmp_path / "export.md").write_text("# Export\nlegacy CSV export\n", encoding="utf-8")
+    short = {"pull_request": {"number": 9, "title": "Fix export", "body": "", "labels": []}}
+    api = FakeApi(); action.run(short, str(tmp_path), "o/r", api)
+    assert "less reliable" in [c for c in api.calls if c[0] == "POST"][0][2]["body"]
+    api = FakeApi(); action.run(PR, str(tmp_path), "o/r", api)
+    assert "less reliable" not in [c for c in api.calls if c[0] == "POST"][0][2]["body"]
