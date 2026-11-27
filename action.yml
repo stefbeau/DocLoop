@@ -1,0 +1,31 @@
+name: DocLoop
+description: Comment on each pull request with the documentation pages it may affect. Writes nothing to your docs.
+author: stefbeau
+branding:
+  icon: book-open
+  color: blue
+inputs:
+  docs:
+    description: Folder that holds your Markdown docs.
+    default: docs
+  search:
+    description: "words (no key, free) or hybrid (meaning and words; needs HF_TOKEN or OPENAI_API_KEY in the environment)."
+    default: words
+  skip-docs-only:
+    description: Do not comment on pull requests that only change the docs folder.
+    default: "true"
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+    - shell: bash
+      run: pip install --quiet "${{ github.action_path }}"
+    - shell: bash
+      env:
+        INPUT_DOCS: ${{ inputs.docs }}
+        INPUT_SEARCH: ${{ inputs.search == 'hybrid' && 'hybrid' || 'lexical' }}
+        INPUT_SKIP_DOCS_ONLY: ${{ inputs.skip-docs-only }}
+        GITHUB_TOKEN: ${{ github.token }}
+      run: python -m docloop.action
