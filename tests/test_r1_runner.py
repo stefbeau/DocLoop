@@ -117,3 +117,10 @@ def test_the_benchmark_workflow_runs_exactly_the_registered_corpora_and_needs_th
     assert "secrets.HF_TOKEN" in text and "workflow_dispatch" in text
     assert "--force" not in text and "push -f" not in text, "no force-push"
     assert "summarize" in text, "the same job set ends in the summary"
+
+
+def test_the_vector_extra_installs_what_hf_embeddings_need():
+    """The first R1 benchmark run failed on the runner: huggingface_hub needs numpy for feature_extraction."""
+    import tomllib
+    extras = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"]["optional-dependencies"]
+    assert any(dep.lower().startswith("numpy") for dep in extras["vector"])
