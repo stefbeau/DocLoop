@@ -1,0 +1,14 @@
+{
+ "verdict": {
+  "passed": null,
+  "corpora": {}
+ },
+ "missing": [
+  "hub",
+  "openbb",
+  "prometheus",
+  "service-manual"
+ ],
+ "pass_scope": {},
+ "corpora": {}
+}
